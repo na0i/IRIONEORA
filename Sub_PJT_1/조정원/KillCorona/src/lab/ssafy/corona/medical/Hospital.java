@@ -1,6 +1,8 @@
 package lab.ssafy.corona.medical;
 
-public class Hospital extends Organization{
+import lab.ssafy.corona.person.Patient;
+
+public class Hospital extends Organization implements MedicalAction{
     private CDC cdc;
 
     private String hospitalId;
@@ -46,4 +48,21 @@ public class Hospital extends Organization{
     public void setRoomEmptyCount(int roomEmptyCount) {
         this.roomEmptyCount = roomEmptyCount;
     }
+
+    @Override
+    public void about() {
+        System.out.println("We are Hospital: " + super.getName());
+    }
+
+    // interface body 구현
+    @Override
+    public void addPatient(Patient p) {
+        cdc.getPatientList().add(p);
+    }
+
+    @Override
+    public void removePatient(Patient p) {
+        cdc.getPatientList().remove(p);
+    }
+
 }

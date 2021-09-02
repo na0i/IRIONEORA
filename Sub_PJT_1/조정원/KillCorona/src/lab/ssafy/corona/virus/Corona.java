@@ -1,6 +1,6 @@
 package lab.ssafy.corona.virus;
 
-public class Corona extends Virus{
+public class Corona extends Virus implements Comparable<Corona>{
     private String name = "코로나";
     public int spreadSpeed;
 
@@ -41,5 +41,12 @@ public class Corona extends Virus{
     public String toString() {
         // 부모 객체에 정의되어 있는 toString 에 추가적으로 spreadSpeed도 추가하겠다!
         return super.toString() + " " + this.spreadSpeed;
+    }
+
+    // priority queue
+    // implements Comporable
+    @Override
+    public int compareTo(Corona c) {
+        return this.spreadSpeed - c.spreadSpeed;
     }
 }

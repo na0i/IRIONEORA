@@ -26,4 +26,8 @@ public class Organization {
     public void setEmployeeCount(int employeeCount) {
         this.employeeCount = employeeCount;
     }
+
+    public void about() {
+        System.out.println("Organization: " + this.name);
+    }
 }

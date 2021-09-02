@@ -2,15 +2,17 @@ package lab.ssafy.corona.medical;
 
 import lab.ssafy.corona.person.Patient;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class CDC extends Organization{
 
     private List<Hospital> hospitalList;
-    private List<Patient> patientList;
+    private Set<Patient> patientList;
 
     public CDC() {}
-    public CDC(String name, int employeeCount, List<Hospital> hospitalList, List<Patient> patientList) {
+    public CDC(String name, int employeeCount, List<Hospital> hospitalList, Set<Patient> patientList) {
         super(name, employeeCount);
         this.hospitalList = hospitalList;
         this.patientList = patientList;
@@ -24,11 +26,26 @@ public class CDC extends Organization{
         this.hospitalList = hospitalList;
     }
 
-    public List<Patient> getPatientList() {
+    public Set<Patient> getPatientList() {
         return patientList;
     }
 
-    public void setPatientList(List<Patient> patientList) {
+    public void setPatientList(Set<Patient> patientList) {
         this.patientList = patientList;
     }
+
+    @Override
+    public void about() {
+        System.out.println("Organization - CDC: " + super.getName());
+    }
+
+    public void printPatientList() {
+        Iterator<Patient> itr = patientList.iterator();
+        while(itr.hasNext()) {
+            Patient p = itr.next();
+            System.out.println(p);
+        }
+    }
+
+
 }
