@@ -97,7 +97,7 @@
 - ~~데이터세트를 미리 전처리하여 확인해야하는 데이터의 수를 줄여보자..~~
 - ~~프론트엔드에서 데이터를 최적화한다...?????~~
 
-ref.
+ref.s
 10만명 접속을 허용하는 시스템 만들기  [https://brunch.co.kr/@jowlee/102](https://brunch.co.kr/@jowlee/102)
 
 [https://ko.wikipedia.org/wiki/%EB%B6%84%EC%82%B0_%EC%BB%B4%ED%93%A8%ED%8C%85](https://ko.wikipedia.org/wiki/%EB%B6%84%EC%82%B0_%EC%BB%B4%ED%93%A8%ED%8C%85)
