@@ -6,8 +6,8 @@ public class ContainerTest {
         sc1.setObj("String");
 //        sc1.setObj(new Integer(0));
 
-        GenericContainer<Integer> gc1 = new GenericContainer<>();
-        gc1.setObj(3);
+//        GenericContainer<Integer> gc1 = new GenericContainer<>();
+//        gc1.setObj(3);
 
         GenericContainer<String> gc2 = new GenericContainer<>();
         gc2.setObj("Generic");
