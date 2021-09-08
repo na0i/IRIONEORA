@@ -18,6 +18,8 @@ import java.util.StringTokenizer;
 public class MatrixMulti {
 	// Map
 	public static class MMMapper extends Mapper<Object, Text, Text, Text>{
+				private Text valpair = new Text();
+				private Text keypair = new Text();
                 private String Matrix1name;
                 private String Matrix2name;
 
