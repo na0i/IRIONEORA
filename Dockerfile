@@ -4,7 +4,7 @@ RUN pip3 install django
 WORKDIR /usr/src/app
 
 COPY . .
-RUN pip install -r requirementss.txt
+RUN pip install -r requirements.txt
 
 WORKDIR ./backend
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
