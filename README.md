@@ -25,8 +25,8 @@
 
 <br>
 
-- DB : 
-- Cloude : AWS EC2, Ubuntu 20.04.2 LTS, Docker 20.10.7
+- DB : Mysql
+- Cloud : AWS EC2, Ubuntu 20.04.2 LTS, Docker 20.10.7
 
 **Back-End**
 
