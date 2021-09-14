@@ -46,9 +46,27 @@
 
 ### 🎨 디자인
 
-##### 메인페이지
+##### MAIN PAGE
 
-![image](https://user-images.githubusercontent.com/77482972/133105471-727e68e5-f163-4bca-b535-da81685d403f.png)
+![image-20210914234540963](https://user-images.githubusercontent.com/77482972/133280448-121645f1-7061-4d5c-8a15-45ea76cd48bc.png) ![image-20210914234604885](https://user-images.githubusercontent.com/77482972/133280456-aa9f59b1-695b-45df-8212-9572397fc67d.png)
+
+
+
+##### RESULT PAGE
+
+![image-20210914235144262](https://user-images.githubusercontent.com/77482972/133280841-91f8f331-ed93-40e9-9c74-fc3b5ed4f66c.png)![image-20210914235209216](https://user-images.githubusercontent.com/77482972/133280854-aebd63f7-074c-46f6-8227-9bb7d33a389b.png)
+
+
+
+##### DETAIL PAGE
+
+![image-20210914235332876](https://user-images.githubusercontent.com/77482972/133281179-b60a039a-bf49-41a2-9b2a-21978ed5a1b3.png)![image-20210914235348700](https://user-images.githubusercontent.com/77482972/133281185-42748470-1fca-44dc-98f7-ca11e82c37e9.png)
+
+
+
+##### PROFILE PAGE
+
+![image-20210914235403464](https://user-images.githubusercontent.com/77482972/133281191-bab0faef-a07f-4222-b0c7-a68efa536f0b.png)
 
 <br>
 
