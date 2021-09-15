@@ -64,9 +64,11 @@
 
 
 
-##### PROFILE PAGE
+##### PROFILE & SEARCH PAGE
 
-![image-20210914235403464](https://user-images.githubusercontent.com/77482972/133281191-bab0faef-a07f-4222-b0c7-a68efa536f0b.png)
+![image-20210914235403464](https://user-images.githubusercontent.com/77482972/133281191-bab0faef-a07f-4222-b0c7-a68efa536f0b.png)![image-20210915215920935](https://user-images.githubusercontent.com/77482972/133437991-0b2d179e-d12c-483d-af98-a3010501bd53.png)![image-20210915220003373](https://user-images.githubusercontent.com/77482972/133437998-e92a588c-a0aa-42cf-be4d-2781724cecc3.png)
+
+
 
 <br>
 
