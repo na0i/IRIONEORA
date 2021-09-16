@@ -5,6 +5,9 @@ import bs4
 from artifacts.models import Artifact
 from artifacts.serializers import ArtifactSerializer
 
+'''
+test 
+'''
 
 # Django extensions runscript
 def run():
