@@ -31,15 +31,14 @@
 **Back-End**
 
   - Python: 3.8.10
-  - Django
+  - Django: 3.2.7
   - Visual Studio Code
 
 **Front-End**
 
-  - html5, CSS3, JavaScript (ES6)
-  - Vue : 
-  - vuex : 
-  - Node.js : 
+  - html5, SCSS, JavaScript (ES6)
+  - Vue: version 2
+  - Node.js : 14.17.3
   - Visual Studio Code
 
 <br>
@@ -77,7 +76,12 @@
 ### Back
 
 ```
-
+backend
+    ├── accounts
+    ├── artifacts
+    ├── hadoop
+    ├── irioneora
+    └── scripts
 ```
 
 ### Front
