@@ -22,7 +22,7 @@ def get_face_data(image):
     try:
         res = requests.post( API_URL, headers=headers, files=files)
         if res.status_code == 200:
-            return res.text
+            return res.json()
         print( f'fail to get face data. code({res.status_code})')
     except:
         print( 'exception raised to get face data')

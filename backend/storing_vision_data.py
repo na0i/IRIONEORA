@@ -1,8 +1,56 @@
 # 유물 사진 URL을 넣어서 vision API에 적용해보자!
 # CSV 파일로 만들 것!
+
+
+# day1은 4000 row까지 긁었음
+
 from get_vision_data import *
+import pymysql
+import json
 
-IMAGE_URL = 'emuseum.go.kr/openapi/img?serviceKey=Qhwj%2B5KHmC8OENHvRm3La%2FxMxbXlXv7HD6Zkm8mpG%2Fg%2BiVN%2BGffbevfZoVDr9vDzsHjkpwtUkmEh1N%2BjnKKKPWf5FfRhBAYcOLum5fp5Wyjs8C%2FCR%2FHztEnDm%2FjtSOw5v%2FBVwBaOcAw%3D&imageId=ZUdWVk93RzZrbGEzZE9RMHBBU0FvL210c2s0ck5Id2swSnBTenhTV1dwM1k1QW9UcXYwYXdIWEJWMkllUjdwY05rMEZIb25CeVdrQ3RSK1BMM1JGN1g3SS9Ja2YrZURF'
+host = "j5a601.p.ssafy.io"
+user = "irioneora"
+pw = "dlfldhsjfk"
+db = "irioneora"
 
-data = get_vision_data(IMAGE_URL)
-print( data )
+conn = pymysql.connect( host= host, user = user, password = pw, db = db)
+
+sql = "SELECT * FROM artifacts_artifact LIMIT 4000;"
+
+# 쿼리 실행
+curs = conn.cursor()
+curs.execute(sql)
+
+uris = curs.fetchall()
+
+# today's result
+result = []
+
+for i in range(len(uris)):
+    
+    identification_number = uris[i][1]
+    image_uri = uris[i][2]
+
+    print(i)
+    # print(identification_number)
+    # print(image_uri)
+
+    data = get_vision_data(image_uri)
+
+    try:
+        if len(data["result"]["faces"]) == 0:
+            continue
+        else:
+            print(f'i have face. idx{i}')
+            result.append({identification_number: data})
+    except:
+        continue
+
+# json_string = json.dumps(result)
+
+with open('day1.json', 'w') as f:
+    json.dump(result, f)
+
+
+print("Today end!")
+print(len(result))
