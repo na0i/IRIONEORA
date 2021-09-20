@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',  # allauth
 
     # django apps
+    'pages'
     'accounts',
     'artifacts',
 
