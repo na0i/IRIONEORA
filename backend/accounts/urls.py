@@ -1,8 +1,8 @@
 from django.urls import path
 from . import views
 
-app_name = 'accounts'
 
 urlpatterns = [
-    path('test/', views.test, name='test')
+    path('username/', views.username_duplicate_check),
+    path('email/', views.email_duplicate_check)
 ]
