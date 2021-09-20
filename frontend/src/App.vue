@@ -3,6 +3,8 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
+      <h1>안녕안녕</h1>
+    
     </div>
     <router-view/>
   </div>
