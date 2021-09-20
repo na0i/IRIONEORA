@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # allauth
 
     # django apps
     'accounts',
@@ -48,6 +49,12 @@ INSTALLED_APPS = [
     # 3rd party apps
     'drf_yasg',  # for swagger
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'django_extensions'
 ]
 
@@ -130,3 +137,38 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+'''
+vvvvv accounts settings vvvvv 
+'''
+
+AUTH_USER_MODEL = 'accounts.User'
+
+# rest-auth signup serializer
+# 회원가입 시리얼라이저 커스텀
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+# 프로필페이지
+REST_AUTH_SERIALIZERS = {
+    # rest-auth/user/
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailSerializer',
+}
+
+# 시리얼라이저에서 보낸 정보 저장
+ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'
+
+# DRF setting
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # DRF-Token
+    ]
+}
+
+# django.contrib.sites 에서 사용
+SITE_ID = 1
+
+'''
+^^^^^ accounts settings ^^^^^ 
+'''
