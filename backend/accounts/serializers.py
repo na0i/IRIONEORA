@@ -7,9 +7,9 @@ User = get_user_model()
 
 
 class CustomRegisterSerializer(RegisterSerializer):
-    username = serializers.CharField(max_length=10, unique=True)
-    password = serializers.CharField(max_length=20)
-    profile_img = serializers.CharField(required=False, null=True)
+    username = serializers.CharField(max_length=10)
+    email = serializers.EmailField(required=False)
+    profile_img = serializers.CharField(required=False)
 
     def get_cleaned_data(self):
         data_dict = super().get_cleaned_data()

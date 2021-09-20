@@ -15,7 +15,7 @@ db = "irioneora"
 
 conn = pymysql.connect( host= host, user = user, password = pw, db = db)
 
-sql = "select * from artifacts_artifact where id > 9000 limit 1000;"
+sql = "select * from artifacts_artifact where id > 20000 limit 2000;"
 
 # 쿼리 실행
 curs = conn.cursor()
