@@ -2,7 +2,7 @@ from django.db import models
 from artifacts.models import Artifact
 
 # Create your models here.
-class Artifact(Artifact):
+class MainArtifact(Artifact):
     pass
     # identification_number = models.CharField(max_length=100)
     # image_uri = models.TextField()

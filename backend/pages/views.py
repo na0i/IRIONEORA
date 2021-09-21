@@ -1,71 +1,67 @@
+from django.http import response
 from django.shortcuts import get_object_or_404
-from .models import Artifact
-from .serializers import ArtifactSerializer
-from rest_framework import serializers
+from artifacts.models import Artifact
+# from artifacts.serializers import ArtifactSerializer
+# from .serializers import MainArtifactSerializer
 from rest_framework.decorators import api_view 
 from rest_framework.response import Response
-from rest_framework import status
-import random
+# from rest_framework import serializers
+# from rest_framework import status
+# from django.db import models
+
+# sell use
+from urllib.request import urlopen
+import random, requests, json
+import xmltodict
 # from django.contrib.auth import get_user_model
 
 # Create your views here.
 # User = get_user_model()
 
+# constant value
+service_key = 'DLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg=='
+
+#main_page
 @api_view(['GET'])
 def artifact_recommend(request):
-    # 숫자범위를 sql 데이터 마지막으로 바꿔야함 
-    randomNum = random.randrange(1,1000)
-    recomended_artifact = Artifact.objects.filter(identification_number=randomNum)
-    serializer = ArtifactSerializer(recomended_artifact, many=True)
-    return Response(serializer.data)
-       
-    # elif request.method == "POST":
-    #     print(1)
-    #     print(request)
-    #     print(request.data)
-    #     print(2)
-    #     serializer = ReviewSerializer(data = request.data)
-    #     my_user =User.objects.filter(username=request.data["UserName"])
-    #     # print(1)
-    #     # print(request.data)
-    #     print(my_user[0].email)
-    #     if serializer.is_valid(raise_exception=True):
-    #         serializer.save(user=my_user[0], nickname= my_user[0].nickname, username=request.data["UserName"], email=my_user[0].email)
-    #         print(serializer.data)
-    #         return Response(serializer.data, status= status.HTTP_201_CREATED)         
+    #수정 숫자범위를 sql 데이터 마지막으로 바꿔야함
+    # 랜덤 추천 유물 선정
+    random_num = random.randrange(1,100)
+    recommended_artifact = Artifact.objects.filter(id=random_num)
+    recommended_artifact_num = recommended_artifact[0].identification_number
+    
+    # url에서 유물 데이터 수신 후 json 데이터 전송
+    artifact_url = f"http://www.emuseum.go.kr/openapi/relic/detail?serviceKey={service_key}&id={recommended_artifact_num}"
+    url_open = urlopen(artifact_url)
+    response_xml = url_open.read().decode('utf-8')
+    response_dict = xmltodict.parse(response_xml)
+    response_json = json.dumps(response_dict)
 
-# @api_view(['GET', 'PUT', 'DELETE'])
-# def review_detail_or_update_or_delete(request, review_pk):
-#     review = get_object_or_404(Review, pk = review_pk)
+    #수정 vue에 필요한 응답을 만들기
+    return Response(response_json)
 
-#     if request.method == "GET":
-#         serializer = ReviewSerializer(review)
-#         return Response(serializer.data)
+#profile_page
+#수정1 유저정보가 어디 저장되는가? 토큰? 세션?
+#수정1-1 내가 변수로 같이 보낼까?
+#수정1-2 아니면 내가 필터로 찾을까?
+# @api_view(['GET'])
+# def artifact_like(request, user_pk ):
+#     like_artifacts = UserLikeArtifact.objects.filter(user_id = user_pk)
+#     serializer = UserLikeArtifactSerializer(like_artifacts)
+#     return Response(serializer.data)
 
-#     elif request.method == "PUT":
-#         print(111)
-#         serializer = ReviewSerializer(instance = review , data= request.data)
-#         print(serializer)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save(review = review)
-#             return Response(serializer.data)
+# @api_view(['GET'])
+# def artifact_resemble(request, user_pk ):
+#     resemble_artifacts = UserResembleArtifact.objects.filter(user_id = user_pk)
+#     serializer = UserResembleArtifactSerializer(resemble_artifacts)
+#     return Response(serializer.data)
 
-#     elif request.method == "DELETE":
-#         write_user = Review.objects.filter(id=review.pk)
-#         my_user =User.objects.filter(username=request.data["UserName"])
-#         # print(request.data["UserName"])
-#         # print(write_user[0].username)
-#         # print(my_user[0])
-#         if str(my_user[0]) == str(write_user[0].username):
-#             review.delete()
-#             data = {
-#                 "success" : True,
-#                 "message" : "리뷰삭제"
-#             }
-#             return Response(data, status=status.HTTP_204_NO_CONTENT)
-#         else:
-#             data = {
-#                 "success" : False,
-#                 "message" : "리뷰삭제실패"
-#             }
-#             return Response(data)
+# search page
+# @api_view(['POST'])
+# def artifact_search(request, index_word ):
+#     for i in range(0,500):
+#         url = 'http://www.emuseum.go.kr/openapi/relic/list?serviceKey=인증키&name=백제&numOfRows=3&pageNo='+str(i)
+#     searched_artifacts = UserResembleArtifact.objects.filter()
+#     serializer = UserResembleArtifactSerializer(resemble_artifacts)
+#     return Response(serializer.data)
+ 
