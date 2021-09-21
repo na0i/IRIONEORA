@@ -1,4 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
+from rest_framework import serializers
+from rest_framework.decorators import api_view 
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Artifact
 from .serializers import ArtifactSerializer
@@ -6,6 +10,9 @@ from .serializers import ArtifactSerializer
 import csv
 import requests
 import bs4
+
+### import by sell
+import random
 
 
 # 저장 여부 확인
@@ -54,3 +61,23 @@ def get_csv():
                         serializer.save()
 
                     break
+
+
+### made by sell
+service_key = 'SKd2hlziS4ug+UJeVVZqw0EWfwAuspV00Kqp1+r0NssWlBCZU1LQOULGnte7LgkQjRPjKFgIBPZ3xE5VxsGrBg=='
+
+#main_page
+@api_view(['GET'])
+def artifact_recommend(request):
+    #수정 숫자범위를 sql 데이터 마지막으로 바꿔야함 
+    random_num = random.randrange(1,100)
+    recommended_artifact = Artifact.objects.filter(id=random_num)
+    recommended_artifact_num = recommended_artifact[0].identification_number
+
+    #수정 이후service_key와 추천유물넘버를 고려해서 api 보내기
+    # artifact_url = 'http://www.emuseum.go.kr/openapi/relic/detail?serviceKey={service_key}&id={recommended_artifact_num}'
+    # response = requests.get(artifact_url).json()
+    # print(response['params'])
+    
+    #수정 vue에 필요한 응답을 만들기
+    return Response(1)
