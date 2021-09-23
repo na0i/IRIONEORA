@@ -1,12 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Artifact
-from .serializers import ArtifactSerializer
+from .serializers import ArtifactSerializer, ArtifactLikeSerializer
 
+from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+from urllib.request import urlopen
+import json
 import csv
 import requests
 import bs4
-
+import xmltodict
 
 # 저장 여부 확인
 def is_saved(id):
@@ -54,3 +61,40 @@ def get_csv():
                         serializer.save()
 
                     break
+
+
+service_key = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+
+# 유물 상세정보
+@api_view(['GET'])
+def artifact_detail(request, artifact_id):
+    
+    # 유물 상세 정보 가져오기
+    artifact_url = f"http://www.emuseum.go.kr/openapi/relic/detail?serviceKey={service_key}&id={artifact_id}"
+    url_open = urlopen(artifact_url)
+    response_xml = url_open.read().decode('utf-8')
+    response_dict = xmltodict.parse(response_xml)
+    response_json = json.dumps(response_dict)
+
+    #수정 vue에 필요한 응답을 만들기
+    return Response(response_json)
+
+
+# 유물 좋아요
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def artifact_like(request, artifact_pk):
+    artifact = get_object_or_404(Artifact, pk=artifact_pk)
+    user = request.user
+
+    # username: column name
+    # user: user 객체(비로그인시 anonymous)
+    # 알아서 찾아서 넣어주는듯..?
+    if artifact.like_users.filter(username=user).exists():
+        artifact.like_users.remove(user)
+    
+    else:
+        artifact.like_users.add(user)
+    
+    serializer = ArtifactLikeSerializer(artifact)
+    return Response(serializer.data)
