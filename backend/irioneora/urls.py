@@ -22,7 +22,6 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 schema_url_patterns = [
-    path('accounts/', include('allauth.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
 ]
@@ -41,7 +40,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('accounts.urls')),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
 
