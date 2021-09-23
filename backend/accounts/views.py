@@ -1,28 +1,17 @@
-from django.http import HttpResponseRedirect
-from django.utils.datastructures import MultiValueDictKeyError
-from rest_framework.exceptions import NotFound
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from allauth.account.models import EmailConfirmation, EmailConfirmationHMAC
-from django.shortcuts import render
-
-# 이메일 재전송 관련
-from rest_framework.generics import GenericAPIView
-from rest_framework import serializers
-from rest_framework.permissions import (AllowAny)
-from allauth.account.models import EmailAddress
-from django.utils.translation import ugettext_lazy as _
+from rest_framework.decorators import api_view
+from django.shortcuts import render, redirect
+import requests
 
 # 중복확인
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-
-# 이메일 인증 완료시 프론트 메인으로 이동
-def redirect_to_vue(request):
-    return render(request, 'signup_complete.html')
+# 카카오 로그인
+from rest_auth.registration.views import SocialLoginView
+from allauth.socialaccount.providers.kakao import views as kakao_views
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 
 
 # 회원가입시 닉네임 중복 확인
@@ -41,67 +30,62 @@ def username_duplicate_check(request):
     return Response(data=data)
 
 
-# 회원가입시 이메일 중복 확인
-@api_view(['GET'])
-def email_duplicate_check(request):
-    email = request.GET['email']
-    data = {
-        'error': True,
-        'result': '이미 사용중인 이메일입니다.'
-    }
-    if not User.objects.all().filter(email=email):
-        data['error'] = False
-        data['result'] = '사용 가능한 이메일입니다.'
-    return Response(data=data)
+def kakao_get_token(SocialLoginView):
+    adapter_class = kakao_views.KakaoOAuth2Adapter
+    client_class = OAuth2Client
 
 
-class ConfirmEmailView(APIView):
-    permission_classes = [AllowAny]
+# 카카오 로그인
+@api_view(['GET', 'POST'])
+def kakao_login(request):
 
-    def get(self, *args, **kwargs):
-        self.object = confirmation = self.get_object()
-        confirmation.confirm(self.request)
-        # A React Router Route will handle the failure scenario
-        return HttpResponseRedirect('/login/success/')
+    if request.method == 'POST':
+        pass
 
-    def get_object(self, queryset=None):
-        key = self.kwargs['key']
-        email_confirmation = EmailConfirmationHMAC.from_key(key)
-        if not email_confirmation:
-            if queryset is None:
-                queryset = self.get_queryset()
-            try:
-                email_confirmation = queryset.get(key=key.lower())
-            except EmailConfirmation.DoesNotExist:
-                # A React Router Route will handle the failure scenario
-                return HttpResponseRedirect('/login/failure/')
-        return email_confirmation
+    REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
+    REDIRECT_URI = 'http://localhost:8000/accounts/kakao/login/'
 
-    def get_queryset(self):
-        qs = EmailConfirmation.objects.all_valid()
-        qs = qs.select_related("email_address__user")
-        return qs
+    # 인증 코드 요청 성공
+    if request.GET.get('code'):
+        print('get code success')
+        print(request.GET['code'])
+        code = request.GET.get('code')
+
+        # 토큰 요청
+        get_token = f'https://kauth.kakao.com/oauth/token'
+        params = {
+            'grant_type': 'authorization_code',
+            'client_id': REST_API_KEY,
+            'redirect_uri': REDIRECT_URI,
+            'code': code,
+        }
+        token_res = requests.post(get_token, params=params)
+        print(token_res.json())
+        access_token = token_res.json()['access_token']
+
+        # 프로필 요청
+        get_profile = f'https://kapi.kakao.com/v2/user/me'
+        header = {
+            'Authorization': f'Bearer {access_token}'
+        }
+
+        profile_res = requests.get(get_profile, headers=header)
+        print(profile_res.json())
+
+        # 로그인
+        if User.objects.all().filter(username=profile_res.json()['id']):
+            print('need login')
+        # 회원가입
+        else:
+            print('need signup')
 
 
-# 이메일 재전송 기능
-class ResendEmailVerificationSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+
+    # 카카오 로그인 인증 코드 요청
+    else:
+        kakao_redirect = f'https://kauth.kakao.com/oauth/authorize?client_id={REST_API_KEY}&redirect_uri={REDIRECT_URI}&response_type=code'
+        return redirect(kakao_redirect)
 
 
-class ResendEmailVerification(GenericAPIView):
-    serializer_class = ResendEmailVerificationSerializer
-    permission_classes = (AllowAny,)
-    allowed_methods = ('POST', 'OPTIONS', 'HEAD')
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        email = serializer.data['email']
 
-        try:
-            email_address = EmailAddress.objects.get(email__exact=email, verified=False)
-            email_address.send_confirmation(self.request, True)
-        except EmailAddress.DoesNotExist:
-            pass
-
-        return Response({'detail': _('Verification e-mail sent.')})
