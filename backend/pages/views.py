@@ -1,5 +1,6 @@
 # from django.http import response
 # from django.shortcuts import get_object_or_404
+import re
 from artifacts.models import Artifact
 # from artifacts.serializers import ArtifactSerializer
 # from .serializers import MainArtifactSerializer
@@ -13,11 +14,14 @@ from rest_framework.response import Response
 from urllib.request import urlopen
 import random, requests, json
 import xmltodict
+import pprint
+import bs4
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # constant value
-service_key = 'DLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg=='
+service_key = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw==',
+# service_key = 'javtmpZuM82GShOc+dJyc3k5bo3kZ3dGF/eM1wUyCvvLXsbGG/sQz5gR0jfk2hH5OmBCVBPxBl5NqLdcHYv/Ew=='
 
 #main_page 1차 완성
 @api_view(['GET'])
@@ -38,53 +42,6 @@ def artifact_recommend(request):
     #수정 vue에 필요한 응답을 만들기
     return Response(response_json)
 
-# search page 미완성
-#수정: 건의 db에 리스트 저장 vs list to dict 변환작업
-#수정: 결과 내 재검색 vs 다중검색 어떻게 할까요????!?
-#수정: 예지님과 만든곳에서 어떻게 했지?
-@api_view(['GET'])
-def artifact_search(request, index_word ):
-    # 전체 검색수 파악 및 변수 설정
-    url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&name={index_word}&numOfRows=1&pageNo=1'
-    response = requests.get(url).content
-    response_dict = xmltodict.parse(response)
-    # ans_json = json.dumps(ans_dict)
-    total_count = int(response_dict["result"]["totalCount"]) // 100
-    last_count = int(response_dict["result"]["totalCount"]) % 100
-
-    # 이름에 해당 키워드가 들어간 유물 찾기
-    search_list = []
-    for i in range(1,total_count+2):
-        url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&name={index_word}&numOfRows=100&pageNo={i}'
-        print(url)
-        response = requests.get(url).content
-        response_dict = xmltodict.parse(response)
-        print(response_dict["result"]["list"]["data"][1]["item"][6])
-        if i == total_count+1:
-            print("pass")
-            for j in range(0,last_count):
-        
-                if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
-                    print("skip")
-                else:
-                    search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
-                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][-17]["@value"])
-                    # print("add")
-        else:
-            # 왜 이런 응답이 나올까?
-            for j in range(0,100):
-                if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
-                    print("skip")
-                else:
-                    search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
-                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][-17]["@value"])
-                    # print("add")
-                    
-    # from collections import OrderedDict
-    # dict(OrderedDict(val))
-
-    return Response(search_list)
-
 @api_view(['GET'])
 def artifact_detail(request,id_num):
     
@@ -97,7 +54,125 @@ def artifact_detail(request,id_num):
 
     #수정 vue에 필요한 응답을 만들기
     return Response(response_json)
-    # return Response(response_dict)
+
+# search page 미완성
+#수정: 건의 db에 리스트 저장 vs list to dict 변환작업
+@api_view(['GET'])
+def artifact_search_index_word(request, index_word):
+    # 전체 검색수 파악 및 변수 설정
+    url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&index_word={index_word}&numOfRows=1&pageNo=1'
+    response = requests.get(url).content
+    response_dict = xmltodict.parse(response)
+    # ans_json = json.dumps(ans_dict)
+    total_count = int(response_dict["result"]["totalCount"]) // 100
+    last_count = int(response_dict["result"]["totalCount"]) % 100
+
+    # 이름에 해당 키워드가 들어간 유물 찾기
+    search_list = []
+    image_uri = ""
+    id_num = ""
+    name = ""
+    
+    for i in range(1,total_count+2):
+    # for i in range(1,2):
+        url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&name={index_word}&numOfRows=100&pageNo={i}'
+        # print(url)
+        response = requests.get(url)
+        response_dict = bs4.BeautifulSoup(response.content, 'html.parser')
+        # print("c")
+        pprint.pprint(response_dict)
+        # for item in response_dict.findAll('item'):
+        #     print(item)
+        
+        for data in response_dict.findAll('data'):
+            print("a")
+            for item in data.findAll('item'):
+                if item['key'] == 'imgUri':
+                    image_uri = item['value']
+                elif item['key'] == 'id':
+                    id_num = item['value']
+                elif item['key'] == 'nameKr':
+                    name = item['value']
+                print("b")
+            search_list.append([image_uri,id_num,name])
+
+        # print(search_list)
+        # response_dict = xmltodict.parse(response)
+        # print(response["item"])
+        # if i == total_count+1:
+        #     print("pass")
+        #     # for j in range(0,last_count):
+        
+        #     #     if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
+        #     #         print("skip")
+        #     #     else:
+        #     #         search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
+        #     #         # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
+        #     #         # print("add")
+        # else:
+        #     # 왜 이런 응답이 나올까?
+        #     for j in range(0,10):
+        #         if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
+        #             print("skip")
+        #         else:
+        #             item = response_dict["result"]["list"]["data"][j]
+        #             if item['key'] == 'id':
+        #                 search_list.append(item['value'])
+
+                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
+                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
+                    # print("add")
+                    
+    # from collections import OrderedDict
+    # print(type(response_dict["result"]["list"]["data"][0]))
+    # r = response_dict["result"]["list"]["data"][0]
+    # s =dict(OrderedDict(r))
+    # print(s["item"])
+    # print(type(s["item"]))
+    return Response(1)
+
+@api_view(['GET'])
+def artifact_search_filter(request,nationalityName2,purposeName2 ):
+    # 전체 검색수 파악 및 변수 설정
+    url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&purposeName2={purposeName2}&nationalityName2={nationalityName2}&numOfRows=1&pageNo=1'
+    response = requests.get(url).content
+    response_dict = xmltodict.parse(response)
+    # ans_json = json.dumps(ans_dict)
+    total_count = int(response_dict["result"]["totalCount"]) // 100
+    last_count = int(response_dict["result"]["totalCount"]) % 100
+
+    # 이름에 해당 키워드가 들어간 유물 찾기
+    search_list = []
+    for i in range(1,total_count+2):
+        url =f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&purposeName2={purposeName2}&nationalityName2={nationalityName2}&numOfRows=100&pageNo={i}'
+        print(url)
+        response = requests.get(url).content
+        response_dict = xmltodict.parse(response)
+        print(response_dict["result"]["list"]["data"][1]["item"][6])
+        if i == total_count+1:
+            print("pass")
+            for j in range(0,last_count):
+        
+                if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
+                    print("skip")
+                else:
+                    item = response_dict["result"]["list"]["data"][j]["item"]
+                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
+                    # print("add")
+        else:
+            # 왜 이런 응답이 나올까?
+            for j in range(0,100):
+                if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
+                    print("skip")
+                else:
+                    search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
+                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
+                    # print("add")
+                    
+    # from collections import OrderedDict
+    # dict(OrderedDict(val))
+
+    return Response(search_list)
 
 
 #profile_page
