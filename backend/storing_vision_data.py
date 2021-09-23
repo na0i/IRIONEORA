@@ -15,7 +15,7 @@ db = "irioneora"
 
 conn = pymysql.connect( host= host, user = user, password = pw, db = db)
 
-sql = "SELECT * FROM artifacts_artifact LIMIT 4000;"
+sql = "select * from artifacts_artifact where id > 16000 limit 4000;"
 
 # 쿼리 실행
 curs = conn.cursor()
@@ -48,7 +48,7 @@ for i in range(len(uris)):
 
 # json_string = json.dumps(result)
 
-with open('day1.json', 'w') as f:
+with open('16000to20000.json', 'w') as f:
     json.dump(result, f)
 
 
