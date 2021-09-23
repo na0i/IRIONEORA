@@ -81,7 +81,6 @@ def artifact_detail(request, artifact_id):
 
 
 # 유물 좋아요
-# 로그인한 유저만
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def artifact_like(request, artifact_pk):
