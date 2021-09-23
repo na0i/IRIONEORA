@@ -13,7 +13,7 @@ def get_image_from_url(url):
     return None
 
 def get_face_data(image):
-    API_KEY= '3ea7603f345b5f0e692c85f233e79d02'
+    API_KEY= '67852745621896a093fa2abcffbd1275'
     API_URL = 'https://dapi.kakao.com/v2/vision/face/detect'
 
     headers = { 'Authorization': 'KakaoAK ' + API_KEY }

@@ -15,7 +15,7 @@ db = "irioneora"
 
 conn = pymysql.connect( host= host, user = user, password = pw, db = db)
 
-sql = "select * from artifacts_artifact where id > 16000 limit 4000;"
+sql = "select * from artifacts_artifact where id > 20000 limit 2000;"
 
 # 쿼리 실행
 curs = conn.cursor()
@@ -27,7 +27,7 @@ uris = curs.fetchall()
 result = []
 
 for i in range(len(uris)):
-    
+
     identification_number = uris[i][1]
     image_uri = uris[i][2]
 
