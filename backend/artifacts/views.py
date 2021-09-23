@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import Artifact
-from .serializers import ArtifactSerializer, ArtifactLikeSerializer
+from .serializers import ArtifactSerializer, ArtifactLikeSerializer, ArtifactResembleSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
@@ -97,4 +97,21 @@ def artifact_like(request, artifact_pk):
         artifact.like_users.add(user)
     
     serializer = ArtifactLikeSerializer(artifact)
+    return Response(serializer.data)
+
+
+# 닮은 유물 저장
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def artifact_resemble(request, artifact_pk):
+    artifact = get_object_or_404(Artifact, pk=artifact_pk)
+    user = request.user
+
+    if artifact.resemble_users.filter(username=user).exists():
+        pass
+    
+    else:
+        artifact.resemble_users.add(user)
+    
+    serializer = ArtifactResembleSerializer(artifact)
     return Response(serializer.data)
