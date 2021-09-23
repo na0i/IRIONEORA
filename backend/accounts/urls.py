@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns = [
     path('username/', views.username_duplicate_check),
-    # path('kakao/login/callback/', ),
+    path('kakao/login/', views.kakao_login),
     path('', include('allauth.urls')),
 ]

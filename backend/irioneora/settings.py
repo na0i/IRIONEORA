@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
     'django_extensions'
 ]
 
@@ -157,7 +158,10 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 REST_AUTH_SERIALIZERS = {
     # rest-auth/user/
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailSerializer',
+    'LOGIN_SERIALIZER': 'accounts.serializers.CustomLoginSerializer',
 }
+
+
 
 # 시리얼라이저에서 보낸 정보 저장
 ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'
