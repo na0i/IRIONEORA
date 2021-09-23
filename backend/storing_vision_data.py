@@ -48,7 +48,8 @@ for i in range(len(uris)):
 
 # json_string = json.dumps(result)
 
-with open('7000.json', 'w') as f:
+
+with open('16000to20000.json', 'w') as f:
     json.dump(result, f)
 
 
