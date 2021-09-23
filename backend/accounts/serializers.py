@@ -14,7 +14,6 @@ class CustomRegisterSerializer(RegisterSerializer):
 
     def get_cleaned_data(self):
         data_dict = super().get_cleaned_data()
-        print(data_dict)
         data_dict['nickname'] = self.validated_data.get('nickname', '')
         data_dict['profile_img'] = self.validated_data.get('profile_img', '')
         return data_dict
