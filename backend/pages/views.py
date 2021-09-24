@@ -20,7 +20,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # constant value
-service_key = "dDLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg=="
+service_key = "DLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg=="
 
 #main_page 1차 완성
 @api_view(['GET'])
@@ -54,31 +54,25 @@ def artifact_detail(request,id_num):
     #수정 vue에 필요한 응답을 만들기
     return Response(response_json)
 
-# search page 미완성
+# search page 완성
 @api_view(['GET'])
 def artifact_search_index_word(request, index_word):
     # 전체 검색수 파악 및 변수 설정
-    url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&index_word={index_word}&numOfRows=1&pageNo=1'
+    url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&indexWord={index_word}&numOfRows=1&pageNo=1'
     response = requests.get(url).content
     response_dict = xmltodict.parse(response)
-    # ans_json = json.dumps(ans_dict)
     total_count = int(response_dict["result"]["totalCount"]) // 100
-    last_count = int(response_dict["result"]["totalCount"]) % 100
 
     # 이름에 해당 키워드가 들어간 유물 찾기
     search_list = []
     image_uri = ""
     id_num = ""
     name = ""
-    
     for i in range(1,total_count+2):
-    # for i in range(1,2):
-        url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&name={index_word}&numOfRows=100&pageNo={i}'
-        # print(url)
+        url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&indexWord={index_word}&numOfRows=100&pageNo={i}'
         response = requests.get(url)
         response_dict = bs4.BeautifulSoup(response.content, 'html.parser')
-        # print(response_dict)
-        
+
         for data in response_dict.findAll('data'):
             for item in data.findAll('item'):
                 if item['key'] == 'id':
@@ -88,7 +82,6 @@ def artifact_search_index_word(request, index_word):
                 elif item['key'] == 'imgUri':
                     image_uri = item['value']
             search_list.append([image_uri,id_num,name])
-        print(1)
 
     return Response(search_list)
 
@@ -98,35 +91,27 @@ def artifact_search_filter(request,nationalityName2,purposeName2 ):
     url = f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&purposeName2={purposeName2}&nationalityName2={nationalityName2}&numOfRows=1&pageNo=1'
     response = requests.get(url).content
     response_dict = xmltodict.parse(response)
-    # ans_json = json.dumps(ans_dict)
     total_count = int(response_dict["result"]["totalCount"]) // 100
-    last_count = int(response_dict["result"]["totalCount"]) % 100
+
 
     # 이름에 해당 키워드가 들어간 유물 찾기
     search_list = []
+    image_uri = ""
+    id_num = ""
+    name = ""
     for i in range(1,total_count+2):
         url =f'http://www.emuseum.go.kr/openapi/relic/list?serviceKey={service_key}&purposeName2={purposeName2}&nationalityName2={nationalityName2}&numOfRows=100&pageNo={i}'
-        print(url)
-        response = requests.get(url).content
-        response_dict = xmltodict.parse(response)
-        print(response_dict["result"]["list"]["data"][1]["item"][6])
-        if i == total_count+1:
-            print("pass")
-            for j in range(0,last_count):
-        
-                if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
-                    print("skip")
-                else:
-                    item = response_dict["result"]["list"]["data"][j]["item"]
-                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
-                    # print("add")
-        else:
-            # 왜 이런 응답이 나올까?
-            for j in range(0,100):
-                if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
-                    print("skip")
-                else:
-                    search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
-                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
-                    # print("add")
+        response = requests.get(url)
+        response_dict = bs4.BeautifulSoup(response.content, 'html.parser')
+
+        for data in response_dict.findAll('data'):
+            for item in data.findAll('item'):
+                if item['key'] == 'id':
+                    id_num = item['value']
+                elif item['key'] == 'nameKr':
+                    name = item['value']
+                elif item['key'] == 'imgUri':
+                    image_uri = item['value']
+            search_list.append([image_uri,id_num,name])
+
     return Response(search_list)
