@@ -74,6 +74,7 @@ def kakao_login(request):
             'access_token': access_token
         }
         accept = requests.post(f'http://localhost:8000/accounts/kakao/user/', data=data)
+        print(accept.json())
 
         # 로그인
         print(SocialAccount.objects.all().values())
@@ -104,7 +105,7 @@ def kakao_login(request):
         # 정보 업데이트
         user.nickname = profile_res.json()['properties'].get('nickname', '')
         user.profile_img = profile_res.json()['properties'].get('profile_image', '')
-        user.email = profile_res.json()['kakao_account']['profile'].get('email', '')
+        user.email = profile_res.json()['kakao_account'].get('email', '')
         user.save()
         return Response(accept.json())
 
