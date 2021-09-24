@@ -20,8 +20,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # constant value
-service_key = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw==',
-# service_key = 'javtmpZuM82GShOc+dJyc3k5bo3kZ3dGF/eM1wUyCvvLXsbGG/sQz5gR0jfk2hH5OmBCVBPxBl5NqLdcHYv/Ew=='
+service_key = "dDLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg=="
 
 #main_page 1차 완성
 @api_view(['GET'])
@@ -56,7 +55,6 @@ def artifact_detail(request,id_num):
     return Response(response_json)
 
 # search page 미완성
-#수정: 건의 db에 리스트 저장 vs list to dict 변환작업
 @api_view(['GET'])
 def artifact_search_index_word(request, index_word):
     # 전체 검색수 파악 및 변수 설정
@@ -79,57 +77,20 @@ def artifact_search_index_word(request, index_word):
         # print(url)
         response = requests.get(url)
         response_dict = bs4.BeautifulSoup(response.content, 'html.parser')
-        # print("c")
-        pprint.pprint(response_dict)
-        # for item in response_dict.findAll('item'):
-        #     print(item)
+        # print(response_dict)
         
         for data in response_dict.findAll('data'):
-            print("a")
             for item in data.findAll('item'):
-                if item['key'] == 'imgUri':
-                    image_uri = item['value']
-                elif item['key'] == 'id':
+                if item['key'] == 'id':
                     id_num = item['value']
                 elif item['key'] == 'nameKr':
                     name = item['value']
-                print("b")
+                elif item['key'] == 'imgUri':
+                    image_uri = item['value']
             search_list.append([image_uri,id_num,name])
+        print(1)
 
-        # print(search_list)
-        # response_dict = xmltodict.parse(response)
-        # print(response["item"])
-        # if i == total_count+1:
-        #     print("pass")
-        #     # for j in range(0,last_count):
-        
-        #     #     if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
-        #     #         print("skip")
-        #     #     else:
-        #     #         search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
-        #     #         # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
-        #     #         # print("add")
-        # else:
-        #     # 왜 이런 응답이 나올까?
-        #     for j in range(0,10):
-        #         if response_dict["result"]["resultMsg"] == "정보 조회에 실패하였습니다.":
-        #             print("skip")
-        #         else:
-        #             item = response_dict["result"]["list"]["data"][j]
-        #             if item['key'] == 'id':
-        #                 search_list.append(item['value'])
-
-                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
-                    # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
-                    # print("add")
-                    
-    # from collections import OrderedDict
-    # print(type(response_dict["result"]["list"]["data"][0]))
-    # r = response_dict["result"]["list"]["data"][0]
-    # s =dict(OrderedDict(r))
-    # print(s["item"])
-    # print(type(s["item"]))
-    return Response(1)
+    return Response(search_list)
 
 @api_view(['GET'])
 def artifact_search_filter(request,nationalityName2,purposeName2 ):
@@ -168,26 +129,4 @@ def artifact_search_filter(request,nationalityName2,purposeName2 ):
                     search_list.append(response_dict["result"]["list"]["data"][j]["item"][-1]["@value"])
                     # search_list.append(response_dict["result"]["list"]["data"][j]["item"][6]["@value"])
                     # print("add")
-                    
-    # from collections import OrderedDict
-    # dict(OrderedDict(val))
-
     return Response(search_list)
-
-
-#profile_page
-#수정1 유저정보가 어디 저장되는가? 토큰? 세션?
-#수정1-1 내가 변수로 같이 보낼까?
-#수정1-2 아니면 내가 필터로 찾을까?
-#수정1-3 좋아요 테이블이 어떻게 구성되지?
-# @api_view(['GET'])
-# def artifact_like(request, user_pk ):
-#     like_artifacts = UserLikeArtifact.objects.filter(user_id = user_pk)
-#     serializer = UserLikeArtifactSerializer(like_artifacts)
-#     return Response(serializer.data)
-
-# @api_view(['GET'])
-# def artifact_resemble(request, user_pk ):
-#     resemble_artifacts = UserResembleArtifact.objects.filter(user_id = user_pk)
-#     serializer = UserResembleArtifactSerializer(resemble_artifacts)
-#     return Response(serializer.data)
