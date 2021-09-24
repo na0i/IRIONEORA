@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import requests
 
 # 중복확인
@@ -12,6 +12,7 @@ User = get_user_model()
 from rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.kakao import views as kakao_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.models import SocialAccount
 
 
 # 회원가입시 닉네임 중복 확인
@@ -30,7 +31,7 @@ def username_duplicate_check(request):
     return Response(data=data)
 
 
-def kakao_get_token(SocialLoginView):
+class KakaoAccountsLogin(SocialLoginView):
     adapter_class = kakao_views.KakaoOAuth2Adapter
     client_class = OAuth2Client
 
@@ -38,9 +39,6 @@ def kakao_get_token(SocialLoginView):
 # 카카오 로그인
 @api_view(['GET', 'POST'])
 def kakao_login(request):
-
-    if request.method == 'POST':
-        pass
 
     REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
     REDIRECT_URI = 'http://localhost:8000/accounts/kakao/login/'
@@ -72,14 +70,43 @@ def kakao_login(request):
         profile_res = requests.get(get_profile, headers=header)
         print(profile_res.json())
 
+        data = {
+            'access_token': access_token
+        }
+        accept = requests.post(f'http://localhost:8000/accounts/kakao/user/', data=data)
+
         # 로그인
-        if User.objects.all().filter(username=profile_res.json()['id']):
-            print('need login')
+        print(SocialAccount.objects.all().values())
+        print(SocialAccount.objects.all().filter(uid=13))
+        social_user = SocialAccount.objects.all().filter(uid=profile_res.json()['id'])
+        print(social_user)
+        # if not social_user:
+        #     print('already in')
+        #     user = get_object_or_404(User, i)
+        #     print(accept.json())
+        #     print(accept.json()['key'])
+        #     return Response(accept.json())
         # 회원가입
-        else:
-            print('need signup')
+        # else:
+        #     print('need signup')
+        #     accept = requests.post(f'http://localhost:8000/accounts/kakao/user/', data=data)
+        #     print(accept)
+        #     print(accept.json())
 
-
+        print(social_user.values())
+        print(social_user[0])
+        user = get_object_or_404(User, id=social_user.values()[0]['user_id'])
+        print('----------')
+        print(user.username)
+        print(user.email)
+        print(profile_res.json())
+        print(profile_res.json()['properties'].get('profile_images', ''))
+        # 정보 업데이트
+        user.nickname = profile_res.json()['properties'].get('nickname', '')
+        user.profile_img = profile_res.json()['properties'].get('profile_image', '')
+        user.email = profile_res.json()['kakao_account']['profile'].get('email', '')
+        user.save()
+        return Response(accept.json())
 
     # 카카오 로그인 인증 코드 요청
     else:
