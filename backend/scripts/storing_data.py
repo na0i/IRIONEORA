@@ -15,6 +15,8 @@ def run():
                'LV9sokurL8kYjvdTGXfxBvus+4yck/HDl0a9/mzdvKJh0HwM0Z/W9YIPN3FT1yk0ki/r0sFn3wFfkN7u3qMazw==',
                'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw==',
                'D/3LM/MOiKLwT/BfzNrt4Uv6ItO4Lzcvl4N/g7GkP6U3buUdSei4pY+gDO/YVovYfFq9tRdvPLY+VqzYDkfR7w==',
+               'javtmpZuM82GShOc+dJyc3k5bo3kZ3dGF/eM1wUyCvvLXsbGG/sQz5gR0jfk2hH5OmBCVBPxBl5NqLdcHYv/Ew==',
+               'aEN8Ldpt09YQ8Cc/V7OWiDn89HI5wrT7V2fhm+4XB8YKqvtBGqFFY9z3PTkplks3Azsz8d1y+yjuy1r79CYKYg==',
                ]
 
     for key in API_KEY:
@@ -22,7 +24,7 @@ def run():
         with open('scripts/국립중앙박물관_전국 박물관 유물정보_20190920..csv', encoding='cp949') as f:
             data = csv.reader(f)
             for line in data:
-                if line[5] == '문화예술' or line[5] == '종교신앙':
+                if line[5] == '종교신앙':
                     print(line)
                     id = line[0]
                     if not Artifact.objects.all().filter(identification_number=id):

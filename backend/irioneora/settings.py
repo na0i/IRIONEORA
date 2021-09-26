@@ -28,7 +28,9 @@ SECRET_KEY = 'django-insecure-u(+tceq^_7a$*$jy&ia)=$p3k@yfa3os1)r#eu)^c_@%kz4rgi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['j5a601.p.ssafy.io']
+ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
+                 'localhost',
+                 '127.0.0.1']
 
 
 # Application definition
@@ -40,14 +42,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # allauth
 
     # django apps
+    'pages',
     'accounts',
     'artifacts',
 
     # 3rd party apps
     'drf_yasg',  # for swagger
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.kakao',
     'django_extensions'
 ]
 
@@ -110,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -130,3 +141,41 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+'''
+vvvvv accounts settings vvvvv 
+'''
+
+AUTH_USER_MODEL = 'accounts.User'
+
+# rest-auth signup serializer
+# 회원가입 시리얼라이저 커스텀
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+}
+
+# 프로필페이지
+REST_AUTH_SERIALIZERS = {
+    # rest-auth/user/
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailSerializer',
+    'LOGIN_SERIALIZER': 'accounts.serializers.CustomLoginSerializer',
+}
+
+
+
+# 시리얼라이저에서 보낸 정보 저장
+ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'
+
+# DRF setting
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # DRF-Token
+    ]
+}
+
+# django.contrib.sites 에서 사용
+SITE_ID = 1
+
+'''
+^^^^^ accounts settings ^^^^^ 
+'''
