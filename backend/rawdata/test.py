@@ -1,6 +1,6 @@
 import json
-import sys
 import math
+import numpy as np
 
 FACE_KEYS = ['left_eyebrow', 'right_eyebrow', 'left_eye','right_eye', 'nose', 'lip', 'jaw' ]
 
@@ -46,26 +46,31 @@ def get_distance( face_a, face_b):
         y = features_a[i][1] - features_b[i][1]
         area = features_a[i][2] - features_b[i][2]
         dis += math.sqrt( x*x + y*y + area*area )
+        #dis += math.sqrt( x*x + y*y)
     
     return dis
 
-with open('sample.json', 'r') as f:
+with open('sample_jw.json', 'r') as f:
     sample_faces = get_faces_from_kakao_response(json.load(f))
 
-print(sample_faces)
+#print(sample_faces)
 sample = sample_faces[0]
 
-with open('4000.json','r') as f:
-    data = json.load(f)
-    nearest = 999
-    nearest_key = []
-    for entry in data:
-        for k, v in entry.items():
-            faces = get_faces_from_kakao_response(v)
-            for i in range(len(faces)):
-                dis = get_distance(sample, faces[i])
-                if dis > 0 and dis < nearest:
-                    nearest = dis
-                    nearest_key = [ k, i]
-    
-    print(nearest,nearest_key)
+def test(fn):
+    with open(fn,'r') as f:
+        data = json.load(f)
+        dist_dict = {}
+        for entry in data:
+            for k, v in entry.items():
+                faces = get_faces_from_kakao_response(v)
+                for i in range(len(faces)):
+                    dis = get_distance(sample, faces[i])
+                    if dis > 0:
+                        dist_dict[ dis ] = (k,i)
+        arr = np.array(list(dist_dict.keys()))
+        print( f'mean: {np.mean(arr)}, min:{np.min(arr)}, max:{np.max(arr)}, std:{np.std(arr)}')
+        print(dist_dict[np.min(arr)])
+
+test('test_faces.json')
+test('test_faces_suji.json')
+test('test_faces_soonjae.json')
