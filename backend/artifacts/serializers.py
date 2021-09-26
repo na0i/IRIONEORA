@@ -1,5 +1,5 @@
+from django.db.models import fields
 from rest_framework import serializers
-
 from .models import Artifact
 
 
@@ -10,3 +10,15 @@ class ArtifactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artifact
         fields = '__all__'
+
+
+class ArtifactLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Artifact
+        fields = ('like_users', )
+
+
+class ArtifactResembleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Artifact
+        fields = ('resemble_users', )
