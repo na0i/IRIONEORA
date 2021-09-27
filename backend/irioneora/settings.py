@@ -30,7 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
                  'localhost',
-                 'localhost:8080/'
+                 'localhost:8080/',
                  '127.0.0.1']
 # CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
