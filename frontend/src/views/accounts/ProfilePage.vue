@@ -25,7 +25,7 @@ export default {
   created() {
     accountsApi.requestProfile()
       .then(res =>
-          this.$store.dispatch('setPropfileInfo', res.data)
+          this.$store.dispatch('setProfileInfo', res.data)
       )
   }
   // navigation guard
