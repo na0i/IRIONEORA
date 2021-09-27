@@ -21,7 +21,6 @@ export default {
   },
   methods: {
     fetchDetailInfo() {
-      console.log(this.$route.params.artifactId)
       axios({
         url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}`,
         method: 'get',
@@ -29,16 +28,13 @@ export default {
       .then((res) => {
         console.log(res.data)
         this.detailInfo = res.data
-        console.log(this.detailInfo[0][1])
       })
       .catch((err) => console.log(err))
     },
   },
   computed: {
-
   },
   created() {
-    console.log('생성')
     this.fetchDetailInfo();
   }
 }

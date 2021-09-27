@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+from rest_framework import serializers
 from rest_framework.serializers import Serializer
 
 from .models import Artifact
-from .serializers import ArtifactSerializer, ArtifactLikeSerializer, ArtifactResembleSerializer
+from .serializers import ArtifactSerializer, ArtifactLikeSerializer, ArtifactResembleSerializer, ArtifactDetailSerializer
 
 from rest_framework.decorators import api_view
 from rest_framework.decorators import permission_classes
@@ -65,21 +66,72 @@ def get_csv():
                     break
 
 
-service_key = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
-
 # 유물 상세정보
 @api_view(['GET'])
 def artifact_detail(request, artifact_id):
     
-    # 유물 상세 정보 가져오기
-    artifact_url = f"http://www.emuseum.go.kr/openapi/relic/detail?serviceKey={service_key}&id={artifact_id}"
-    url_open = urlopen(artifact_url)
-    response_xml = url_open.read().decode('utf-8')
-    response_dict = xmltodict.parse(response_xml)
-    response_json = json.dumps(response_dict)
+    artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
+    API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+    params = {'serviceKey': API_KEY, 'id': artifact_id}
+    
+    raw_data = requests.get(artifact_url, params=params)
+    pretty_data = bs4.BeautifulSoup(raw_data.content, 'html.parser')    
 
-    #수정 vue에 필요한 응답을 만들기
-    return Response(response_json)
+    # 초기화 설정 해주지 않으면
+    # UnboundLocalError: local variable 'desc' referenced before assignment 에러를 마주하게 된다.
+    data = {
+        'identification_number': artifact_id,
+        'artifact_name': '',
+        'artifact_size': '',
+        'artifact_author': '',
+        'description': '',
+        'museum_name': '',
+        'index_words': '',
+        'nationality_name': '',
+        'image_uri': '',
+    }
+
+    # 반복문 순회하며 해당 item의 key값에 따라 덮어씌우기
+    for item in pretty_data.find_all('item'):
+        if item.get('key') == "name":
+            data['artifact_name'] = item.get('value')
+        
+        if item.get('key') == "sizeInfo":
+            data['artifact_size'] = item.get('value')
+        
+        if item.get('key') == "author":
+            data['artifact_author'] = item.get('value')
+        
+        if item.get('key') == "desc":
+            data['description'] = item.get('value')
+        
+        if item.get('key') == "museumName2":
+            data['museum_name'] = item.get('value')
+
+        if item.get('key') == "indexWord":
+            data['index_words'] = item.get('value')
+
+        if item.get('key') == "nationalityName2":    
+            data['nationality_name'] = item.get('value')
+
+        if item.get('key') == "imgUri":
+            data['image_uri'] = item.get('value')
+        
+
+    split_artifact_img = list(data['image_uri'].partition('/'))
+
+    for i in range(1, len(split_artifact_img)):
+        artifact_img_uri = 'www.emuseum.go.kr/' + split_artifact_img[i]
+
+    data['image_uri'] = artifact_img_uri
+
+    serializer = ArtifactDetailSerializer(data=data)
+    if serializer.is_valid(raise_exception=True):
+        return Response(serializer.data)
+    else:
+        error_data = {'message': 'error'}
+        return Response(error_data)
+
 
 
 # 유물 좋아요
