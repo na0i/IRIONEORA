@@ -1,4 +1,5 @@
 const state = {
+  // 프로필
   profileInfo: {
     username: '',
     nickname: '',
@@ -27,7 +28,7 @@ const mutations = {
   }
 }
 const actions = {
-  setPropfileInfo({commit}, profile) {
+  setProfileInfo({commit}, profile) {
     commit('SET_PROFILE_INFO', profile)
   }
 }
