@@ -1,9 +1,10 @@
 #card-thumbnail {
   background-color: aliceblue;
-  width: 30%;
-  padding-top: 30%;
+  width: 100%;
+  padding-top: 100%;
   position: relative;
   margin: 8px 0;
+  //margin-left: calc((100% - 40px) * 0.03);
 
   img {
     position: absolute;
