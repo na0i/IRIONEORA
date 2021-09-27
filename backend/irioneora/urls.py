@@ -25,6 +25,10 @@ from drf_yasg import openapi
 schema_url_patterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
+    path('artifacts/', include('artifacts.urls')),
+    path('pages/', include('pages.urls')),
 ]
 
 schema_view = get_schema_view(
