@@ -30,15 +30,11 @@ import NavBar from './components/common/NavBar.vue'
   right: 0;
   margin: 0 auto;
 
-  /* 임시로 가로세로 구분선 하나 그을게요.. */
+  /* 임시로 구분선 하나 그을게요.. */
   border: 1px solid ivory;
 
+  font-family: 'Noto Serif KR', serif;
 
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
 #app-nav {

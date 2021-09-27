@@ -1,20 +1,28 @@
 <template>
   <div>
     <h1>ProfilePage</h1>
-    <CardThumbnail>
 
-    </CardThumbnail>
+    <div class="router-wrap">
+      <router-link to="/profile" class="router-button">
+        <Button value="좋아하는 문화재"></Button>
+      </router-link>
+      <router-link to="/profile/resemble" class="router-button">
+        <Button value="나와 닮은 유물"></Button>
+      </router-link>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import accountsApi from "@/api/accounts";
-import CardThumbnail from "../../components/artifacts/CardThumbnail";
+import Button from "@/components/common/Button";
+// import CardThumbnail from "../../components/artifacts/CardThumbnail";
 
 export default {
   name: "ProfilePage",
   components: {
-    CardThumbnail,
+    Button,
   },
   // props
   // data
@@ -25,7 +33,7 @@ export default {
   created() {
     accountsApi.requestProfile()
       .then(res =>
-          this.$store.dispatch('setProfileInfo', res.data)
+        this.$store.dispatch('setProfileInfo', res.data)
       )
   }
   // navigation guard
