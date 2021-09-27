@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/common/Home.vue'
 import SearchPage from '../views/artifacts/SearchPage.vue'
 import ProfilePage from "../views/accounts/ProfilePage";
+import ProfileLikePage from "@/views/accounts/ProfileLikePage";
+import ProfileResemblePage from "@/views/accounts/ProfileResemblePage";
 
 Vue.use(VueRouter)
 
@@ -20,6 +22,10 @@ const routes = [
   {
     path: '/profile',
     component: ProfilePage,
+    children: [
+      {path: '', name: 'ProfileLikePage', component: ProfileLikePage},
+      {path: 'resemble', name: 'ProfileResemblePage', component: ProfileResemblePage}
+    ]
 
   }
 ]
