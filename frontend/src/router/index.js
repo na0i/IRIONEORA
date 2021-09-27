@@ -6,6 +6,9 @@ import ProfilePage from "../views/accounts/ProfilePage";
 import ProfileLikePage from "@/views/accounts/ProfileLikePage";
 import ProfileResemblePage from "@/views/accounts/ProfileResemblePage";
 import DetailPage from '@/views/artifacts/DetailPage.vue'
+import SearchIndexPage from '@/views/artifacts/SearchIndexPage.vue'
+import SearchFilterPage from '@/views/artifacts/SearchFilterPage.vue'
+import LoadingPage from '../views/common/LoadingPage.vue'
 
 Vue.use(VueRouter)
 
@@ -18,7 +21,12 @@ const routes = [
   {
     path: '/search',
     name: 'SearchPage',
-    component: SearchPage
+    component: SearchPage,
+    children: [
+      {path: '', name: 'SearchIndexPage', component: SearchIndexPage},
+      {path: 'filter', name: 'SearchFilterPage', component: SearchFilterPage},
+    ]
+    
   },
   {
     path: '/profile',
@@ -27,7 +35,11 @@ const routes = [
       {path: '', name: 'ProfileLikePage', component: ProfileLikePage},
       {path: 'resemble', name: 'ProfileResemblePage', component: ProfileResemblePage}
     ]
-
+  },
+  {
+    path: '/loading',
+    name: 'LoadingPage',
+    component: LoadingPage,
   },
   {
     path: '/detail/:artifactId',

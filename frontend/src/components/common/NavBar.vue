@@ -6,12 +6,7 @@
         
         <div class="nav-item-center">
           <router-link to="/">
-            <div class="nav-p">
-              <p>이리오너라</p>
-            </div>
-            <div class="nav-img">
-              <img src="@/assets/images/logo-main.png"/>
-            </div>
+              <img src="@/assets/images/logo-navbar.png"/>
           </router-link>
         </div>
 

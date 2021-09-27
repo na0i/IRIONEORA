@@ -1,0 +1,23 @@
+.center-div {
+  display: flex;
+  justify-content: center;
+}
+
+.coin {
+  width: 500px;
+  height: 500px;
+}
+
+.spin-circle {
+  animation:spin 4s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform:rotateY(0);
+  }
+  to {
+    transform:rotateY(360deg);
+  }
+}
+  
