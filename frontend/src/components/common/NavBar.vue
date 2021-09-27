@@ -1,0 +1,32 @@
+<template>
+  <div>
+
+    <div class="nav-background">
+        <div class="nav-item-start"><router-link to="/about"><span class="material-icons md-18">search</span></router-link></div>
+        
+        <div class="nav-item-center">
+          <router-link to="/">
+            <div class="nav-p">
+              <p>이리오너라</p>
+            </div>
+            <div class="nav-img">
+              <img src="@/assets/images/logo-main.png"/>
+            </div>
+          </router-link>
+        </div>
+
+        <div class="nav-item-end"><router-link to="/searchpage"><span class="material-icons md-18">person_outline</span></router-link></div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'Navbar',
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import "../../assets/style/common/NavBar.scss";
+</style>

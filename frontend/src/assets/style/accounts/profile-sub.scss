@@ -1,0 +1,20 @@
+.card-wrap {
+  margin: 20px 20px;
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 30% 30% 30%;
+  grid-gap: 0 5%;
+}
+
+.no-card {
+  color: #DEC8A4;
+  text-align: center;
+  margin: 50px;
+
+  a {
+    color: #DEC8A4;
+  }
+}
+
+
+

@@ -28,9 +28,12 @@ SECRET_KEY = 'django-insecure-u(+tceq^_7a$*$jy&ia)=$p3k@yfa3os1)r#eu)^c_@%kz4rgi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
-                 'localhost',
-                 '127.0.0.1']
+# ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
+#                  'localhost',
+#                  'localhost:8080/',
+#                  '127.0.0.1']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -58,10 +61,14 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'django_extensions'
+    'allauth.socialaccount.providers.kakao',
+    'django_extensions',
+    # cors
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -120,7 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -157,7 +164,10 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 REST_AUTH_SERIALIZERS = {
     # rest-auth/user/
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailSerializer',
+    'LOGIN_SERIALIZER': 'accounts.serializers.CustomLoginSerializer',
 }
+
+
 
 # 시리얼라이저에서 보낸 정보 저장
 ACCOUNT_ADAPTER = 'accounts.adapter.CustomAccountAdapter'

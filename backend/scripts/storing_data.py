@@ -24,7 +24,7 @@ def run():
         with open('scripts/국립중앙박물관_전국 박물관 유물정보_20190920..csv', encoding='cp949') as f:
             data = csv.reader(f)
             for line in data:
-                if line[5] == '문화예술' or line[5] == '종교신앙':
+                if line[5] == '종교신앙':
                     print(line)
                     id = line[0]
                     if not Artifact.objects.all().filter(identification_number=id):

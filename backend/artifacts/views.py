@@ -1,12 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from rest_framework import serializers
+from rest_framework.serializers import Serializer
 
 from .models import Artifact
-from .serializers import ArtifactSerializer
+from .serializers import ArtifactSerializer, ArtifactLikeSerializer, ArtifactResembleSerializer, ArtifactDetailSerializer
 
+from rest_framework.decorators import api_view
+from rest_framework.decorators import permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+from urllib.request import urlopen
+import json
 import csv
 import requests
 import bs4
-
+import xmltodict
+import pprint
 
 # 저장 여부 확인
 def is_saved(id):
@@ -54,3 +64,137 @@ def get_csv():
                         serializer.save()
 
                     break
+
+
+# 유물 상세정보
+@api_view(['GET'])
+def artifact_detail(request, artifact_id):
+    
+    artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
+    API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+    params = {'serviceKey': API_KEY, 'id': artifact_id}
+    
+    raw_data = requests.get(artifact_url, params=params)
+    pretty_data = bs4.BeautifulSoup(raw_data.content, 'html.parser')    
+
+    # 초기화 설정 해주지 않으면
+    # UnboundLocalError: local variable 'desc' referenced before assignment 에러를 마주하게 된다.
+    data = {
+        'identification_number': artifact_id,
+        'artifact_name': '',
+        'artifact_size': '',
+        'artifact_author': '',
+        'description': '',
+        'museum_name': '',
+        'index_words': '',
+        'nationality_name': '',
+        'image_uri': '',
+    }
+
+    # 반복문 순회하며 해당 item의 key값에 따라 덮어씌우기
+    for item in pretty_data.find_all('item'):
+        if item.get('key') == "name":
+            data['artifact_name'] = item.get('value')
+        
+        if item.get('key') == "sizeInfo":
+            data['artifact_size'] = item.get('value')
+        
+        if item.get('key') == "author":
+            data['artifact_author'] = item.get('value')
+        
+        if item.get('key') == "desc":
+            data['description'] = item.get('value')
+        
+        if item.get('key') == "museumName2":
+            data['museum_name'] = item.get('value')
+
+        if item.get('key') == "indexWord":
+            data['index_words'] = item.get('value')
+
+        if item.get('key') == "nationalityName2":    
+            data['nationality_name'] = item.get('value')
+
+        if item.get('key') == "imgUri":
+            data['image_uri'] = item.get('value')
+        
+
+    split_artifact_img = list(data['image_uri'].partition('/'))
+
+    for i in range(1, len(split_artifact_img)):
+        artifact_img_uri = 'www.emuseum.go.kr/' + split_artifact_img[i]
+
+    data['image_uri'] = artifact_img_uri
+
+    serializer = ArtifactDetailSerializer(data=data)
+    if serializer.is_valid(raise_exception=True):
+        return Response(serializer.data)
+    else:
+        error_data = {'message': 'error'}
+        return Response(error_data)
+
+
+
+# 유물 좋아요
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def artifact_like(request, artifact_id):
+    user = request.user
+
+    # 좋아요한 artifact가 DB에 없는 경우 → 저장 후 좋아요하기
+    if not Artifact.objects.all().filter(identification_number = artifact_id):
+        artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
+        API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+        params = {'serviceKey': API_KEY, 'id': artifact_id}
+
+        raw_data = requests.get(artifact_url, params=params)
+        pretty_data = bs4.BeautifulSoup(raw_data.content, 'html.parser')
+        # pprint.pprint(pretty_data)
+
+        for item in pretty_data.find_all('item'):
+            if item.get('key') == "imgUri":
+                artifact_img = item.get('value')
+
+        # artifact_img 주소: '211.252.141.58/openapi/img?serviceKey=%2F%2BRIMbHtvxv0Qjz6tKz5DqXD5svR9t4DN.. 이하 생략'
+        # partition을 사용 → '/'을 기준으로 문자열을 자름 → ('211.252.141.58', '/', 'openapi/img?serviceKey=7QIFITdRH1k.. 이하 생략')
+        split_artifact_img = list(artifact_img.partition('/'))
+
+        for i in range(1, len(split_artifact_img)):
+            artifact_img_uri = 'www.emuseum.go.kr/' + split_artifact_img[i]
+        
+        artifact_data = {
+            'identification_number': artifact_id,
+            'image_uri': artifact_img_uri
+        }
+
+        serializer = ArtifactSerializer(data=artifact_data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+
+    artifact = get_object_or_404(Artifact, identification_number=artifact_id)
+
+    if artifact.like_users.filter(username=user).exists():
+        artifact.like_users.remove(user)
+
+    else:
+        artifact.like_users.add(user)
+
+    serializer = ArtifactLikeSerializer(artifact)
+    return Response(serializer.data)
+
+
+# 닮은 유물 저장
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def artifact_resemble(request, artifact_pk):
+    artifact = get_object_or_404(Artifact, pk=artifact_pk)
+    user = request.user
+
+    if artifact.resemble_users.filter(username=user).exists():
+        pass
+    
+    else:
+        artifact.resemble_users.add(user)
+    
+    serializer = ArtifactResembleSerializer(artifact)
+    return Response(serializer.data)
