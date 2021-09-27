@@ -12,3 +12,19 @@ export default {
   name: 'Home',
 }
 </script>
+
+<style scoped>
+  div {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    background: #081420;
+  }
+  div input {
+    height: 50px;
+    display: block;
+    width: 100vw;
+    max-width: 425px;
+    margin: 10px 0;
+  }
+</style>
