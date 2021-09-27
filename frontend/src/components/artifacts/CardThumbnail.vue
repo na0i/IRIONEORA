@@ -1,14 +1,13 @@
 <template>
   <div id="card-thumbnail">
-    {{likeArtifact}}
-    <img :src=`https://${likeArtifact.image_uri}` alt="">
+    <img :src="`https://${artifact.image_uri}`" alt="artifact_img">
   </div>
 </template>
 
 <script>
 export default {
   name: "CardThumbnail",
-  props: ['likeArtifact'],
+  props: ['artifact'],
 }
 </script>
 

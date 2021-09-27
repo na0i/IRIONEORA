@@ -1,7 +1,13 @@
 <template>
   <div>
+    <div v-if="likeArtifacts.length === 0" class="no-card">
+      마음에 드는 문화재에 좋아요를 눌러주세요
+    </div>
+
     <div class="card-wrap">
-      <CardThumbnail v-for="likeArtifact in likeArtifacts" :key=likeArtifact.id :likeArtifact="likeArtifact"></CardThumbnail>
+      <CardThumbnail
+          class="card-thumbnail"
+          v-for="(likeArtifact, idx) in likeArtifacts" :key="idx" :artifact="likeArtifact"></CardThumbnail>
     </div>
   </div>
 </template>
