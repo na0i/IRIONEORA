@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>ProfilePage</h1>
+    <ImageBox></ImageBox>
+
+    <div class="nickname">
+      {{nickname}}
+    </div>
 
     <div class="router-wrap">
       <router-link to="/profile" class="router-button">
@@ -17,17 +21,24 @@
 <script>
 import accountsApi from "@/api/accounts";
 import Button from "@/components/common/Button";
-// import CardThumbnail from "../../components/artifacts/CardThumbnail";
+import ImageBox from "@/components/accounts/ImageBox";
+import {mapState} from "vuex";
 
 export default {
   name: "ProfilePage",
   components: {
     Button,
+    ImageBox,
   },
   // props
   // data
   // methods
   // computed
+  computed: {
+    ...mapState({
+      nickname: state => state.accounts.profileInfo.nickname
+    })
+  },
   // watch
   // life cycle hook
   created() {
