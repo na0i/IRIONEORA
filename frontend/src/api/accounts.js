@@ -2,7 +2,8 @@
 
  const URL = 'http://localhost:8000/'
  const ROUTES = {
-  profile: 'rest-auth/user/'
+  profile: 'rest-auth/user/',
+  login: 'rest-auth/login/',
  }
 
  async function requestProfile () {
@@ -10,14 +11,20 @@
   const headers = {
    'Authorization': 'Token fd241862a1b6cd60b72e5c95692a76e6a1db18e8'
   }
-  const result = await axios.get(profilePath, {headers: headers})
-  return result
+  return await axios.get(profilePath, {headers: headers})
  }
+
+ async function requestLogin(data) {
+  const loginPath = URL + ROUTES.login
+  return await axios.post(loginPath, data)
+ }
+
 
  const accountsApi = {
    URL,
    ROUTES,
    requestProfile: () => requestProfile(),
+   requestLogin: (data) => requestLogin(data),
  }
 
  export default accountsApi

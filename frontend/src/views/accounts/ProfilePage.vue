@@ -23,8 +23,10 @@ export default {
   // watch
   // life cycle hook
   created() {
-    const result = accountsApi.requestProfile()
-    console.log(result)
+    accountsApi.requestProfile()
+      .then(res =>
+          this.$store.dispatch('setPropfileInfo', res.data)
+      )
   }
   // navigation guard
 }
