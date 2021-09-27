@@ -84,7 +84,7 @@ def artifact_detail(request, artifact_id):
 
 # 유물 좋아요
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def artifact_like(request, artifact_id):
     user = request.user
 

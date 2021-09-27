@@ -5,6 +5,7 @@ import SearchPage from '../views/artifacts/SearchPage.vue'
 import ProfilePage from "../views/accounts/ProfilePage";
 import ProfileLikePage from "@/views/accounts/ProfileLikePage";
 import ProfileResemblePage from "@/views/accounts/ProfileResemblePage";
+import DetailPage from '@/views/artifacts/DetailPage.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
       {path: 'resemble', name: 'ProfileResemblePage', component: ProfileResemblePage}
     ]
 
+  },
+  {
+    path: '/detail/:artifactId',
+    name: 'DetailPage',
+    component: DetailPage,
   }
 ]
 
