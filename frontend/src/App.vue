@@ -14,6 +14,16 @@
 #app {
   max-width: 425px;
   width: 100%;
+  /* 가운데 정렬 */
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+
+  /* 임시로 가로세로 구분선 하나 그을게요.. */
+  border: 1px solid ivory;
+
+
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,16 +31,4 @@
   color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
