@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'pages',
     'accounts',
     'artifacts',
+    'spark',
 
     # 3rd party apps
     'drf_yasg',  # for swagger
