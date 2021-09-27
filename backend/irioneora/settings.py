@@ -30,7 +30,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
                  'localhost',
+                 'localhost:8080/'
                  '127.0.0.1']
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -59,10 +62,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
-    'django_extensions'
+    'django_extensions',
+    # cors
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
