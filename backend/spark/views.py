@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 # from django.http import HttpResponse
 
@@ -36,6 +37,6 @@ def test(request):
 # 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
 @api_view(['POST'])
 def user_face(request):
-    print(request)
+    print(request.data)
 
-    return Response(request)
+    return HttpResponse(200)
