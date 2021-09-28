@@ -63,3 +63,11 @@ input::placeholder {
   clear: both;
 }
 
+.search-wrap-div {
+  margin: 20px 20px;
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 30% 30% 30%;
+  grid-gap: 0 5%;
+}
+
