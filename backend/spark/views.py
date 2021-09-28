@@ -1,5 +1,9 @@
-# from django.shortcuts import render
+from django.shortcuts import render
 # from django.http import HttpResponse
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 
 # # Create your views here.
 
@@ -23,5 +27,15 @@
 # # Create your views here.
 
 
+
 def test(request):
     return 'just test'
+
+
+
+# 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
+@api_view(['POST'])
+def user_face(request):
+    print(request)
+
+    return Response(request)
