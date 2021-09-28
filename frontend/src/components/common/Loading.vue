@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class = "center-div">
-      <img class="coin spin-circle" src="@/assets/images/logo-main.png"/>
+      <img class="coin spin-circle" src="@/assets/images/logo-transparent.png"/>
+      이리 오는 중입니다...
     </div>
   </div>
 </template>

@@ -32,23 +32,23 @@ def artifact_recommend(request):
     # 랜덤 추천 유물 선정
     random_num = random.randrange(1,100)
     recommended_artifact = Artifact.objects.filter(id=random_num)
-    data = {
-        'identificationNumber': recommended_artifact[0].identification_number,
-        'imageUri': recommended_artifact[0].image_uri
-    }
-    return JsonResponse(data=data)
+    # data = {
+    #     'identificationNumber': recommended_artifact[0].identification_number,
+    #     'imageUri': recommended_artifact[0].image_uri
+    # }
+    # return JsonResponse(data=data)
     # print(serializer)
-    # recommended_artifact_num = recommended_artifact[0].identification_number
-    #
-    # # url에서 유물 데이터 수신 후 json 데이터 전송
-    # artifact_url = f"http://www.emuseum.go.kr/openapi/relic/detail?serviceKey={service_key}&id={recommended_artifact_num}"
-    # url_open = urlopen(artifact_url)
-    # response_xml = url_open.read().decode('utf-8')
-    # response_dict = xmltodict.parse(response_xml)
-    # response_json = json.dumps(response_dict)
-    #
-    # #수정 vue에 필요한 응답을 만들기
-    # return Response(response_json)
+    recommended_artifact_num = recommended_artifact[0].identification_number
+
+    # url에서 유물 데이터 수신 후 json 데이터 전송
+    artifact_url = f"http://www.emuseum.go.kr/openapi/relic/detail?serviceKey={service_key}&id={recommended_artifact_num}"
+    url_open = urlopen(artifact_url)
+    response_xml = url_open.read().decode('utf-8')
+    response_dict = xmltodict.parse(response_xml)
+    response_json = json.dumps(response_dict)
+
+    #수정 vue에 필요한 응답을 만들기
+    return Response(response_json)
 
 @api_view(['GET'])
 def artifact_detail(request,id_num):
