@@ -5,6 +5,7 @@ const URL = 'http://localhost:8000/'
 const ROUTES = {
   profile: 'rest-auth/user/',
   login: 'rest-auth/login/',
+  userFace: 'spark/userface/',
 }
 
 async function requestProfile () {
@@ -20,12 +21,19 @@ async function requestLogin(data) {
   return await axios.post(loginPath, data)
 }
 
+// 얼굴 데이터 백 전송
+async function requestAnalyze(data) {
+  const analyzePath = URL + ROUTES.userFace
+  return await axios.post(analyzePath, data)
+}
 
-const accountsApi = {
+
+const AccountsApi = {
   URL,
   ROUTES,
   requestProfile: () => requestProfile(),
   requestLogin: (data) => requestLogin(data),
+  requestAnalyze: (data) => requestAnalyze(data),
 }
 
-export default accountsApi
+export default AccountsApi

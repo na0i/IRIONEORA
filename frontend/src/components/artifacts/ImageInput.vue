@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import axios from "axios";
+import KakaoApi from "@/api/kakao";
+import AccountsApi from "@/api/accounts";
 
 export default {
   name: "ImageInput",
@@ -14,6 +15,7 @@ export default {
     return {
       selectedFile: null,
       error: '',
+
     }
   },
   methods: {
@@ -22,8 +24,26 @@ export default {
       this.$refs.imgInput.click()
     },
 
+    // kakao vision -> back으로 얼굴 json 전송
+    async requestAnalyze (imageFile) {
+      // kakao 얼굴 데이터 검출
+      const res = await KakaoApi.requestFacialData(imageFile)
+      // 얼굴 데이터를 검출하지 못한 경우
+      if (res.data.result.faces.length === 0) {
+        this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
+      }
+      // 얼굴 데이터를 전송받은 경우
+      else {
+        const result = await AccountsApi.requestAnalyze(res.data)
+        return result
+      }
+    },
+
     // 이미지 입력 받음
     onImageUploaded(event) {
+      // 로딩 스피너 돌기
+      this.$emit('on-loading', true)
+
       this.selectedFile = event.target.files[0]
       // 이미지 확장자/ 크기 확인
       let extension = this.selectedFile.name.substring(
@@ -46,33 +66,16 @@ export default {
 
       // 오류 없는 경우 formData 전송
       else {
-
         // 서버 전송 데이터
         const imageFile = new FormData()
         imageFile.append('image', this.selectedFile)
 
-        const apiKey = '0e63d9a73b29cb9e1c85f0279f834367'
-        const url = "https://dapi.kakao.com/v2/vision/face/detect"
-        const headers = {
-          "Content-Type": 'multipart/form-data',
-          'Authorization': `KakaoAK ${apiKey}`
-        }
-        axios.post(url, imageFile, {headers: headers})
-          .then(res => {
-            // 얼굴이 검출되지 않은 경우,
-            if (res.data.result.faces.length === 0) {
-              this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
-            }
-            // 검출완료
-            else {
-              const url = 'http://localhost:8000/spark/userface/'
-              console.log(res.data)
-              axios.post(url, res.data)
-                .then(res => console.log(res))
-                .catch(err => console.log(err))
-            }
-          })
-        .catch(err => console.log(err))
+        const result = this.requestAnalyze(imageFile)
+        console.log(result)
+
+        this.$emit('on-loading', false)
+
+
       }
     }
 
