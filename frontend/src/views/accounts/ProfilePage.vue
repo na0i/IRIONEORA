@@ -8,10 +8,10 @@
 
     <div class="router-wrap">
       <router-link to="/profile" class="router-button">
-        <Button value="좋아하는 문화재"></Button>
+        <Button value="좋아하는 문화재" class="button"></Button>
       </router-link>
       <router-link to="/profile/resemble" class="router-button">
-        <Button value="나와 닮은 유물"></Button>
+        <Button value="나와 닮은 유물" ></Button>
       </router-link>
     </div>
     <router-view></router-view>

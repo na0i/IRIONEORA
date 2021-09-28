@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/common/Home.vue'
+import MainPage from "@/views/common/MainPage";
 import SearchPage from '../views/artifacts/SearchPage.vue'
 import ProfilePage from "../views/accounts/ProfilePage";
 import ProfileLikePage from "@/views/accounts/ProfileLikePage";
@@ -17,6 +18,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/main',
+    name: 'MainPage',
+    component: MainPage
   },
   {
     path: '/search',
