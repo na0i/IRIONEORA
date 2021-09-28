@@ -117,13 +117,34 @@ def artifact_detail(request, artifact_id):
         if item.get('key') == "imgUri":
             data['image_uri'] = item.get('value')
         
-
+    # image uri를 www. 형태로 만들기
     split_artifact_img = list(data['image_uri'].partition('/'))
 
     for i in range(1, len(split_artifact_img)):
         artifact_img_uri = 'www.emuseum.go.kr/' + split_artifact_img[i]
 
     data['image_uri'] = artifact_img_uri
+
+    # decription 내 html 엔티티 삭제
+    # &prime; 과 같은 문자열 삭제하기
+    problem_idx = []
+    for i in range(len(data['description'])):
+        if data['description'][i] == '&':
+            idx = 0
+            while data['description'][i+idx] != ';':
+                problem_idx.append(i+idx)
+                idx += 1
+            problem_idx.append(i+idx)
+    
+    list_description = list(data['description'])
+    for j in range(len(problem_idx)):
+        list_description[problem_idx[j]] = ''
+    
+    str_description = ''
+    for k in range(len(list_description)):
+        str_description += list_description[k]
+
+    data['description'] = str_description
 
     serializer = ArtifactDetailSerializer(data=data)
     if serializer.is_valid(raise_exception=True):
