@@ -2,7 +2,7 @@
   <div>
 
     <div class="nav-background">
-        <div class="nav-item-start"><router-link to="/about"><span class="material-icons md-18">search</span></router-link></div>
+        <div class="nav-item-start"><router-link to="/search"><span class="material-icons md-18">search</span></router-link></div>
         
         <div class="nav-item-center">
           <router-link to="/">
@@ -10,7 +10,7 @@
           </router-link>
         </div>
 
-        <div class="nav-item-end"><router-link to="/searchpage"><span class="material-icons md-18">person_outline</span></router-link></div>
+        <div class="nav-item-end"><router-link to="/profile"><span class="material-icons md-18">person_outline</span></router-link></div>
     </div>
 
   </div>
