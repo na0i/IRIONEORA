@@ -69,5 +69,9 @@ input::placeholder {
   flex-wrap: wrap;
   grid-template-columns: 30% 30% 30%;
   grid-gap: 0 5%;
+  overflow:scroll;
+  height: 500px;
+  // overflow:auto; 
+  // height:0px;
 }
 
