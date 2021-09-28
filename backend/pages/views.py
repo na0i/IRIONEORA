@@ -37,7 +37,6 @@ def artifact_recommend(request):
     #     'imageUri': recommended_artifact[0].image_uri
     # }
     # return JsonResponse(data=data)
-    # print(serializer)
     recommended_artifact_num = recommended_artifact[0].identification_number
 
     # url에서 유물 데이터 수신 후 json 데이터 전송
@@ -45,9 +44,7 @@ def artifact_recommend(request):
     url_open = urlopen(artifact_url)
     response_xml = url_open.read().decode('utf-8')
     response_dict = xmltodict.parse(response_xml)
-    print(response_dict)
     response_json = json.dumps(response_dict)
-    print(type(response_json))
 
     #수정 vue에 필요한 응답을 만들기
     return Response(response_json)

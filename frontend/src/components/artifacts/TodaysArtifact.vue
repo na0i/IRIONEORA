@@ -35,7 +35,8 @@ export default {
     // async gettodayArtifact() {
     //   const res = await ArtifactsApi.requestToday()
     //   return res.data.identificationNumber
-    // }
+    // },
+
     onClick() {
       this.$router.push(`/detail/${this.idNumber}`)
     }
@@ -45,6 +46,7 @@ export default {
     // this.gettodayArtifact()
     // .then(id => {
     //   const museumApiPath = `/openapi/relic/detail?serviceKey=${ArtifactsApi.SERVICE_KEY}&id=${id}`
+    //   console.log(museumApiPath)
     //   axios({
     //     methods: 'get',
     //     url: museumApiPath
@@ -52,6 +54,7 @@ export default {
     //   .then(res => console.log(res))
     //
     // })
+
     ArtifactsApi.requestToday()
       .then(res => {
         const recommend = JSON.parse(res.data)
