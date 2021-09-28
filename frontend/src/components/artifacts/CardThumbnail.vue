@@ -1,7 +1,7 @@
 <template>
-  <div id="card-thumbnail">
+  <router-link :to="`/detail/${artifact.identification_number}`" id="card-thumbnail">
     <img :src="`https://${artifact.image_uri}`" alt="artifact_img">
-  </div>
+  </router-link>
 </template>
 
 <script>

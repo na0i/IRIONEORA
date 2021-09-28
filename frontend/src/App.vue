@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <h1>안녕안녕</h1>
-    
-    </div> -->
     <NavBar id="app-nav"/>
-    <router-view/>
+
+    <div id="app-content">
+      <router-view/>
+    </div>
+
+    <LowBar id="low-bar"></LowBar>
   </div>
 </template>
 
 <script>  
 import NavBar from './components/common/NavBar.vue'
+import LowBar from "@/components/common/LowBar";
+
   export default {
     components: {
       NavBar,
+      LowBar
     }
   }
 </script>
@@ -37,8 +39,19 @@ import NavBar from './components/common/NavBar.vue'
 
 }
 
+#app-content {
+  min-height: calc(100vh - 150px);
+  /*margin-top: 40px;*/
+  margin-bottom: 60px;
+}
+
 #app-nav {
   padding: 30px;
+}
+
+#low-bar {
+  position: absolute;
+  bottom: 0;
 }
 
 </style>
