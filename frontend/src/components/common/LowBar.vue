@@ -22,7 +22,7 @@ export default {
 <style scoped>
 .low-bar {
   width: 100%;
-  height: 50px;
+  height: 45px;
   max-width: 425px;
   background: rgba(222, 200, 164, 0.2);
   display: flex;
@@ -40,7 +40,7 @@ export default {
 .notion {
   color: #848063;
   font-weight: 300;
-  font-size: 8px;
+  font-size: 9px;
   align-self: center;
 }
 

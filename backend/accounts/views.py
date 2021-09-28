@@ -45,8 +45,6 @@ def kakao_login(request):
 
     # 인증 코드 요청 성공
     if request.GET.get('code'):
-        print('get code success')
-        print(request.GET['code'])
         code = request.GET.get('code')
 
         # 토큰 요청
@@ -58,7 +56,6 @@ def kakao_login(request):
             'code': code,
         }
         token_res = requests.post(get_token, params=params)
-        print(token_res.json())
         access_token = token_res.json()['access_token']
 
         # 프로필 요청
@@ -68,40 +65,17 @@ def kakao_login(request):
         }
 
         profile_res = requests.get(get_profile, headers=header)
-        print(profile_res.json())
 
         data = {
             'access_token': access_token
         }
         accept = requests.post(f'http://localhost:8000/accounts/kakao/user/', data=data)
-        print(accept.json())
 
-        # 로그인
-        print(SocialAccount.objects.all().values())
-        print(SocialAccount.objects.all().filter(uid=13))
+        # 소셜 로그인 유저
         social_user = SocialAccount.objects.all().filter(uid=profile_res.json()['id'])
-        print(social_user)
-        # if not social_user:
-        #     print('already in')
-        #     user = get_object_or_404(User, i)
-        #     print(accept.json())
-        #     print(accept.json()['key'])
-        #     return Response(accept.json())
-        # 회원가입
-        # else:
-        #     print('need signup')
-        #     accept = requests.post(f'http://localhost:8000/accounts/kakao/user/', data=data)
-        #     print(accept)
-        #     print(accept.json())
-
-        print(social_user.values())
-        print(social_user[0])
+        # 소셜 로그인과 연결된 유저
         user = get_object_or_404(User, id=social_user.values()[0]['user_id'])
-        print('----------')
-        print(user.username)
-        print(user.email)
-        print(profile_res.json())
-        print(profile_res.json()['properties'].get('profile_images', ''))
+
         # 정보 업데이트
         user.nickname = profile_res.json()['properties'].get('nickname', '')
         user.profile_img = profile_res.json()['properties'].get('profile_image', '')

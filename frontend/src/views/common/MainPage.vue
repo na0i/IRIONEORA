@@ -13,11 +13,21 @@
       </div>
     </div>
 
-    <Button value="나와 닮은 문화재 찾기 →" class="button"></Button>
+    <!-- 이미지 입력/ 안내 -->
+    <div class="image-upload">
+      <Button value="나와 닮은 문화재 찾기 →" class="button" @click.native="onImage"></Button>
+      <ImageInput class="image-input" ref="image" ></ImageInput>
 
-    <div class="info">
-      사진은 저장되지 않습니다.<br>
-      얼굴이 흐릿하게 나오거나, 판별하기 어려운 사진은 결과가 도출되지 않을 수 있습니다.
+      <div class="info">
+        사진은 저장되지 않습니다.<br>
+        얼굴이 흐릿하게 나오거나, 판별하기 어려운 사진은 결과가 도출되지 않을 수 있습니다.
+      </div>
+    </div>
+
+    <!-- 오늘의 문화재 -->
+    <div class="todays-artifact">
+      오늘의 문화재
+      <TodaysArtifact></TodaysArtifact>
     </div>
 
 
@@ -27,11 +37,21 @@
 
 <script>
 import Button from "@/components/common/Button";
+import ImageInput from "@/components/artifacts/ImageInput";
+import TodaysArtifact from "@/components/artifacts/TodaysArtifact";
 
 export default {
   name: "MainPage",
   components: {
-    Button
+    Button,
+    ImageInput,
+    TodaysArtifact,
+  },
+  methods: {
+    // input 호출
+    onImage() {
+      this.$refs.image.onOpen()
+    }
   }
 }
 </script>
