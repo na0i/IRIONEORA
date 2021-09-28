@@ -37,7 +37,6 @@ def artifact_recommend(request):
     #     'imageUri': recommended_artifact[0].image_uri
     # }
     # return JsonResponse(data=data)
-    # print(serializer)
     recommended_artifact_num = recommended_artifact[0].identification_number
 
     # url에서 유물 데이터 수신 후 json 데이터 전송
