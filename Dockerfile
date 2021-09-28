@@ -1,5 +1,6 @@
 # FROM sjoh004/django:latest
 FROM python:3.8
+RUN apt-get -y update && apt-get -y install default-jdk
 RUN pip3 install django
 WORKDIR /usr/src/app
 
