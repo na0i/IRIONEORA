@@ -1,6 +1,7 @@
 <template>
   <div>
     <input type="text" class="search-box" :placeholder="placeholder" v-model="indexWord" @keydown.enter="searchKeyWord()"/>
+    <button @click="searchKeyWord()">search</button>
     <hr>
     <div class="search-wrap-div">
       <SearchCard 
