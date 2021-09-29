@@ -10,6 +10,7 @@ import DetailPage from '@/views/artifacts/DetailPage.vue'
 import SearchIndexPage from '@/views/artifacts/SearchIndexPage.vue'
 import SearchFilterPage from '@/views/artifacts/SearchFilterPage.vue'
 import LoadingPage from '../views/common/LoadingPage.vue'
+import ResultPage from "@/views/artifacts/ResultPage";
 
 Vue.use(VueRouter)
 
@@ -26,13 +27,11 @@ const routes = [
   },
   {
     path: '/search',
-    name: 'SearchPage',
     component: SearchPage,
     children: [
       {path: '', name: 'SearchIndexPage', component: SearchIndexPage},
       {path: 'filter', name: 'SearchFilterPage', component: SearchFilterPage},
     ]
-    
   },
   {
     path: '/profile',
@@ -51,7 +50,13 @@ const routes = [
     path: '/detail/:artifactId',
     name: 'DetailPage',
     component: DetailPage,
+  },
+  {
+    path: '/result',
+    name: 'ResultPage',
+    component: ResultPage
   }
+
 ]
 
 const router = new VueRouter({
