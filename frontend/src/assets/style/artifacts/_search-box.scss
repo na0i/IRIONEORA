@@ -1,77 +1,37 @@
 .search-box {
   background-color: #081420;
-  color: #d4ab67;
   border: solid 1px #d4ab67;
+  color: #d4ab67;
+  height: 1.9rem;
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   width: 90%;
-  margin-top: 20px;
-  margin-left: 14px;
-  margin-right: 14px;
-  height: 30px;
 }
 
 .search-box:focus {
-  outline: none !important;
   border:1px solid #f1e8db;
+  outline: none !important;
 }
 
 hr {
-  border-top: 1px solid #848063;
+  border-top: 1px solid #d4ab67;
   border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
 }
+
 input::placeholder {
   color: #d4ab67;
 }
 
-#sort-p {
-  font-size: 20px;
-  color: #F1E8DB;
-}
-
-#block-div {
-  display: block;
-}
-
-.search-button {
-  color: #848063;
-  display: inline-block;
-  float: left;
-  width: 20%;
-  border: solid 1px #848063;
-  margin: 5px;
-}
-
-.search-button.on {
-  color: #d4ab67;
-  border: solid 1px #d4ab67;;
-}
-
-.era-button {
-  color: #848063;
-  display: inline-block;
-  float: left;
-  width: 20%;
-  border: solid 1px #848063;
-  margin: 5px;
-}
-
-.era-button.on {
-  color: #d4ab67;
-  border: solid 1px #d4ab67;;
-}
-
-#float-clear-div {
-  clear: both;
-}
-
 .search-wrap-div {
-  margin: 20px 20px;
   display: grid;
   flex-wrap: wrap;
   grid-template-columns: 30% 30% 30%;
   grid-gap: 0 5%;
-  overflow:scroll;
   height: 500px;
-  // overflow:auto; 
-  // height:0px;
+  margin: 20px 20px;
+  overflow:scroll;
 }
-
