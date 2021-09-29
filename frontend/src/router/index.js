@@ -20,7 +20,6 @@ const routes = [
   },
   {
     path: '/search',
-    name: 'SearchPage',
     component: SearchPage,
     children: [
       {path: '', name: 'SearchIndexPage', component: SearchIndexPage},

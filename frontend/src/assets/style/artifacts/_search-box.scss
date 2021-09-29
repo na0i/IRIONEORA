@@ -75,3 +75,18 @@ input::placeholder {
   // height:0px;
 }
 
+.search-filter-div{
+  display: flex;
+  justify-content: center;
+}
+
+.search-button-div{
+  clear: both;
+  display: flex;
+  justify-content: center;
+  margin-right: 5px;
+}
+
+.seach-button {
+  width: 20%;
+}
