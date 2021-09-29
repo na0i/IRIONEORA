@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <img src="@/assets/images/mainpage.png" alt="main page image" class="background">
+    <img src="@/assets/images/mainpage-flower.png" alt="" class="flower">
     <div class="description">
       <div class="description-kr">
         이리오너라에서<br>
