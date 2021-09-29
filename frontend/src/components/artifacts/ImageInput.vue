@@ -31,6 +31,7 @@ export default {
       // 얼굴 데이터를 검출하지 못한 경우
       if (res.data.result.faces.length === 0) {
         this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
+        this.$emit('on-loading', false)
       }
       // 얼굴 데이터를 전송받은 경우
       else {
@@ -67,6 +68,7 @@ export default {
       // 에러 발생하면 에러메세지 emit
       if (this.error) {
         this.$emit('on-error', this.error)
+        this.$emit('on-loading', false)
       }
 
       // 오류 없는 경우 formData 전송
