@@ -32,7 +32,9 @@ import SearchCard from './SearchCard.vue'
 
         // index case
         indexWord: '',
-        totalCount: 0,
+        totalPage: 0,
+        totalNum: 0,
+        nowPage: 1,
         search_list : [],
         response_dict : {},
         image_uri : "",
@@ -40,7 +42,9 @@ import SearchCard from './SearchCard.vue'
         name : "",
 
         // infinite scroll
-        loading : false,
+        // loading : false,
+        reminderFlag: 0,
+        nextNumReminder: 0,
         nextNum: 0,
         items: []
       }
@@ -80,25 +84,34 @@ import SearchCard from './SearchCard.vue'
           method: 'get',
           url: `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=1&pageNo=1`,
         })
+
         // 응답페이지 수 결정
         .then((res) => {
-          this.totalCount = parseInt(res.data.totalCount /100)
+          console.log(res.data.totalCount)
+          this.totalNum = res.data.totalCount
+          this.totalPage = parseInt(res.data.totalCount /100) + 2
         })
-        // 
+
+        // 응답 받아오기
         .then(() => {
-          for (var i = 1; i < this.totalCount+2; i++) {
-            axios({
-              method: 'get',
-              url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${i}`, 
-            })
-            .then((res) => {
-              console.log(this.search_list)
-              console.log(this.items)
-              this.search_list.push(...res.data.list)
-              this.indexWord = ''
-              this.placeholder = ''
-            })
-          }
+          axios({
+            method: 'get',
+            url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
+          })
+          .then((res) => {
+            this.search_list.push(...res.data.list)
+            this.nowPage = this.nowPage + 1
+            this.indexWord = ''
+            this.placeholder = ''
+          })
+          .then(() => {
+            for (var j = this.nextNum; j < this.nextNum+18; j++) {
+              if (this.search_list[j] !== undefined) {
+                this.items.push(this.search_list[j]);
+              } 
+            }
+            this.nextNum = j
+          })
         })
         .catch((err) => {
           console.log(err)
@@ -107,7 +120,10 @@ import SearchCard from './SearchCard.vue'
 
       // infinite methods
       loadMore () {
-        this.loading = true;
+        if (this.nextNum > this.totalNum) {
+          return false
+        }
+        // this.loading = true;
         setTimeout(e => {
           console.log(e)
           for (var i = 0; i < 6; i++) {
@@ -115,8 +131,22 @@ import SearchCard from './SearchCard.vue'
             this.items.push(this.search_list[this.nextNum]);
             console.log(this.nextNum)
           }
-          this.loading = false;
+          // this.loading = false;
         }, 200);
+
+        this.nextNumReminder = this.nextNum%100
+    
+        if (this.reminderFlag === 1 && this.nextNumReminder < 20 ) {
+          this.reminderFlag = 0
+        }
+        
+        if ( this.nextNumReminder > 70 && this.reminderFlag === 0 && this.nowPage < this.totalPage ) {
+          this.getArtifactPageList(this.nowPage)
+          console.log(this.search_list)
+          this.nowPage = this.nowPage + 1
+          this.reminderFlag = 1
+        }
+
       },
     },
 
@@ -132,18 +162,6 @@ import SearchCard from './SearchCard.vue'
           this.loadMore();
         }
       });
-    },
-
-    watch: {
-      search_list() {
-        console.log("watch")
-        for (var j = this.nextNum; j < this.nextNum+9; j++) {
-            if (this.search_list[j] !== undefined) {
-              this.items.push(this.search_list[j]);
-            } 
-          }
-        this.nextNum = j
-      }
     },
   }
 
