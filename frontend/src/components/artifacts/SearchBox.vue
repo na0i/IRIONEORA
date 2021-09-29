@@ -31,18 +31,14 @@ import SearchCard from './SearchCard.vue'
         placeholder: '검색어를 입력해주세요',
 
         // index case
-        indexWord: '',
+        indexWord: '', //나중에 네임으로 바꾸자
         totalPage: 0,
         totalNum: 0,
         nowPage: 1,
         search_list : [],
-        response_dict : {},
-        image_uri : "",
-        id_num : "",
-        name : "",
 
         // infinite scroll
-        // loading : false,
+        // loading : false, //로딩 그게 돌아야한다면
         reminderFlag: 0,
         nextNumReminder: 0,
         nextNum: 0,
@@ -161,7 +157,7 @@ import SearchCard from './SearchCard.vue'
         if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight-10) {
           this.loadMore();
         }
-      });
+      })
     },
   }
 

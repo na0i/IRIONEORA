@@ -1,21 +1,6 @@
-.search-wrap-div {
-  display: grid;
-  flex-wrap: wrap;
-  grid-template-columns: 30% 30% 30%;
-  grid-gap: 0 5%;
-  height: 500px;
-  margin: 20px 20px;
-  overflow:scroll;
-}
-
-///
 .theme-text {
   color: #F1E8DB;
   font-size: 20px;
-}
-
-#block-div {
-  display: block;
 }
 
 .search-button {
@@ -46,8 +31,4 @@
   display: flex;
   justify-content: center;
   margin-right: 5px;
-}
-
-.search-button {
-  width: 20%;
 }

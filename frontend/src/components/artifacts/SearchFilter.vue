@@ -5,10 +5,11 @@
         <hr>
         <p class="theme-text">{{theme}}</p>
         <div class="search-filter-div">
-          <div class= "search-button" @click="buttonSwitch(ele,sortlist)" v-for="(ele,idx) in sortlist" :key="idx">
+          <div class= "search-button" @click="buttonSwitch($event)" v-for="(ele,idx) in sortlist" :key="idx">
             {{ele.name}}
           </div>
         </div>
+        
       </div>
 
   </div>
@@ -25,8 +26,8 @@ window.$ = $;
         type: String,
         required: true
       },
-      classname: {
-        type: String,
+      startnum: {
+        type: Number,
         required: true
       },
       sortlist: {
@@ -36,29 +37,24 @@ window.$ = $;
     },
     
     methods: {
-      buttonSwitch: function (ele, sortlist) {
-        
-        const num = sortlist.length
-        const btns = document.getElementsByClassName(this.classname)
-        const selectBtns = btns[ele.switch]
-        var j
-        for (j = 0; j < num; j++) {
-          const btn = btns[j]
-          $(btn).removeClass('on')
+      buttonSwitch: function ($event) {
+        console.log($event.target.classList)
+        if ($event.target.classList[1] === "on") {
+          console.log("already on")
+        } else {
+          var j = this.startnum
+          var num = j+this.sortlist.length
+          const btns = document.getElementsByClassName("search-button")
+          // console.log(j)
+          for (j ; j < num; j++) {
+            const btn = btns[j]
+            $(btn).removeClass('on')
+          }
+          $event.target.classList.add("on")
         }
-        $(selectBtns).addClass('on')
       return false;
       },
     },
-
-  mounted () {
-    const num = this.sortlist.length
-    const btns = document.getElementsByClassName("search-button")
-    for (var i = 0; i < num; i++) {
-      const btn = btns[i]
-      $(btn).addClass(this.classname)
-    }
-   }
   }
 </script>
 
