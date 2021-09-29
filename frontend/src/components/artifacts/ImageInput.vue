@@ -11,11 +11,11 @@ import AccountsApi from "@/api/accounts";
 
 export default {
   name: "ImageInput",
+  props: ['preview'],
   data() {
     return {
       selectedFile: null,
       error: '',
-
     }
   },
   methods: {
@@ -37,6 +37,11 @@ export default {
         const result = await AccountsApi.requestAnalyze(res.data)
         return result
       }
+    },
+
+    // 미리보기
+    async setPreview(data) {
+      return await this.$store.dispatch('setPreview', data)
     },
 
     // 이미지 입력 받음
@@ -70,10 +75,23 @@ export default {
         const imageFile = new FormData()
         imageFile.append('image', this.selectedFile)
 
-        const result = this.requestAnalyze(imageFile)
-        console.log(result)
+        this.requestAnalyze(imageFile)
+          .then(res => {
+            // 미리보기
+            const read = new FileReader()
+            read.onload = file => {
+              this.setPreview(file.target.result)
+                .then(() => {
+                  this.$router.push('/result')
+                  this.$emit('on-loading', false)
+                })
+            }
+            read.readAsDataURL(this.selectedFile)
+            console.log(res)
 
-        this.$emit('on-loading', false)
+          })
+
+
 
 
       }
