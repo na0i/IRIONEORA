@@ -1,6 +1,7 @@
 .result {
   position: relative;
 
+
   .icon-button-wrap {
     margin: 20px 20px;
     display: flex;
@@ -11,6 +12,34 @@
     }
   }
 
+  .result-box-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .arrow {
+      color: #081420;
+      font-weight: 600;
+      font-size: 36px;
+      background-color: rgba(222, 200, 164, 0.4);
+      position: absolute;
+
+      &.left {
+        left: 10px;
+      }
+
+      &.right {
+        right: 10px;
+      }
+    }
+
+
+
+    .result-box {
+      width: 100%;
+    }
+
+  }
 
   .result-preview {
     position: relative;
@@ -37,6 +66,42 @@
       right: 15%;
     }
   }
+}
 
+// transition
+// 슬라이드
+.slide-enter-active,
+.slide-leave-active {
+  transition-duration: 0.5s;
+  transition-property: height, opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+  overflow: hidden;
+}
 
+.slide-leave-active {
+  opacity: 0;
+  transform: translate(-50%, 0);
+}
+
+.slide-enter {
+  opacity: 0;
+  transform: translate(50%, 0);
+}
+
+// 플립
+.flip-enter-active {
+  transition: all 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  transform-origin: 50% 50%;
+}
+
+.flip-leave-active {
+  transform-origin: 50% 50%;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.flip-enter-from,
+.flip-leave-to {
+  transform-origin: 50% 50%;
+  transform: scaleY(0) translateZ(0);
+  opacity: 0;
 }
