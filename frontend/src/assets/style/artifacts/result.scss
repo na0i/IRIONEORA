@@ -69,39 +69,38 @@
 }
 
 // transition
-// 슬라이드
-.slide-enter-active,
-.slide-leave-active {
-  transition-duration: 0.5s;
-  transition-property: height, opacity, transform;
+// slide-right
+.slide-right-enter-active,
+.slide-right-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity, transform;
   transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
-  overflow: hidden;
 }
 
-.slide-leave-active {
+.slide-right-leave-active {
   opacity: 0;
-  transform: translate(-50%, 0);
+  transform: translate(-30%, 0);
 }
 
-.slide-enter {
+.slide-right-enter {
   opacity: 0;
-  transform: translate(50%, 0);
+  transform: translate(30%, 0);
 }
 
-// 플립
-.flip-enter-active {
-  transition: all 0.35s ease;
-  transform-origin: 50% 50%;
+// slide-left
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity, transform;
+  transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
 }
 
-.flip-leave-active {
-  transform-origin: 50% 50%;
-  transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94); //ease-out-quad;
-}
-
-.flip-enter-from,
-.flip-leave-to {
-  transform-origin: 50% 50%;
-  transform: scaleY(0) translateZ(0);
+.slide-left-leave-active {
   opacity: 0;
+  transform: translate(30%, 0);
+}
+
+.slide-left-enter {
+  opacity: 0;
+  transform: translate(-30%, 0);
 }
