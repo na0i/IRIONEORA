@@ -1,10 +1,10 @@
 <template>
   <div>
 
-    <div class="search-card">
+    <div @click="moveDetail(idNum)" class="search-card">
 
       <div class="search-card-img">
-        <img :src="`${changed_url}`" alt=""/> 
+        <img :src="`${changedUrl}`" alt=""/> 
       </div>
 
       <div class="search-card-p">
@@ -20,22 +20,32 @@
   export default {
     name: 'SearchCard',
     props: ['artifact'],
+
     data () {
     return {
-      image_url : this.artifact.imgThumUriM,
-      changed_url : ""
+      imageUrl : this.artifact.imgThumUriM,
+      changedUrl : "",
+      idNum : this.artifact.id
       }
     },
+
     methods: {
       // URL 주소 체인지
-      change_url (url) {
+      changeUrl (url) {
         const splitResult = url.split('/',3)
         const sumUrl = 'http://www.emuseum.go.kr' + '/' + splitResult[1] + '/' + splitResult[2]
-        this.changed_url = sumUrl
+        this.changedUrl = sumUrl
+      },
+
+      // 디테일 페이지로 보내기
+      moveDetail (id_num) {
+        const target = '/detail/' + String(id_num)
+        this.$router.push(target);
       }
     },
+
     mounted () {
-      this.change_url(this.image_url)
+      this.changeUrl(this.imageUrl)
     }
   }
 </script>

@@ -1,0 +1,25 @@
+#float-clear-div {
+  clear: both;
+}
+
+hr {
+  margin-top: 10px;
+  border-top: 1px solid #d4ab67;
+  border-bottom: 0px;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+#search-filter {
+  margin-bottom: 10px;
+}
+
+.search-wrap-div {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 30% 30% 30%;
+  grid-gap: 0 5%;
+  height: 500px;
+  margin: 20px 20px;
+  overflow:scroll;
+}

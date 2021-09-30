@@ -1,0 +1,34 @@
+.theme-text {
+  color: #F1E8DB;
+  font-size: 20px;
+}
+
+.search-button {
+  border: solid 1px #848063;
+  color: #848063;
+  display: inline-block;
+  float: left;
+  margin: 5px;
+  width: 20%;
+}
+
+.search-button.on {
+  border: solid 1px #d4ab67;;
+  color: #d4ab67;
+}
+
+#float-clear-div {
+  clear: both;
+}
+
+// .search-filter-div{
+//   display: flex;
+//   justify-content: center;
+// }
+
+.search-button-div{
+  clear: both;
+  display: flex;
+  justify-content: center;
+  margin-right: 5px;
+}
