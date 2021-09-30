@@ -7,9 +7,9 @@
   border: solid 1px #848063;
   color: #848063;
   display: inline-block;
-  float: left;
   margin: 5px;
   width: 20%;
+  text-align: center;
 }
 
 .search-button.on {
@@ -21,14 +21,7 @@
   clear: both;
 }
 
-// .search-filter-div{
-//   display: flex;
-//   justify-content: center;
-// }
-
-.search-button-div{
-  clear: both;
-  display: flex;
-  justify-content: center;
-  margin-right: 5px;
+.search-filter-wrap-div{
+  margin-top: 10px;
+  margin-left: 25px;
 }

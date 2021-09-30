@@ -23,3 +23,19 @@ hr {
   margin: 20px 20px;
   overflow:scroll;
 }
+.search-button-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.search-button {
+  margin-right: 35px;
+  margin-top: 10px;
+  width: fit-content;
+  color: #DEC8A4;
+  border: 1px solid #DEC8A4;
+  background-color: transparent;
+  height: 20px;
+  text-align: center;
+}

@@ -1,7 +1,14 @@
 <template>
   <div>
+    <div class="search-icon-box">
+
     <input type="text" class="search-box" :placeholder="placeholder" v-model="indexWord" @keydown.enter="searchKeyWord()"/>
-    <button @click="searchKeyWord()">search</button>
+    
+    <button class="search-icon-box-real" @click="searchKeyWord()">
+      search
+    </button>
+    <!-- <button @click="searchKeyWord()">search</button> -->
+    </div>
     <hr>
     <div class="search-wrap-div">
       <SearchCard 
@@ -12,7 +19,7 @@
     </div>
 
     <!-- 확인 후 삭제 -->
-    <button @click="cons()">pqpeqpq1</button> 
+    <button>pqpeqpq1</button> 
   </div>
 </template>
 
@@ -47,10 +54,6 @@ import SearchCard from './SearchCard.vue'
       }
     },
     methods: {
-      // 확인 후 삭제 확인 함수
-      cons: function() {
-        console.log(this.items)
-      },
 
       // 특정 유물정보 가져오기
       getArtifactPageList (pageNum) {
@@ -86,6 +89,12 @@ import SearchCard from './SearchCard.vue'
           console.log("res")
           console.log(res)
           console.log(res.data.totalCount)
+          if (res.data.totalCount === 0) {
+            console.log("결과가 업습니다")
+            this.indexWord = ''
+            this.placeholder = '결과가 없습니다'
+            return false
+          }
           this.totalNum = res.data.totalCount
           this.totalPage = parseInt(res.data.totalCount /100) + 2
           this.search_list.push(...res.data.list)

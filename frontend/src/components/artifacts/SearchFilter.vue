@@ -4,8 +4,8 @@
     <div id="float-clear-div">
         <hr>
         <p class="theme-text">{{theme}}</p>
-        <div class="search-filter-div">
-          <div class= "search-button" @click="buttonSwitch($event)" v-for="(ele,idx) in sortlist" :key="idx">
+        <div class="search-filter-wrap-div">
+          <div class= "search-button" @click="buttonSwitch($event,idx)" v-for="(ele,idx) in sortlist" :key="idx">
             {{ele.name}}
           </div>
         </div>
@@ -35,12 +35,22 @@ window.$ = $;
         required: true
       }
     },
+    data () {
+      return {
+        value: ''
+      }
+    },
     
     methods: {
-      buttonSwitch: function ($event) {
-        console.log($event.target.classList)
+      buttonSwitch: function ($event,idx) {
+        console.log($event.target.innerText)
+        this.value = this.sortlist[idx].code
+        
         if ($event.target.classList[1] === "on") {
           console.log("already on")
+          $event.target.classList.remove("on")
+          this.value = ''
+          this.$emit('change', this.value)
         } else {
           var j = this.startnum
           var num = j+this.sortlist.length
@@ -51,6 +61,7 @@ window.$ = $;
             $(btn).removeClass('on')
           }
           $event.target.classList.add("on")
+          this.$emit('change', this.value)
         }
       return false;
       },
