@@ -11,15 +11,29 @@
 </template>
 
 <script>  
+import cookies from "vue-cookies";
+import AccountsApi from "@/api/accounts";
+
 import NavBar from './components/common/NavBar.vue'
 import LowBar from "@/components/common/LowBar";
 
-  export default {
-    components: {
-      NavBar,
-      LowBar
+export default {
+  components: {
+    NavBar,
+    LowBar
+  },
+  created() {
+    // 로그인된 유저 확인
+    const token = cookies.get('user-token')
+
+    if (token) {
+      AccountsApi.requestProfile(token)
+      .then(res => {
+        this.$store.dispatch('setProfileInfo', res.data)
+      })
     }
   }
+}
 </script>
 
 <style>
