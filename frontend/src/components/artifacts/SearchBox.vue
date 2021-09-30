@@ -79,7 +79,7 @@ import SearchCard from './SearchCard.vue'
         // 응답 요청
         axios({
           method: 'get',
-          url: `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=1&pageNo=1`,
+          url: `http://www.emuseum.go.kr/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=1&pageNo=1`,
         })
 
         // 응답페이지 수 결정
@@ -95,7 +95,7 @@ import SearchCard from './SearchCard.vue'
         .then(() => {
           axios({
             method: 'get',
-            url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
+            url : `http://www.emuseum.go.kr/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
           })
           .then((res) => {
             this.search_list.push(...res.data.list)
