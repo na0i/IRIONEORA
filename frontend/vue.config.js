@@ -1,8 +1,9 @@
 module.exports = {
   devServer: {
     proxy: {
-      "^/openapi/": {
+      "^/openapi": {
         target: 'http://www.emuseum.go.kr/',
+        ws:true,
         changeOrigin: true
 
       }
