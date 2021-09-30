@@ -12,7 +12,7 @@
     </div>
 
     <!-- 확인 후 삭제 -->
-    <button @click="cons()">pppppppppppppppppppp</button> 
+    <button @click="cons()">pqpq</button> 
   </div>
 </template>
 
@@ -75,7 +75,7 @@ import SearchCard from './SearchCard.vue'
         // 검색결과 초기화
         this.search_list = []
         this.items = []
-
+        console.log("first")
         // 응답 요청
         axios({
           method: 'get',
@@ -84,6 +84,8 @@ import SearchCard from './SearchCard.vue'
 
         // 응답페이지 수 결정
         .then((res) => {
+          console.log("res")
+          console.log(res)
           console.log(res.data.totalCount)
           this.totalNum = res.data.totalCount
           this.totalPage = parseInt(res.data.totalCount /100) + 2
