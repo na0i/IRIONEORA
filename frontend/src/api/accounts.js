@@ -5,13 +5,14 @@ const URL = 'http://localhost:8000/'
 const ROUTES = {
   profile: 'rest-auth/user/',
   login: 'rest-auth/login/',
+  kakao: 'accounts/kakao/login/',
   userFace: 'spark/userface/',
 }
 
-async function requestProfile () {
+async function requestProfile (token) {
   const profilePath = URL + ROUTES.profile
   const headers = {
-    'Authorization': 'Token fd241862a1b6cd60b72e5c95692a76e6a1db18e8'
+    'Authorization': `Token ${token}`
   }
   return await axios.get(profilePath, {headers: headers})
 }
@@ -21,6 +22,16 @@ async function requestLogin(data) {
   return await axios.post(loginPath, data)
 }
 
+// 카카오 로그인
+async function requestKakaoLogin(code) {
+  const kakaoPath = URL + ROUTES.kakao
+  const data = {
+    'code': code
+  }
+  return await axios.post(kakaoPath, data)
+}
+
+
 // 얼굴 데이터 백 전송
 async function requestAnalyze(data) {
   const analyzePath = URL + ROUTES.userFace
@@ -28,12 +39,14 @@ async function requestAnalyze(data) {
 }
 
 
+
 const AccountsApi = {
   URL,
   ROUTES,
-  requestProfile: () => requestProfile(),
+  requestProfile: (token) => requestProfile(token),
   requestLogin: (data) => requestLogin(data),
   requestAnalyze: (data) => requestAnalyze(data),
+  requestKakaoLogin: (code) => requestKakaoLogin(code),
 }
 
 export default AccountsApi
