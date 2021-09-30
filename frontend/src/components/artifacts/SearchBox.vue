@@ -12,7 +12,7 @@
     </div>
 
     <!-- 확인 후 삭제 -->
-    <button @click="cons()">pqpq</button> 
+    <button @click="cons()">pqpqpq</button> 
   </div>
 </template>
 
@@ -56,7 +56,7 @@ import SearchCard from './SearchCard.vue'
       getArtifactPageList (pageNum) {
         axios({
               method: 'get',
-              url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${pageNum}`, 
+              url : `http://j5a601.p.ssafy.io/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${pageNum}`, 
             })
             .then((res) => {
               this.search_list.push(...res.data.list)
@@ -76,41 +76,30 @@ import SearchCard from './SearchCard.vue'
         this.search_list = []
         this.items = []
         console.log("first")
+
         // 응답 요청
         axios({
           method: 'get',
-          url: `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=1&pageNo=1`,
+          url : `http://j5a601.p.ssafy.io/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
         })
-
-        // 응답페이지 수 결정
         .then((res) => {
           console.log("res")
           console.log(res)
           console.log(res.data.totalCount)
           this.totalNum = res.data.totalCount
           this.totalPage = parseInt(res.data.totalCount /100) + 2
+          this.search_list.push(...res.data.list)
+          this.nowPage = this.nowPage + 1
+          this.indexWord = ''
+          this.placeholder = ''
         })
-
-        // 응답 받아오기
         .then(() => {
-          axios({
-            method: 'get',
-            url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
-          })
-          .then((res) => {
-            this.search_list.push(...res.data.list)
-            this.nowPage = this.nowPage + 1
-            this.indexWord = ''
-            this.placeholder = ''
-          })
-          .then(() => {
-            for (var j = this.nextNum; j < this.nextNum+18; j++) {
-              if (this.search_list[j] !== undefined) {
-                this.items.push(this.search_list[j]);
-              } 
-            }
-            this.nextNum = j
-          })
+          for (var j = this.nextNum; j < this.nextNum+18; j++) {
+            if (this.search_list[j] !== undefined) {
+              this.items.push(this.search_list[j]);
+            } 
+          }
+          this.nextNum = j
         })
         .catch((err) => {
           console.log(err)
