@@ -50,7 +50,7 @@ def get_distance( face_a, face_b):
     
     return dis
 
-with open('sample_jw.json', 'r') as f:
+with open('sample.json', 'r') as f:
     sample_faces = get_faces_from_kakao_response(json.load(f))
 
 #print(sample_faces)
@@ -70,6 +70,8 @@ def test(fn):
         arr = np.array(list(dist_dict.keys()))
         print( f'mean: {np.mean(arr)}, min:{np.min(arr)}, max:{np.max(arr)}, std:{np.std(arr)}')
         print(dist_dict[np.min(arr)])
+        print(min(arr))
+
 
 test('test_faces.json')
 test('test_faces_suji.json')
