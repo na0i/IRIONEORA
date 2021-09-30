@@ -12,7 +12,7 @@
     </div>
 
     <!-- 확인 후 삭제 -->
-    <button @click="cons()">pqpqpq</button> 
+    <button @click="cons()">pqpeqpq</button> 
   </div>
 </template>
 
