@@ -56,7 +56,7 @@ import SearchCard from './SearchCard.vue'
       getArtifactPageList (pageNum) {
         axios({
               method: 'get',
-              url : `http://j5a601.p.ssafy.io/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${pageNum}`, 
+              url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${pageNum}`, 
             })
             .then((res) => {
               this.search_list.push(...res.data.list)
@@ -80,7 +80,7 @@ import SearchCard from './SearchCard.vue'
         // 응답 요청
         axios({
           method: 'get',
-          url : `http://j5a601.p.ssafy.io/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
+          url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
         })
         .then((res) => {
           console.log("res")
