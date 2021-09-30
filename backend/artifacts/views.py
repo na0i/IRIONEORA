@@ -81,13 +81,13 @@ def artifact_detail(request, artifact_id):
     # UnboundLocalError: local variable 'desc' referenced before assignment 에러를 마주하게 된다.
     data = {
         'identification_number': artifact_id,
-        'artifact_name': '',
-        'artifact_size': '',
-        'artifact_author': '',
-        'description': '',
-        'museum_name': '',
-        'index_words': '',
-        'nationality_name': '',
+        'artifact_name': '이름 정보가 없습니다.',
+        'artifact_size': '크기 정보가 없습니다.',
+        'artifact_author': '작가 정보가 없습니다.',
+        'description': '상세 정보가 없습니다.',
+        'museum_name': '박물관 정보가 없습니다.',
+        'index_words': '색인어 정보가 없습니다.',
+        'nationality_name': '시대 정보가 없습니다.',
         'image_uri': '',
     }
 
@@ -117,7 +117,7 @@ def artifact_detail(request, artifact_id):
         if item.get('key') == "imgUri":
             data['image_uri'] = item.get('value')
         
-    # image uri를 www. 형태로 만들기
+    # artifact uri 수정
     split_artifact_img = list(data['image_uri'].partition('/'))
 
     for i in range(1, len(split_artifact_img)):
@@ -146,6 +146,7 @@ def artifact_detail(request, artifact_id):
 
     data['description'] = str_description
 
+    # serializer로 data response
     serializer = ArtifactDetailSerializer(data=data)
     if serializer.is_valid(raise_exception=True):
         return Response(serializer.data)
@@ -219,3 +220,8 @@ def artifact_resemble(request, artifact_pk):
     
     serializer = ArtifactResembleSerializer(artifact)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def word_cloud():
+    pass
