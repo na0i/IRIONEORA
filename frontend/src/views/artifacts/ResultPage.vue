@@ -8,7 +8,7 @@
 
     <div class="result-box-wrap">
       <span class="material-icons-outlined arrow left" @click="moveBackward">arrow_back_ios</span>
-      <transition name="flip" mode="out-in">
+      <transition :name="slideTransition" mode="out-in">
         <ResultBox v-if="nowShowing===1" number="1" class="result-box" key="1"></ResultBox>
         <ResultBox v-else-if="nowShowing===2" number="2" class="result-box" key="2"></ResultBox>
         <ResultBox v-else-if="nowShowing===3" number="3" class="result-box" key="3"></ResultBox>
@@ -17,8 +17,8 @@
     </div>
 
     <div class="icon-button-wrap">
-      <IconButton value="다시하기" :icon="replay" class="icon-button"></IconButton>
-      <IconButton value="공유하기" :icon="share" class="icon-button"></IconButton>
+      <IconButton value="다시하기" icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-replay.png" class="icon-button"></IconButton>
+      <IconButton value="공유하기" icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-share.png" class="icon-button"></IconButton>
     </div>
 
   </div>
@@ -39,23 +39,29 @@ export default {
   data() {
     return {
       nowShowing: 1,
-      replay: '<span class="material-icons-outlined md-18">replay</span>',
-      share: '<span class="material-icons-outlined md-18">add_to_home_screen</span>'
+      slideTransition: 'slide-right',
     }
   },
   methods: {
     // 이전 결과 보기
     moveBackward() {
+      this.slideTransition = 'slide-left'
+
       if (this.nowShowing === 1) {
         this.nowShowing = 3
       } else this.nowShowing--
+
+      const transition = document.getElementById('transition')
+      console.log(transition)
     },
     // 다음 결과 보기
     moveForward() {
+      this.slideTransition = 'slide-right'
+
       if (this.nowShowing === 3) {
         this.nowShowing = 1
       } else this.nowShowing++
-    }
+    },
   }
 }
 </script>

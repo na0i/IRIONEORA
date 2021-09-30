@@ -2,7 +2,7 @@
   <div>
     <button>
       {{value}}&nbsp;
-      <span v-html="icon"></span>
+      <img :src="icon" alt="" class="icon">
     </button>
   </div>
 </template>
