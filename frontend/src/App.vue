@@ -43,10 +43,11 @@ import LowBar from "@/components/common/LowBar";
   min-height: calc(100vh - 150px);
   /*margin-top: 40px;*/
   margin-bottom: 60px;
+  margin-top: 50px;
 }
 
 #app-nav {
-  padding: 30px;
+  /*padding: 30px;*/
 }
 
 #low-bar {
