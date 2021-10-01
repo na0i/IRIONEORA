@@ -19,7 +19,7 @@
     </div>
 
     <!-- 확인 후 삭제 -->
-    <button>pqpeqpq12</button> 
+    <button>pqpeqpq1</button> 
   </div>
 </template>
 
@@ -59,7 +59,7 @@ import SearchCard from './SearchCard.vue'
       getArtifactPageList (pageNum) {
         axios({
               method: 'get',
-              url : `http://www.emuseum.go.kr/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${pageNum}`, 
+              url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=${pageNum}`, 
             })
             .then((res) => {
               this.search_list.push(...res.data.list)
@@ -83,7 +83,7 @@ import SearchCard from './SearchCard.vue'
         // 응답 요청
         axios({
           method: 'get',
-          url : `http://www.emuseum.go.kr/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
+          url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
         })
         .then((res) => {
           console.log("res")
