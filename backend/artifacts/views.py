@@ -18,6 +18,9 @@ import bs4
 import xmltodict
 import pprint
 
+from konlpy.tag import Okt, Kkma, Twitter
+from collections import Counter
+
 # 저장 여부 확인
 def is_saved(id):
     if not Artifact.objects.all().filter(identification_number=id):
@@ -155,6 +158,129 @@ def artifact_detail(request, artifact_id):
         return Response(error_data)
 
 
+@api_view(['GET'])
+def wordcloud(request, artifact_id):
+    
+    # 해당 유물에 대한 정보 받아오기
+    artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
+    API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+    params = {'serviceKey': API_KEY, 'id': artifact_id}
+
+    raw_data = requests.get(artifact_url, params=params)
+    pretty_data = bs4.BeautifulSoup(raw_data.content, 'html.parser')
+    
+    ori_description = ''
+    ori_indexWords = ''
+    ori_nationality_1 = ''
+    ori_nationality_2 = ''
+    ori_materialName = ''
+    ori_purposeName1 = ''
+    ori_purposeName2 = ''
+    ori_purposeName3 = ''
+    ori_purposeName4 = ''
+    relt_id = ''
+
+    for item in pretty_data.find_all('item'):
+        if item.get('key') == "desc":
+            ori_description = item.get('value')
+
+        if item.get('key') == "indexWord":
+            ori_indexWords = item.get('value')
+
+        if item.get('key') == "nationalityName1":    
+            ori_nationality_1 = item.get('value')
+
+        if item.get('key') == "nationalityName2":    
+            ori_nationality_2 = item.get('value')
+
+        if item.get('key') == "materialName1":    
+            ori_materialName = item.get('value')
+
+        if item.get('key') == "purposeName1":    
+            ori_purposeName1 = item.get('value')
+
+        if item.get('key') == "purposeName2":    
+            ori_purposeName2 = item.get('value')
+
+        if item.get('key') == "purposeName3":    
+            ori_purposeName3 = item.get('value')
+        
+        if item.get('key') == "purposeName4":    
+            ori_purposeName4 = item.get('value')
+
+        if item.get('key') == "reltId":
+            relt_id = item.get('value')
+
+    # 관련 유물에 대한 정보 받아오기
+    if relt_id:
+        artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
+        API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+        params = {'serviceKey': API_KEY, 'id': relt_id}
+
+        raw_data = requests.get(artifact_url, params=params)
+        pretty_data = bs4.BeautifulSoup(raw_data.content, 'html.parser')
+
+        rel_description = ''
+        rel_indexWords = ''
+        rel_nationality_1 = ''
+        rel_nationality_2 = ''
+        rel_materialName = ''
+        rel_purposeName1 = ''
+        rel_purposeName2 = ''
+        rel_purposeName3 = ''
+        rel_purposeName4 = ''
+
+        for item in pretty_data.find_all('item'):
+            if item.get('key') == "desc":
+                rel_description = item.get('value')
+
+            if item.get('key') == "indexWord":
+                rel_indexWords = item.get('value')
+
+            if item.get('key') == "nationalityName1":    
+                rel_nationality_1 = item.get('value')
+
+            if item.get('key') == "nationalityName2":    
+                rel_nationality_2 = item.get('value')
+
+            if item.get('key') == 'materialName1':
+                rel_materialName = item.get('value')
+
+            if item.get('key') == "purposeName1":    
+                rel_purposeName1 = item.get('value')
+
+            if item.get('key') == "purposeName2":    
+                rel_purposeName2 = item.get('value')
+
+            if item.get('key') == "purposeName3":    
+                rel_purposeName3 = item.get('value')
+            
+            if item.get('key') == "purposeName4":    
+                rel_purposeName4 = item.get('value')
+
+        ori_info = ori_description + ori_indexWords + ori_nationality_1 + ori_nationality_2 + ori_materialName + ori_purposeName1 + ori_purposeName2 + ori_purposeName3 + ori_purposeName4
+        rel_info = rel_description + rel_indexWords + rel_nationality_1 + rel_nationality_2 + rel_materialName + rel_purposeName1 + rel_purposeName2 + rel_purposeName3 + rel_purposeName4
+        sentences = ori_info + rel_info
+
+    sentences = ori_description + ori_indexWords + ori_nationality_1 + ori_nationality_2 + ori_materialName + ori_purposeName1 + ori_purposeName2 + ori_purposeName3 + ori_purposeName4
+
+    okt = Okt()
+    count = Counter()
+
+    # 형태소 구분
+    morpheme = okt.pos(sentences)
+    
+    # 명사, 형용사 선별
+    noun_and_adj = []
+    for word, tag in morpheme:
+        if tag in ['Noun', 'Adjective']:
+            noun_and_adj.append(word)
+
+    # 빈도수와 함께 출력
+    count = Counter(noun_and_adj)
+    result = count.most_common(100)  # 상위 50개 출력
+
+    return Response(result)
 
 # 유물 좋아요
 @api_view(['POST'])
