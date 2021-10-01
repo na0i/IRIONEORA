@@ -19,10 +19,11 @@
 </template>
 
 <script>
-import accountsApi from "@/api/accounts";
+import cookies from "vue-cookies";
+import {mapState} from "vuex";
+import AccountsApi from "@/api/accounts";
 import Button from "@/components/common/Button";
 import ImageBox from "@/components/accounts/ImageBox";
-import {mapState} from "vuex";
 
 export default {
   name: "ProfilePage",
@@ -41,13 +42,20 @@ export default {
   },
   // watch
   // life cycle hook
-  created() {
-    accountsApi.requestProfile()
-      .then(res =>
-        this.$store.dispatch('setProfileInfo', res.data)
-      )
-  }
   // navigation guard
+  beforeRouteEnter(to, from, next) {
+    const token = cookies.get('user-token')
+    // 토큰이 있다면
+    if (token) {
+      next(vm => {
+        AccountsApi.requestProfile(token)
+          .then(res => {
+            vm.$store.dispatch('setProfileInfo', res.data)
+          })
+      })
+    }
+    else next('/login')
+  }
 }
 </script>
 
