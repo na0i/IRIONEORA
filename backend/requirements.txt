@@ -4,6 +4,7 @@ bs4==0.0.1
 certifi==2021.5.30
 cffi==1.14.6
 charset-normalizer==2.0.4
+colorama==0.4.4
 coreapi==2.3.3
 coreschema==0.0.4
 cryptography==3.4.8
@@ -20,6 +21,9 @@ idna==3.2
 inflection==0.5.1
 itypes==1.2.0
 Jinja2==3.0.1
+JPype1 @ file:///C:/Users/multicampus/Desktop/na0i/S05P21A601/backend/JPype1-1.1.2-cp38-cp38-win_amd64.whl
+konlpy==0.5.2
+lxml==4.6.3
 MarkupSafe==2.0.1
 mysqlclient==2.0.3
 numpy==1.21.2
@@ -44,6 +48,7 @@ selenium==3.141.0
 six==1.16.0
 soupsieve==2.2.1
 sqlparse==0.4.1
+tweepy==4.0.0
 uritemplate==3.0.1
 urllib3==1.26.6
 xmltodict==0.12.0
