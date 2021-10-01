@@ -19,7 +19,7 @@
     </div>
 
     <!-- 확인 후 삭제 -->
-    <button>pqpeqpq1</button> 
+    <button>pqpeqpq12</button> 
   </div>
 </template>
 
