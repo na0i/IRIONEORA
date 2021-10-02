@@ -79,6 +79,9 @@ export default {
 
         this.requestAnalyze(imageFile)
           .then(res => {
+            // vuex 결과 저장
+            this.$store.dispatch('setResults', res.data)
+
             // 미리보기
             const read = new FileReader()
             read.onload = file => {
