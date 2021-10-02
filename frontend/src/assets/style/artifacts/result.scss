@@ -23,6 +23,7 @@
       font-size: 36px;
       background-color: rgba(222, 200, 164, 0.4);
       position: absolute;
+      z-index: 3;
 
       &.left {
         left: 10px;
