@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="$router.push(`/detail/${result.identification}`)">
     <div class="result-box-wrap">
       
       <div class="explian-text">
@@ -30,6 +30,11 @@ import ArtifactsApi from "@/api/artifacts";
 export default {
   name: "ResultBox",
   props: ['number', 'result'],
+  methods: {
+    onClick() {
+
+    }
+  },
   computed: {
     imageUri() {
       return `https://${this.result.url}`
@@ -42,7 +47,6 @@ export default {
         '--crop-height': this.result.h,
         '--image-width': this.result.width,
         '--image-height': this.result.height,
-
       }
     }
   },

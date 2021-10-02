@@ -1,6 +1,8 @@
 <template>
   <div>
-    <button @click="onClick">카카오 로그인</button>
+    <button @click="onClick" class="kakao-button">
+      <img src="@/assets/images/kakao-login-wide.png" alt="">
+    </button>
   </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
             AccountsApi.requestKakaoLogin(code)
             .then(res => {
               cookies.set('user-token', res.data.key)
-              this.$router.back()
+              this.$router.go(-2)
             })
           }
         },
@@ -36,6 +38,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+ @import "src/assets/style/accounts/_kakao-login";
 </style>

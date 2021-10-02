@@ -40,8 +40,8 @@
     position: absolute;
     border: 3px solid #f1e8db;
     z-index: 2;
-    top: calc(45vh * var(--crop-start-y) - 13px);
-    left: calc(100% * var(--crop-start-x) - 13px);
+    top: calc(45vh * var(--crop-start-y) - 12px);
+    left: calc(100% * var(--crop-start-x) - 12px);
     width: calc(100% * var(--crop-width) + 20px) ;
     height: calc(45vh * var(--crop-height) + 20px);
   }
