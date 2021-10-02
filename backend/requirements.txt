@@ -21,7 +21,7 @@ idna==3.2
 inflection==0.5.1
 itypes==1.2.0
 Jinja2==3.0.1
-JPype1 @ file:///C:/Users/multicampus/Desktop/na0i/S05P21A601/backend/JPype1-1.1.2-cp38-cp38-win_amd64.whl
+JPype1-1.1.2-cp38-cp38-win_amd64.whl
 konlpy==0.5.2
 lxml==4.6.3
 MarkupSafe==2.0.1
