@@ -9,7 +9,7 @@ files = [
 ]
 
 
-rawdata = {}
+rawdata = []
 
 
 
@@ -19,14 +19,10 @@ with open('4000.json', 'r') as jason_file:
 
 # print(jason_to_python)
 
+face_item = {}
 tmp = jason_to_python[0]
 
-rawdata['identification'] = tmp.keys
+face_item['identification'] = list(tmp.keys())[0]
 
 
-
-print(rawdata)
-
-
-####### 데이터 전처리 멘토링 이후에 어떻게 할지 확인
-
+print(tmp)
