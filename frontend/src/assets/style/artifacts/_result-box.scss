@@ -36,6 +36,28 @@
     height: 45vh;
   }
 
+  .artifact-image-crop {
+    position: absolute;
+    border: 3px solid #f1e8db;
+    z-index: 2;
+    top: calc(45vh * var(--crop-start-y) - 13px);
+    left: calc(100% * var(--crop-start-x) - 13px);
+    width: calc(100% * var(--crop-width) + 20px) ;
+    height: calc(45vh * var(--crop-height) + 20px);
+  }
+
+  .artifact-image-crop-wrap {
+    position: absolute;
+    width: 100%;
+    height: 45vh;
+    top: 0;
+    z-index: 3;
+  }
+
+  .artifact-image-wrap {
+    position: relative;
+  }
+
   .explian-text {
     background-color: #3D4141;
     color: #DEC8A4;
