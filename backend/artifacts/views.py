@@ -18,7 +18,7 @@ import bs4
 import xmltodict
 import pprint
 
-from konlpy.tag import Okt, Kkma, Twitter
+from konlpy.tag import Okt
 from collections import Counter
 
 # 저장 여부 확인
