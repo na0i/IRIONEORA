@@ -54,10 +54,10 @@ export default {
 }
 
 #app-content {
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 130px);
   /*margin-top: 40px;*/
   margin-bottom: 60px;
-  margin-top: 50px;
+  margin-top: 70px;
 }
 
 #app-nav {

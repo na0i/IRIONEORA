@@ -110,6 +110,7 @@ label {
   justify-content: center;
   text-align: center;
   z-index: 1;
+  color: #DEC8A4;
 }
 
 input{
@@ -119,17 +120,20 @@ input{
   height:50px;
   vertical-align:middle;
   position: absolute;
-  border-radius:25px;
+  /*border-radius:25px;*/
   width:100%;
   box-sizing:border-box;
   padding:0 0 0 80px;
-  box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);
-  font-family: GongGothicLight;
+  /*box-shadow: 0 0 15px -9px rgba(0, 0, 0, 0.55);*/
   font-size: 0.9em;
+  font-family: 'Noto Serif KR';
+  background: #081420;
+  color: #DEC8A4;
+
 }
 
 input:focus {
-  border: 1px solid rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(222, 200, 164, 0.5);
 }
 
 input.error {
