@@ -1,8 +1,9 @@
 <template>
   <div>
-
-    <router-link to="/login">로그인</router-link>
-    <router-link to="/signup">회원가입</router-link>
+    <div class="router-wrap">
+      <router-link to="/login" class="router">로그인</router-link>
+      <router-link to="/signup" class="router">회원가입</router-link>
+    </div>
 
     <router-view></router-view>
 
@@ -15,6 +16,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+  @import "src/assets/style/accounts/sign-in-up";
 </style>
