@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const URL = 'http://localhost:8000/'
+// const URL = 'http://localhost:8000/'
+const URL = 'http://j5a601.p.ssafy.io/'
+
 const ROUTES = {
   detail: 'artifacts/',
   today: 'pages/recommend',

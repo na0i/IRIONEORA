@@ -12,6 +12,12 @@ from rest_framework.response import Response
 
 from pyspark.sql import SparkSession
 
+spark = SparkSession\
+        .builder\
+        .master('spark://170.26.6.204:7077')\
+        .appName('Search')\
+        .getOrCreate()
+
 # def index(request):
 #     sc = spark.sparkContext
 
