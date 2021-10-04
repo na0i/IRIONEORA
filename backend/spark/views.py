@@ -89,12 +89,14 @@ def user_face(request):
     except:
         pass
 
-    # print(request.data)
+    print(request.data)
 
     ret = []
     ret.extend(decode_one_image(request.data))
 
-    userDf = spark.createDataFrame(ret)
+    print(ret)
+
+    userDf = spark.createDataFrame(ret[0])
 
     training_vectorize = VectorAssembler(
         inputCols=[
