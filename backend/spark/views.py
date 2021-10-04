@@ -36,7 +36,7 @@ def user_face(request):
     try:
         spark = SparkSession\
                 .builder\
-                .master('spark://127.0.0.1:7077')\
+                .master('spark://172.26.6.204:7077')\
                 .appName('Search')\
                 .getOrCreate()
 
