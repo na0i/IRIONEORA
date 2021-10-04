@@ -94,6 +94,8 @@ def user_face(request):
     ret = []
     ret.extend(decode_one_image(request.data))
 
+    userDf = spark.createDataFrame(ret)
+
     training_vectorize = VectorAssembler(
         inputCols=[
             # 'age',
@@ -111,7 +113,7 @@ def user_face(request):
         ],
         outputCol='features'
     )
-    userData = training_vectorize.transform(ret)
+    userData = training_vectorize.transform(userDf)
 
     print(userData)
 
