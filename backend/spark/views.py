@@ -7,10 +7,15 @@ from artifacts.models import Artifact
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+import numpy as np
+import pandas as pd
 
 # Create your views here.
 
 from pyspark.sql import SparkSession
+from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.feature import PCA
+from pyspark.ml.feature import PCAModel
 
 # def index(request):
 #     sc = spark.sparkContext
@@ -24,11 +29,50 @@ from pyspark.sql import SparkSession
 # Create your views here.
 
 
+# 인풋된 유저 얼굴 데이터 변환
+def get_polygon_info(prefix, polygon):
+    x = [p[0] for p in polygon]
+    y = [p[1] for p in polygon]
 
-def test(request):
-    return 'just test'
+    return {
+        f'{prefix}_x_mean': np.average(x),
+        f'{prefix}_y_mean': np.average(y),
+        f'{prefix}_x_min': np.min(x),
+        f'{prefix}_x_max': np.max(x),
+        f'{prefix}_y_min': np.min(y),
+        f'{prefix}_y_max': np.max(y),
+    }
 
 
+def decode_face(face):
+    keys = ['x', 'y', 'w', 'h', 'yaw', 'pitch', 'roll', 'score']
+    data = dict()
+    data['age'] = face['facial_attributes']['age']
+    data['gender'] = face['facial_attributes']['gender']['female']
+
+    data.update({k: face[k] for k in keys})
+
+    for k, v in face['facial_points'].items():
+        data.update(get_polygon_info(k, v))
+
+    return data
+
+
+def decode_one_image(o):
+    ret = []
+
+    rid = o['rid']
+    r = o['result']
+
+    width = r['width']
+    height = r['height']
+
+    for face in r['faces']:
+        data = decode_face(face)
+        data.update({'identification': 'User', 'rid': rid, 'width': width, 'height': height})
+        ret.append(data)
+
+    return ret
 
 # 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
 @api_view(['POST'])
@@ -44,7 +88,33 @@ def user_face(request):
         test = spark.read.json('/home/path/test.json')
     except:
         pass
-    print(request.data)
+
+    # print(request.data)
+
+    ret = []
+    ret.extend(decode_one_image(request.data))
+
+    training_vectorize = VectorAssembler(
+        inputCols=[
+            # 'age',
+            'gender',
+            # 'x','y','w','h','yaw','pitch','roll',
+            # 'score',
+            'left_eyebrow_x_mean','left_eyebrow_y_mean','left_eyebrow_x_min','left_eyebrow_x_max','left_eyebrow_y_min','left_eyebrow_y_max',
+            'jaw_x_mean','jaw_y_mean','jaw_x_min','jaw_x_max','jaw_y_min','jaw_y_max',
+            'left_eye_x_mean','left_eye_y_mean','left_eye_x_min','left_eye_x_max','left_eye_y_min','left_eye_y_max',
+            'lip_x_mean','lip_y_mean','lip_x_min','lip_x_max','lip_y_min','lip_y_max',
+            'nose_x_mean','nose_y_mean','nose_x_min','nose_x_max','nose_y_min','nose_y_max',
+            'right_eye_x_mean','right_eye_y_mean','right_eye_x_min','right_eye_x_max','right_eye_y_min','right_eye_y_max',
+            'right_eyebrow_x_mean','right_eyebrow_y_mean','right_eyebrow_x_min','right_eyebrow_x_max','right_eyebrow_y_min','right_eyebrow_y_max',
+            # identification,rid,width,height
+        ],
+        outputCol='features'
+    )
+    userData = training_vectorize.transform(ret)
+
+    print(userData)
+
 
     dummydata = [
         {'identification': 'PS0100100102102727900000', 'name': '이건첫번째야', 'width': 3000, 'height': 2000, 'x': 0.4754312744140625, 'y': 0.6482667846679687, 'w': 0.05687882486979168, 'h': 0.08531817626953131},
