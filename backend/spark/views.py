@@ -10,13 +10,13 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-# from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession
 
-# spark = SparkSession\
-#         .builder\
-#         .master('spark://127.0.0.1:7077')\
-#         .appName('Python Spark SQL basic example')\
-#         .getOrCreate()
+spark = SparkSession\
+        .builder\
+        .master('spark://127.0.0.1:7077')\
+        .appName('Search')\
+        .getOrCreate()
 
 # def index(request):
 #     sc = spark.sparkContext
@@ -39,6 +39,11 @@ def test(request):
 # 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
 @api_view(['POST'])
 def user_face(request):
+    try:
+        sc = spark.sparkContext
+        test = spark.read.json('/home/path/test.json')
+    except:
+        pass
     print(request.data)
 
     dummydata = [
