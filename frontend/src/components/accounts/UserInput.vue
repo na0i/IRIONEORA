@@ -137,8 +137,7 @@ input:focus {
 }
 
 input.error {
-  border: 1px solid #cd4e3e;
-  box-shadow: 0px 0px 15px -5px #cd4e3e;
+  border-bottom: 1px solid #cd4e3e;
 }
 
 .error-message {
