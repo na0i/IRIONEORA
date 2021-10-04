@@ -81,6 +81,16 @@ export default {
       })
       .catch((err) => console.log(err))
     },
+    getWordCloud() {
+      axios({
+        url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}` + '/wordcloud',
+        method: 'get',
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch((err) => console.log(err))
+    }
   },
   computed: {
   },
