@@ -93,7 +93,7 @@ def user_face(request):
 
     ret = [ decode_one_image(request.data)[0] ]
 
-    print(request.data)
+    print(ret)
     userDf = spark.createDataFrame(ret)
 
     training_vectorize = VectorAssembler(
