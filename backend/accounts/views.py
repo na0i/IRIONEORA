@@ -21,12 +21,12 @@ def username_duplicate_check(request):
     username = request.GET['username']
     data = {
         'error': True,
-        'result': '이미 사용중인 닉네임입니다.'
+        'result': '이미 사용중인 아이디입니다.'
     }
 
     if not User.objects.all().filter(username=username):
         data['error'] = False
-        data['result'] = '사용 가능한 닉네임입니다.'
+        data['result'] = '사용 가능한 아이디입니다.'
 
     return Response(data=data)
 
