@@ -12,12 +12,6 @@ from rest_framework.response import Response
 
 from pyspark.sql import SparkSession
 
-spark = SparkSession\
-        .builder\
-        .master('spark://170.26.6.204:7077')\
-        .appName('Search')\
-        .getOrCreate()
-
 # def index(request):
 #     sc = spark.sparkContext
 
@@ -40,6 +34,12 @@ def test(request):
 @api_view(['POST'])
 def user_face(request):
     try:
+        spark = SparkSession\
+                .builder\
+                .master('spark://127.0.0.1:7077')\
+                .appName('Search')\
+                .getOrCreate()
+
         sc = spark.sparkContext
         test = spark.read.json('/home/path/test.json')
     except:
