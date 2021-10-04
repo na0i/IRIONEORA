@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 // const URL = 'http://localhost:8000/'
-const URL = 'http://j5a601.p.ssafy.io/'
+const URL = 'http://j5a601.p.ssafy.io:8000/'
+
 const ROUTES = {
   profile: 'rest-auth/user/',
   login: 'rest-auth/login/',
