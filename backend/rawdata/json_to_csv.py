@@ -50,18 +50,38 @@ def decode_one_image(o):
     return ret
 
 
-def run(filename):
-    ret = []
-    with open(filename, 'r') as f:
-        for obj in json.load(f):
-            ret.extend(decode_one_image(obj))
-    df = pd.DataFrame(ret)
-
-    df.to_csv(os.path.splitext(filename)[0] + '.csv')
+# def run(filename):
+#     ret = []
+#     with open(filename, 'r') as f:
+#         for obj in json.load(f):
+#             ret.extend(decode_one_image(obj))
+#     df = pd.DataFrame(ret)
+#     df.to_csv(os.path.splitext(filename)[0] + '.csv')
 
 
 # Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    for fn in glob.glob(os.path.join(os.getcwd(), '*.json')):
-        print(fn)
-        run(fn)
+# if __name__ == '__main__':
+#     for fn in glob.glob(os.path.join(os.getcwd(), '*.json')):
+#         print(fn)
+#         run(fn)
+
+
+files = [
+    '1to4000.json', '4000.json', '5000.json', '6000.json', '7000.json',
+    '8000to12000.json', '12000to16000.json', '16000to20000.json', '20000to21000.json',
+]
+
+rawdata = []
+
+for file in files:
+    ret = []
+    with open(file, 'r') as jason_file:
+        jason_to_python = json.load(jason_file)
+        for obj in jason_to_python:
+            ret.extend(decode_one_image(obj))
+    
+    print(file)
+    rawdata.extend(ret)
+
+df = pd.DataFrame(rawdata)
+df.to_csv('rawdata.csv')
