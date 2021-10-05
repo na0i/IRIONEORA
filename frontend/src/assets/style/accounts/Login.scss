@@ -32,86 +32,10 @@
   margin-bottom: 20px;
   font-size: 0.8em;
   font-weight: bold;
-  width: 65%;
+  width: 90%;
   align-self: center;
+  word-break: keep-all;
 }
-
-/* 자동로그인 */
-.login-duration {
-  width: 80%;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.8em;
-}
-
-.switch {
-    display: inline-block;
-    height: 25px;
-    position: relative;
-    width: 50px;
-}
-
-.switch > input {
-    height: 0px;
-    opacity: 0;
-    width: 0px;
-}
-
-.switch > .switch-slider {
-    -webkit-transition: .4s;
-    background-color: #ccc;
-    border-radius: 20px;
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: .4s;
-}
-
-.switch > .switch-slider:before {
-    -webkit-transition: .4s;
-    background-color: white;
-    border-radius: 50%;
-    bottom: 4px;
-    content: "";
-    height: 18px;
-    left: 4px;
-    position: absolute;
-    transition: .4s;
-    width: 18px;
-}
-
-.switch > input:checked + .switch-slider:before {
-    -ms-transform: translateX(24px);
-    -webkit-transform: translateX(24px);
-    transform: translateX(24px);
-}
-
-.switch.switch-off-primary > input + .switch-slider {
-  background-color: #183a1d;
-}
-
-.switch.switch-primary > input:checked + .switch-slider {
-  background-color: #183a1d;
-  box-shadow: 0 0 3px #183a1d;
-}
-
-.switch-sm > .switch-slider:before {
-    height: 18px;
-    width: 18px;
-}
-.switch-sm > input:checked + .switch-slider:before {
-    -ms-transform: translateX(22px);
-    -webkit-transform: translateX(22px);
-    transform: translateX(22px);
-}
-
-
-
 
 .button {
   width: 90%;
@@ -134,7 +58,7 @@
 .login-description{
   width: 90%;
   margin-left: 5%;
-  font-family: GongGothicLight;
+  font-family: "Noto Serif KR";
   font-size: 0.9em;
   color: #183a1d;
 }

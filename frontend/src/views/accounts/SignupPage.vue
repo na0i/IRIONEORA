@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="signup">
     <div class="input-with-button">
       <UserInput class="user-input set"
           id="username" label="아이디" placeholder="아이디를 입력하세요" type="text"
@@ -33,6 +33,7 @@
 import PV from "password-validator";
 import UserInput from "@/components/accounts/UserInput";
 import AccountsApi from "@/api/accounts";
+import cookies from "vue-cookies";
 
 export default {
   name: "SignupPage",
@@ -122,8 +123,15 @@ export default {
         AccountsApi.requestSignup(data)
         .then(res => {
           const token = res.data.key
-          
+            // 회원 프로필 저장
+            AccountsApi.requestProfile(token)
+              .then(res =>
+                this.$store.dispatch('setProfileInfo', res.data)
+              )
 
+            // 쿠키에 유저 토큰 저장
+            cookies.set('user-token', token, 0)
+            this.$router.back()
         })
       }
     },
@@ -179,87 +187,6 @@ export default {
 }
 </script>
 
-<style scoped>
-
-#signup{
-  margin-top: 40px;
-}
-
-
-#signup .back-button {
-  display: flex;
-  margin-top: 10px;
-}
-
-#signup #title {
-  color: #183a1d;
-  margin: 30px 0 40px;
-  padding: 10px 0;
-  font-size: 1.4em;
-}
-
-.user-input {
-  width: 90%;
-  margin-left: 5%;
-}
-
-.user-input.set {
-  margin-left: 0;
-  width: 76%;
-}
-
-.input-with-button {
-  display: flex;
-  justify-content: space-between;
-  margin-left: 5%;
-  width: 90%;
-}
-
-.input-with-button a {
-  width: 21%;
-  margin-bottom: 25px;
-  margin-left: 3%;
-  align-self: center;
-  color: #cd4e3e;
-  font-size: 0.8em;
-  cursor: pointer;
-  border: 1px solid #cd4e3e;
-  padding: 5px 3px;
-  border-radius: 5px;
-  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
-  text-decoration: none;
-}
-
-.input-with-button a.disabled {
-  /*color: lightgray;*/
-  opacity: 0.5;
-  /*text-decoration: none;*/
-  pointer-events: none;
-  cursor: default;
-}
-
-.input-with-button a.success {
-  color: #6cb9a2;
-  /*text-decoration: none;*/
-  pointer-events: none;
-  cursor: default;
-  border: none;
-  box-shadow: none;
-}
-
-.button {
-  width: 90%;
-  height: 50px;
-  border-radius:25px;
-  box-shadow: 0 0 15px -8px rgba(0, 0, 0, 0.55);
-  font-size: 1em;
-  /*font-weight: bold;*/
-  background-color: #183a1d;
-  color: #e1eedd;
-  cursor: pointer;
-}
-.button:disabled {
-  opacity: 0.6;
-  cursor: default;
-}
+<style lang="scss" scoped>
+  @import "src/assets/style/accounts/signup";
 </style>
