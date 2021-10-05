@@ -85,7 +85,7 @@ def user_face(request):
     try:
         spark = SparkSession\
                 .builder\
-                .master('spark://172.26.6.204:7077')\
+                .master('spark://j5a601.p.ssafy.io:7077')\
                 .appName('Search')\
                 .getOrCreate()
 
@@ -124,7 +124,7 @@ def user_face(request):
     )
     userData = training_vectorize.transform(userDf)
 
-    model = PCAModel.load('hdfs://172.26.6.204:9000/models/2')
+    model = PCAModel.load('hdfs://127.0.0.1:9000/models/2')
     # print(model.pc)
     # print(model)
     # print(userData)
