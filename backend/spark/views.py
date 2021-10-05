@@ -123,11 +123,16 @@ def user_face(request):
 
     userData = training_vectorize.transform(userDf)
     print( '----------- load model')
-    model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
+    #model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
+    model = PCAModel.load('./model')
     print( '----------- load done')
     print(model.pc)
     print(model)
     print(userData)
+    try:
+        spark.stop()
+    except:
+        pass
 
 
     
