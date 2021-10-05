@@ -1,6 +1,9 @@
+from os import error
+from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from rest_framework import serializers
 from rest_framework.serializers import Serializer
+from rest_framework.views import APIView
 
 from .models import Artifact
 from .serializers import ArtifactSerializer, ArtifactLikeSerializer, ArtifactResembleSerializer, ArtifactDetailSerializer
@@ -156,7 +159,6 @@ def artifact_detail(request, artifact_id):
     else:
         error_data = {'message': 'error'}
         return Response(error_data)
-
 
 # 워드 클라우드
 @api_view(['GET'])
@@ -338,7 +340,6 @@ def artifact_like(request, artifact_id):
     serializer = ArtifactLikeSerializer(artifact)
     return Response(serializer.data)
 
-
 # 닮은 유물 저장
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -354,3 +355,45 @@ def artifact_resemble(request, artifact_id):
     
     serializer = ArtifactResembleSerializer(artifact)
     return Response(serializer.data)
+
+# 박물관 정보
+@api_view(['GET'])
+def get_museum_info(request, museum_name):
+    museum_url = f'http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api'
+    API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+    params = {'serviceKey': API_KEY, 'fcltyNm': museum_name}
+
+    raw_data = requests.get(museum_url, params=params)
+    pretty_data = bs4.BeautifulSoup(raw_data.content, 'html.parser')    
+    
+    data = {
+        'fclty_name': '',
+        'fclty_type': '',
+        'address': '',
+        'homepage': '',
+        'weekday_open': '',
+        'weekday_close': '',
+        'holiday_open': '',
+        'holiday_close': '',
+        'closed_date': '',
+        'adult_chrg': '',
+        'student_chrg': '',
+        'child_chrg': '',
+        'introduction': '',
+    }
+
+    data['fclty_name'] = pretty_data.find('fcltynm').text
+    data['fclty_type'] = pretty_data.find('fcltytype').text
+    data['address'] = pretty_data.find('rdnmadr').text
+    data['homepage'] = pretty_data.find('homepageurl').text
+    data['weekday_open'] = pretty_data.find('weekdayoperopenhhmm').text
+    data['weekday_close'] = pretty_data.find('weekdayopercolsehhmm').text
+    data['holiday_open'] = pretty_data.find('holidayoperopenhhmm').text
+    data['holiday_close'] = pretty_data.find('holidaycloseopenhhmm').text
+    data['closed_date'] = pretty_data.find('rstdeinfo').text
+    data['adult_chrg'] = pretty_data.find('adultchrge').text
+    data['student_chrg'] = pretty_data.find('yngbgschrge').text
+    data['child_chrg'] = pretty_data.find('childchrge').text
+    data['introduction'] = pretty_data.find('fcltyintrcn').text
+
+    return Response(data)
