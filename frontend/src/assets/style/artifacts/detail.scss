@@ -45,7 +45,7 @@
 .first-tab {
   display: flex;
   justify-content: space-between;
-  margin-top: 5px;
+  margin-top: 15px;
 }
 
 .heart {
@@ -60,8 +60,8 @@
 
 .tab {
   align-items: center;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .museum-button {
@@ -91,4 +91,9 @@
   font-weight: 500;
   justify-content: flex-end;
   padding-right: 7px;
+}
+
+#wordcloud {
+  height: 200px;
+  margin: 0;
 }
