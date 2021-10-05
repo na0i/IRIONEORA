@@ -80,26 +80,5 @@ const router = new VueRouter({
   routes
 })
 
-// 전역 navigation guard
-router.beforeEach((to, from, next) => {
-
-  const token = cookies.get('user-token')
-
-  // 로그인 되어있지 않은 경우 -> 경로를 store에 저장
-  if (to.path === '/profile') {
-    if (token === null) {
-      store.dispatch('setLoginPath', to.path)
-    }
-  }
-
-  // 로그인 된 유저가 로그인으로 들어가지는 경우 -> back
-  if (to.path === '/login') {
-    if (token) {
-      next(store.state.afterLoginPath)
-    }
-  }
-
-  next()
-})
 
 export default router

@@ -18,7 +18,9 @@
     </div>
 
     <div class="icon-button-wrap">
-      <IconButton value="다시하기" icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-replay.png" class="icon-button"></IconButton>
+      <IconButton
+          value="다시하기" @click.native="onRedo"
+          icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-replay.png" class="icon-button"></IconButton>
       <IconButton value="공유하기" icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-share.png" class="icon-button"></IconButton>
     </div>
 
@@ -64,6 +66,11 @@ export default {
         this.nowShowing = 1
       } else this.nowShowing++
     },
+
+    // 다시하기
+    onRedo() {
+      this.$router.push('/')
+    }
   },
   computed: {
     ...mapState({
