@@ -126,6 +126,7 @@ def user_face(request):
     userData = training_vectorize.transform(userDf)
     print( '----------- load model')
     res = subprocess.run( ['pyspark','./spark/tmp.py'], capture_output=True)
+    print(res)
     print(res.stdout.decode('utf-8'))
 
     #model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
