@@ -83,9 +83,6 @@ def decode_one_image(o):
 # 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
 @api_view(['POST'])
 def user_face(request):
-    res = subprocess.run( ['pyspark','./spark/tmp.py'], capture_output=True)
-
-    print(res.stdout.decode('utf-8'))
     try:
         spark = SparkSession\
                 .builder\
@@ -125,11 +122,15 @@ def user_face(request):
         outputCol='features'
     )
 
+
     userData = training_vectorize.transform(userDf)
-    #print( '----------- load model')
+    print( '----------- load model')
+    res = subprocess.run( ['pyspark','./spark/tmp.py'], capture_output=True)
+    print(res.stdout.decode('utf-8'))
+
     #model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
     #model = PCAModel.load('./spark/model')
-    #print( '----------- load done')
+    print( '----------- load done')
     #print(model.pc)
     #print(model)
     #print(userData)

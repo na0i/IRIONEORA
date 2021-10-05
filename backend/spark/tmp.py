@@ -8,6 +8,7 @@ from pyspark.ml.feature import PCAModel
 
 from scipy.spatial import distance
 
+print('start')
 spark = SparkSession\
         .builder\
         .master('spark://j5a601.p.ssafy.io:7077')\
@@ -15,4 +16,5 @@ spark = SparkSession\
         .getOrCreate()
 
 model = PCAModel.load('./spark/model')
-print(model.pc)
+print(model)
+print('end')
