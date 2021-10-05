@@ -123,9 +123,10 @@ def user_face(request):
         outputCol='features'
     )
     userData = training_vectorize.transform(userDf)
+
     model = PCAModel.load('hdfs://172.26.6.204:9000/models/2')
-    print(model.pc)
-    print(model)
+    # print(model.pc)
+    # print(model)
     # print(userData)
 
 
