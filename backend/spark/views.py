@@ -125,7 +125,7 @@ def user_face(request):
 
     userData = training_vectorize.transform(userDf)
     print( '----------- load model')
-    res = subprocess.run( ['pyspark','./spark/tmp.py'], capture_output=True)
+    res = subprocess.run( ['spark-submit','./spark/tmp.py'], capture_output=True)
     print(res)
     print(res.stdout.decode('utf-8'))
 
