@@ -82,17 +82,6 @@ def decode_one_image(o):
 # 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
 @api_view(['POST'])
 def user_face(request):
-    try:
-        spark = SparkSession\
-                .builder\
-                .master('spark://j5a601.p.ssafy.io:7077')\
-                .appName('Search')\
-                .getOrCreate()
-
-        sc = spark.sparkContext
-        test = spark.read.json('/home/path/test.json')
-    except:
-        pass
 
     # print(request.data)
 
@@ -122,12 +111,12 @@ def user_face(request):
         ],
         outputCol='features'
     )
-    userData = training_vectorize.transform(userDf)
 
-    model = PCAModel.load('hdfs://172.26.6.204:9000/models/2')
-    # print(model.pc)
-    # print(model)
-    # print(userData)
+    userData = training_vectorize.transform(userDf)
+    model = PCAModel.load('hdfs://127.0.0.1:9000/models/2')
+    print(model.pc)
+    print(model)
+    print(userData)
 
 
 
