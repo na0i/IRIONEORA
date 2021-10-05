@@ -6,10 +6,11 @@ const URL = 'http://j5a601.p.ssafy.io:8000/'
 
 const ROUTES = {
   detail: 'artifacts/',
+  museum: 'artifacts/museum/',
   today: 'pages/recommend',
   saveResemble(artifactId) {
     return `artifacts/${artifactId}/resemble/`
-  }
+  },
 }
 
 const token = {'Authorization': `Token ${cookies.get('user-token')}`}

@@ -13,7 +13,7 @@
           <div class="second-tab">
             <span class="artifact-title">소장위치</span>
             <span class="artifact-content">{{ detailInfo.museum_name }}</span>
-            <button class="museum-button"><span class="museum-button-text">자세히 보기</span></button>
+            <button class="museum-button" @click="getMuseumInfo(detailInfo.museum_name)"><span class="museum-button-text">자세히 보기</span></button>
           </div>
           <div v-if="isLike" class="second-tab">
             <img src="@/assets/images/heart.png" class="heart" @click="likeArtifact(detailInfo.identification_number)">
@@ -73,6 +73,7 @@ export default {
   data() {
     return {
       detailInfo: [],
+      serviceKey: 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq%2BcLDfiGBiMv8Pt5VFk1H0Sz4lX3yw%3D%3D',
       imgUrl: 'https://',
       isLike: false,
       wordcloudData: '',
@@ -102,6 +103,19 @@ export default {
       .then((res) => {
         console.log(res.data)
         this.isLike = !this.isLike
+      })
+      .catch((err) => console.log(err))
+    },
+
+    // 박물관
+    getMuseumInfo(museumName) {
+      axios({
+        url: API.URL + API.ROUTES.museum + `${museumName}` +'/',
+        // url: `http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api?serviceKey=${this.serviceKey}&fcltyNm=${this.detailInfo.museum_name}`, 
+        method: 'get'
+      })
+      .then((res) => {
+        console.log(res.data)
       })
       .catch((err) => console.log(err))
     },
