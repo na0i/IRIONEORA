@@ -2,7 +2,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from artifacts.models import Artifact
-# from django.http import HttpResponse
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -10,12 +9,18 @@ from rest_framework.response import Response
 import numpy as np
 import pandas as pd
 
-# Create your views here.
-
+import pyspark.sql.functions as F
 from pyspark.sql import SparkSession
+from pyspark.sql.types import DoubleType
+
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.feature import PCA
 from pyspark.ml.feature import PCAModel
+
+from scipy.spatial import distance
+
+
+
 
 # def index(request):
 #     sc = spark.sparkContext
@@ -118,10 +123,18 @@ def user_face(request):
         outputCol='features'
     )
     userData = training_vectorize.transform(userDf)
+    model = PCAModel.load('hdfs://172.26.6.204:9000/models/2')
+    print(model.pc)
+    print(model)
+    # print(userData)
 
-    print(userData)
 
 
+
+    
+    
+    
+    
     dummydata = [
         {'identification': 'PS0100100102102727900000', 'name': '이건첫번째야', 'width': 3000, 'height': 2000, 'x': 0.4754312744140625, 'y': 0.6482667846679687, 'w': 0.05687882486979168, 'h': 0.08531817626953131},
         {'identification': 'PS0100100100900173100000', 'name': '이건두번째고', 'width': 669, 'height': 515, 'x': 0.43930195122734494, 'y': 0.11844135765890473, 'w': 0.08157868663291756, 'h': 0.10597306038569479},
