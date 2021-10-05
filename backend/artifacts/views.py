@@ -334,8 +334,8 @@ def artifact_like(request, artifact_id):
 # 닮은 유물 저장
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def artifact_resemble(request, artifact_pk):
-    artifact = get_object_or_404(Artifact, pk=artifact_pk)
+def artifact_resemble(request, artifact_id):
+    artifact = get_object_or_404(Artifact, identification_number=artifact_id)
     user = request.user
 
     if artifact.resemble_users.filter(username=user).exists():
