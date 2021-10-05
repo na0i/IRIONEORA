@@ -50,6 +50,7 @@
         <div class="wordcloud">
           WORD CLOUD
         </div>
+        <div id="wordcloud"></div>
       </div>
     </div>
   </div>
@@ -58,6 +59,9 @@
 <script>
 import axios from 'axios'
 import API from '@/api/artifacts.js'
+import * as echarts from 'echarts'
+import 'echarts-wordcloud';
+
 
 export default {
   name: 'DetailPage',
@@ -66,36 +70,100 @@ export default {
   data() {
     return {
       detailInfo: [],
-      imgUrl: 'https://'
+      imgUrl: 'https://',
+      wordcloudData: '',
     }
   },
   methods: {
+    // detail page 전체 정보 받아오기
     fetchDetailInfo() {
       axios({
         url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}`,
         method: 'get',
       })
       .then((res) => {
+        console.log(res.data)
         this.detailInfo = res.data
         this.imgUrl += res.data.image_uri
       })
       .catch((err) => console.log(err))
     },
+    
+    // wordcloud 단어 받아오기
     getWordCloud() {
       axios({
         url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}` + '/wordcloud',
         method: 'get',
       })
       .then((res) => {
-        console.log(res.data)
+        this.wordcloudData = res.data
+        this.makeWordCloud()
       })
       .catch((err) => console.log(err))
+    },
+
+    // wordcloud 그리기
+    makeWordCloud() {
+      var chart = echarts.init(document.getElementById('wordcloud'));
+
+      // const color_palette = ['#F1E8DB', '#DEC8A4', '#D5D3C3', '#D4AB67', '#B1AFB2', '#848063'];
+      // function randomItem(a) {
+      //   console.log(a[Math.floor(Math.random() * a.length)])
+      //   return a[Math.floor(Math.random() * a.length)]
+      // }
+
+      chart.setOption({
+          series: [{
+              type: 'wordCloud',
+              // circle (default),  cardioid (apple or heart shape curve), diamond, triangle-forward, triangle, alias of triangle-upright, pentagon, and star.
+              shape: 'circle',
+              // maskImage: maskImage,
+              left: 'center',
+              top: 'center',
+              width: '90%',
+              height: '90%',
+              right: 'center',
+              bottom: 'center',
+              sizeRange: [12, 30],
+              rotationRange: [-90, 90],
+              rotationStep: 45,
+              gridSize: 8,
+              drawOutOfBound: false,
+              layoutAnimation: true,
+              textStyle: {
+                  fontFamily: 'Noto Serif KR',
+                  fontWeight: 500,
+                  // color: randomItem(color_palette),
+                  // color: function () {
+                  //   return 'rgb(' + [
+                  //       Math.round(Math.random() * 160),
+                  //       Math.round(Math.random() * 160),
+                  //       Math.round(Math.random() * 160)
+                  //   ].join(',') + ')';
+                  // }
+                  color: function(a) {
+                    const i =  (a.dataIndex)%6;
+                    const color_palette = ['#F1E8DB', '#DEC8A4', '#D5D3C3', '#D4AB67', '#B1AFB2', '#848063'];
+                    return color_palette[i];
+                  }
+              },
+              emphasis: {
+                  focus: 'self',
+                  textStyle: {
+                      textShadowBlur: 10,
+                      textShadowColor: '#333'
+                  }
+              },
+              data: this.wordcloudData
+          }]
+      });
     }
   },
   computed: {
   },
   created() {
     this.fetchDetailInfo();
+    this.getWordCloud();
   }
 }
 

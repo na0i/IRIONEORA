@@ -158,6 +158,7 @@ def artifact_detail(request, artifact_id):
         return Response(error_data)
 
 
+# 워드 클라우드
 @api_view(['GET'])
 def wordcloud(request, artifact_id):
 
@@ -278,7 +279,15 @@ def wordcloud(request, artifact_id):
 
     # 빈도수와 함께 출력
     count = Counter(noun_and_adj)
-    result = count.most_common(100)  # 상위 50개 출력
+    common_50 = count.most_common(50)  # 상위 50개 출력
+
+    # key - name, value - 빈도수 형태의 딕셔너리로 변환
+    # [{'name': '병풍', 'value': 5}, {'name': '의궤', 'value': 4}, {'name': '폭', 'value': 4} .. 이하 생략
+    result = []
+    for i in range(len(common_50)):
+        nv_dict = {'name': common_50[i][0], 'value': common_50[i][1]}
+        result.append(nv_dict)
+    print(result)
 
     return Response(result)
 
