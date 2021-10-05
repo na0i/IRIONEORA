@@ -16,6 +16,7 @@ import ResultPage from "@/views/artifacts/ResultPage";
 import LoginPage from "@/views/accounts/LoginPage";
 import SignupPage from "@/views/accounts/SignupPage";
 import SignInUpPage from "@/views/accounts/SignInUpPage";
+import IntroPage from '../views/common/IntroPage.vue'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
     path: '/main',
     name: 'MainPage',
     component: MainPage
+  },
+  {
+    path: '/intro',
+    name: 'IntroPage',
+    component: IntroPage
   },
   {
     path: '/search',

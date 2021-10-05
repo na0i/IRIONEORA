@@ -21,7 +21,7 @@
       <IconButton
           value="다시하기" @click.native="onRedo"
           icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-replay.png" class="icon-button"></IconButton>
-      <IconButton value="공유하기" icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-share.png" class="icon-button"></IconButton>
+      <IconButton @click.native="kakaoRequest()" value="공유하기" icon="https://irioneora.s3.ap-northeast-2.amazonaws.com/result-share.png" class="icon-button"></IconButton>
     </div>
 
   </div>
@@ -44,6 +44,10 @@ export default {
     return {
       nowShowing: 1,
       slideTransition: 'slide-right',
+
+      // 세일이 만듬
+      cuttedUrl: '/openapi/img?serviceKey=YRxuikhcQX7v7M0GurZEBdHr49zxbr2so054TqRBKqRBZzBQo7xWyhdM06W8QSsVLjQyaRpV%2BM8oRktGCkQ8oFx2VKjYUUqoOG7rRO2tJXcxleSenoyroumw7aVcXof9F7egXUi1K%2F4%3D&imageId=YjNLeE1CdGR6RUZUckU5ZllIbnU0SmVRbHFvZkxoZy9YNU9BeW5scWlRcXZrZTMxWUNsTGNBc2M2cUtpRmRoaHFqTEs5TnlJUnAvTzlkTHpVbnVZMmtZaytHRnYwQldM',
+      kakaoImageUrl: null,
     }
   },
   methods: {
@@ -70,7 +74,69 @@ export default {
     // 다시하기
     onRedo() {
       this.$router.push('/')
-    }
+    },
+
+    //세일이 만듬
+
+    // logic 
+    // 1. url을 받아와서 'http://www.emuseum.go.kr/'을 잘라야함 그래야 proxy설정이 맞아서 통신이 된다.
+    // 2. 자른 url을 받아서 파일로 만들고 변환해야함
+    // 3-1. 해당 파일을 카카오의 업로드하여 업로드 주소를 받음
+    // 3-2. 해당 주소를 공유하기 ImageUrl에 넣으면 완료!
+
+    // 카카오 공유하기
+    async KakaoRequest () {
+      // 1. url 자르기
+      
+      // this.cuttedUrl = this.testurl.substring(24,this.testurl.length)
+
+      // 2.url을 받아서, 파일 생성에 맞는 형식으로 변환
+      const response = await fetch(this.cuttedUrl);
+      const blob = await response.blob();
+
+      // 파일 생성하기
+      const file = new File([blob], 'image.jpg', {type: blob.type});
+      let list = new DataTransfer();
+      list.items.add(file);
+      let myFileList = list.files;
+
+      // 3-1. 위에서 만든 파일을 통해서 카카오 url 등록하기
+      var files = myFileList
+      await window.Kakao.Link.uploadImage({
+        file: files
+      })
+      .then((res) =>{
+
+        // 수정 카카오 url을 저장해야함
+        this.kakaoImageUrl = res.infos.original.url
+        console.log(this.kakaoImageUrl)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      
+      // 3-2.공유하기
+      window.Kakao.Link.sendDefault({ 
+        objectType: 'feed', 
+        content: { 
+          title: '나와 닮은 얼굴은????', 
+          description: '지금 바로 나와 닮은 문화재를 찾아보세요!', 
+          imageUrl: this.kakaoImageUrl,
+          link: { 
+            mobileWebUrl: 'http://j5a601.p.ssafy.io/', 
+            webUrl: 'http://j5a601.p.ssafy.io/', 
+              }, 
+            }, 
+          buttons: [{ 
+            title: '이리오너라!!', 
+            link: { 
+              mobileWebUrl: 'http://j5a601.p.ssafy.io/', 
+              webUrl: 'http://j5a601.p.ssafy.io/', 
+              },
+            }], 
+        }) 
+      }, 
+  
   },
   computed: {
     ...mapState({
