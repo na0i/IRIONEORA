@@ -122,14 +122,13 @@ def user_face(request):
     )
 
     userData = training_vectorize.transform(userDf)
+    print( '----------- load raw')
+    df = spark.read.option("inferSchema",True).csv('hdfs://j5a601.p.ssafy.io', header=True)
     print( '----------- load model')
     model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
     print(model.pc)
     print(model)
     print(userData)
-
-
-
 
 
     
