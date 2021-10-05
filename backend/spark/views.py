@@ -20,6 +20,7 @@ from pyspark.ml.feature import PCAModel
 from scipy.spatial import distance
 
 
+import subprocess
 
 
 # def index(request):
@@ -82,6 +83,9 @@ def decode_one_image(o):
 # 유저 얼굴 데이터 받아와서 닮은 얼굴 뿌리기
 @api_view(['POST'])
 def user_face(request):
+    res = subprocess.run( ['pyspark','./spark/tmp.py'], capture_output=True)
+
+    print(res.stdout.decode('utf-8'))
     try:
         spark = SparkSession\
                 .builder\
