@@ -89,7 +89,7 @@ def user_face(request):
     except:
         pass
 
-    print(request.data)
+    # print(request.data)
 
     ret = [ decode_one_image(request.data)[0] ]
     # print(ret)
@@ -98,28 +98,28 @@ def user_face(request):
     # print(ret_df)
 
     userDf = spark.createDataFrame(ret_df)
-    print(userDf)
+    # print(userDf)
     
-    # training_vectorize = VectorAssembler(
-    #     inputCols=[
-    #         # 'age',  
-    #         'gender',
-    #         # 'x','y','w','h','yaw','pitch','roll',
-    #         # 'score',
-    #         'left_eyebrow_x_mean','left_eyebrow_y_mean','left_eyebrow_x_min','left_eyebrow_x_max','left_eyebrow_y_min','left_eyebrow_y_max',
-    #         'jaw_x_mean','jaw_y_mean','jaw_x_min','jaw_x_max','jaw_y_min','jaw_y_max',
-    #         'left_eye_x_mean','left_eye_y_mean','left_eye_x_min','left_eye_x_max','left_eye_y_min','left_eye_y_max',
-    #         'lip_x_mean','lip_y_mean','lip_x_min','lip_x_max','lip_y_min','lip_y_max',
-    #         'nose_x_mean','nose_y_mean','nose_x_min','nose_x_max','nose_y_min','nose_y_max',
-    #         'right_eye_x_mean','right_eye_y_mean','right_eye_x_min','right_eye_x_max','right_eye_y_min','right_eye_y_max',
-    #         'right_eyebrow_x_mean','right_eyebrow_y_mean','right_eyebrow_x_min','right_eyebrow_x_max','right_eyebrow_y_min','right_eyebrow_y_max',
-    #         # identification,rid,width,height
-    #     ],
-    #     outputCol='features'
-    # )
-    # userData = training_vectorize.transform(userDf)
+    training_vectorize = VectorAssembler(
+        inputCols=[
+            # 'age',  
+            'gender',
+            # 'x','y','w','h','yaw','pitch','roll',
+            # 'score',
+            'left_eyebrow_x_mean','left_eyebrow_y_mean','left_eyebrow_x_min','left_eyebrow_x_max','left_eyebrow_y_min','left_eyebrow_y_max',
+            'jaw_x_mean','jaw_y_mean','jaw_x_min','jaw_x_max','jaw_y_min','jaw_y_max',
+            'left_eye_x_mean','left_eye_y_mean','left_eye_x_min','left_eye_x_max','left_eye_y_min','left_eye_y_max',
+            'lip_x_mean','lip_y_mean','lip_x_min','lip_x_max','lip_y_min','lip_y_max',
+            'nose_x_mean','nose_y_mean','nose_x_min','nose_x_max','nose_y_min','nose_y_max',
+            'right_eye_x_mean','right_eye_y_mean','right_eye_x_min','right_eye_x_max','right_eye_y_min','right_eye_y_max',
+            'right_eyebrow_x_mean','right_eyebrow_y_mean','right_eyebrow_x_min','right_eyebrow_x_max','right_eyebrow_y_min','right_eyebrow_y_max',
+            # identification,rid,width,height
+        ],
+        outputCol='features'
+    )
+    userData = training_vectorize.transform(userDf)
 
-    # print(userData)
+    print(userData)
 
 
     dummydata = [
