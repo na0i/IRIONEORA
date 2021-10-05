@@ -8,5 +8,5 @@ COPY . .
 RUN pip install -r ./backend/requirements.txt
 
 WORKDIR ./backend
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["spark-submit", "manage.py", "runserver", "0.0.0.0:8000"]
 EXPOSE 8000
