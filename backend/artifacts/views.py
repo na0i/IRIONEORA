@@ -161,7 +161,6 @@ def artifact_detail(request, artifact_id):
 # 워드 클라우드
 @api_view(['GET'])
 def wordcloud(request, artifact_id):
-
     # 해당 유물에 대한 정보 받아오기
     artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
     API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
@@ -343,8 +342,8 @@ def artifact_like(request, artifact_id):
 # 닮은 유물 저장
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def artifact_resemble(request, artifact_pk):
-    artifact = get_object_or_404(Artifact, pk=artifact_pk)
+def artifact_resemble(request, artifact_id):
+    artifact = get_object_or_404(Artifact, identification_number=artifact_id)
     user = request.user
 
     if artifact.resemble_users.filter(username=user).exists():

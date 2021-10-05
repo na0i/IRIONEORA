@@ -15,8 +15,11 @@
             <span class="artifact-content">{{ detailInfo.museum_name }}</span>
             <button class="museum-button"><span class="museum-button-text">자세히 보기</span></button>
           </div>
-          <div class="second-tab">
-            <img src="@/assets/images/heart.png" class="heart">
+          <div v-if="isLike" class="second-tab">
+            <img src="@/assets/images/heart.png" class="heart" @click="likeArtifact(detailInfo.identification_number)">
+          </div>
+          <div v-if="!isLike" class="second-tab">
+            <img src="@/assets/images/heart-empty.png" class="heart" @click="likeArtifact(detailInfo.identification_number)">
           </div>
         </div>
         <div>
@@ -71,6 +74,7 @@ export default {
     return {
       detailInfo: [],
       imgUrl: 'https://',
+      isLike: false,
       wordcloudData: '',
     }
   },
@@ -89,6 +93,19 @@ export default {
       .catch((err) => console.log(err))
     },
     
+    // 유물 좋아요
+    likeArtifact() {
+      axios({
+        url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}` + '/like',
+        method: 'post',
+      })
+      .then((res) => {
+        console.log(res.data)
+        this.isLike = !this.isLike
+      })
+      .catch((err) => console.log(err))
+    },
+
     // wordcloud 단어 받아오기
     getWordCloud() {
       axios({
@@ -116,7 +133,7 @@ export default {
           series: [{
               type: 'wordCloud',
               // circle (default),  cardioid (apple or heart shape curve), diamond, triangle-forward, triangle, alias of triangle-upright, pentagon, and star.
-              shape: 'circle',
+              shape: 'diamond',
               // maskImage: maskImage,
               left: 'center',
               top: 'center',

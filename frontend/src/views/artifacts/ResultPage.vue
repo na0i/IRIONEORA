@@ -12,7 +12,7 @@
         <ResultBox v-if="nowShowing===1" :result="results[0]" number="1" class="result-box" key="1"></ResultBox>
         <ResultBox v-else-if="nowShowing===2" :result="results[1]" number="2" class="result-box" key="2"></ResultBox>
         <ResultBox v-else-if="nowShowing===3" :result="results[2]" number="3" class="result-box" key="3"></ResultBox>
-        <ResultBox v-else-if="nowShowing===4" :result="results[3]" number="3" class="result-box" key="4"></ResultBox>
+        <ResultBox v-else-if="nowShowing===4" :result="results[3]" number="4" class="result-box" key="4"></ResultBox>
       </transition>
       <span class="material-icons-outlined arrow right" @click="moveForward">arrow_forward_ios</span>
     </div>
