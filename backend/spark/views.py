@@ -1,13 +1,12 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 from artifacts.models import Artifact
-from artifacts.serializers import ArtifactResembleSerializer
+# from artifacts.serializers import ArtifactResembleSerializer
 
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 
 
 import numpy as np
@@ -23,7 +22,7 @@ from pyspark.ml.feature import PCAModel
 
 from scipy.spatial import distance
 
-
+from ..artifacts.views import artifact_resemble
 
 # 인풋된 유저 얼굴 데이터 변환
 def get_polygon_info(prefix, polygon):
@@ -161,17 +160,18 @@ def user_face(request):
 
 
     # 닮은 유물 저장
-    print('-----------')
-    print(request.user.is_authenticated)
-    user = request.user
-    if user.is_authenticated:
-        artifact = get_object_or_404(Artifact, identification_number=resultData[0]['identification'])
-        print(artifact)
-        if artifact.resemble_users.filter(username=user).exists():
-            pass
+    # print('-----------')
+    # print(request.user.is_authenticated)
+    # user = request.user
+    # if user.is_authenticated:
+    #     artifact = get_object_or_404(Artifact, identification_number=resultData[0]['identification'])
+    #     print(artifact)
+    #     if artifact.resemble_users.filter(username=user).exists():
+    #         pass
         
-        else:
-            artifact.resemble_users.add(user)
+    #     else:
+    #         artifact.resemble_users.add(user)
+    artifact_resemble(request, resultData[0]['identification'])
 
     return Response(resultData)
     # return HttpResponse(200)
