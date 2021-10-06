@@ -157,7 +157,7 @@ export default {
       console.log(this.results)
       console.log(this.nowShowing-1)
       console.log(this.results[this.nowShowing-1])
-      return this.results[this.nowShowing-1].img_uri
+      return this.results[this.nowShowing-1].url
     }
   }
 }
