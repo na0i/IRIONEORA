@@ -93,6 +93,7 @@ export default {
     async kakaoRequest () {
       // console.log(1)
       // 1. url 자르기
+      this.selectedUrl = this.cuttingUrl
       console.log(this.selectedUrl)
       this.cuttedUrl = this.selectedUrl.substring(17,this.selectedUrl.length)
       console.log(this.cuttedUrl)
@@ -158,7 +159,7 @@ export default {
       console.log(this.results)
       console.log(this.nowShowing-1)
       console.log(this.results[this.nowShowing-1])
-      this.selectedUrl = this.results[this.nowShowing-1].url
+      return this.results[this.nowShowing-1].url
     }
   }
 }
