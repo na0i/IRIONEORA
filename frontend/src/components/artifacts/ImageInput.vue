@@ -35,6 +35,7 @@ export default {
       }
       // 얼굴 데이터를 전송받은 경우
       else {
+        console.log(res.data.result)
         const result = await AccountsApi.requestAnalyze(res.data)
         return result
       }
