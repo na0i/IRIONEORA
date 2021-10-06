@@ -128,7 +128,8 @@ def user_face(request):
     # print(userData)
 
     # adjust model
-    sqlContext = SQLContext()
+    sc = spark.sparkContext
+    sqlContext = SQLContext(sc)
     dataset = sqlContext.read.format('parquet').load('hdfs://j5a601.p.ssafy.io:9000/data/part-00000-06399d54-8edc-4cfb-8b4c-eb58dd2394a3-c000.')
     print('------------- dataset')
     print(dataset)
