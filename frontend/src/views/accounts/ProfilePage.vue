@@ -58,6 +58,7 @@ export default {
       next(vm => {
         AccountsApi.requestProfile(token)
           .then(res => {
+            console.log(res.data)
             vm.$store.dispatch('setProfileInfo', res.data)
           })
       })
