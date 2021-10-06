@@ -6,6 +6,8 @@
       {{nickname}}
     </div>
 
+    <button @click="onLogout">로그아웃</button>
+
     <div class="router-wrap">
       <router-link to="/profile" class="router-button">
         <Button value="좋아하는 문화재" class="button"></Button>
@@ -34,6 +36,12 @@ export default {
   // props
   // data
   // methods
+  methods: {
+    onLogout() {
+      this.$store.dispatch('logout')
+      this.$router.push('/')
+    }
+  },
   // computed
   computed: {
     ...mapState({

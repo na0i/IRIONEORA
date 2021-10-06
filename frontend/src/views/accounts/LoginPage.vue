@@ -81,21 +81,31 @@ export default {
 
         // 버튼 비활성화
         this.isSubmit = false
-
+        console.log('1')
         AccountsApi.requestLogin(data)
           // 로그인 성공
           .then(res => {
             const token = res.data.key
+            console.log(token)
               // 회원 프로필 저장
               AccountsApi.requestProfile(token)
-                .then(res =>
+                .then(res => {
+                  console.log('3')
                   this.$store.dispatch('setProfileInfo', res.data)
-                )
-
+                })
+              console.log('ehre')
               // 쿠키에 유저 토큰 저장
-              cookies.set('user-token', token, 0)
-              this.$router.back()
+              this.$store.dispatch('fulfillLogin', token)
+              .then( res => {
+
+                  console.log('어디가 찍히냐')
+                // this.$router.go(-1)
+              }
+              )
+              console.log('여기')
+              // cookies.set('user-token', token, 0)
             })
+            .then(res => this.$router.back())
 
           // 로그인 실패
           .catch(() => {
