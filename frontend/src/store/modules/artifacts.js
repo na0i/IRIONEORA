@@ -3,7 +3,7 @@ const state = {
   preview: '',
   results: [
     {
-      identification: '',
+      identification: 'qwer',
       img_uri: '',
       height: 0,
       width: 0,
