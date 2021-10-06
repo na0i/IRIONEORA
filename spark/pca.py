@@ -33,7 +33,7 @@ training_vectorize = VectorAssembler(
     outputCol='features'
 )
 dataset = training_vectorize.transform(df)
-dataset.write.save('hdfs://127.0.0.1:9000/data', format='parquet', mode='append')
+dataset.write.save('hdfs://127.0.0.1:9000/data', format='parquet')
 
 # print(dataset)
 
