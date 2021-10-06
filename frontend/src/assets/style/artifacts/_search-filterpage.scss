@@ -22,6 +22,12 @@ hr {
   height: 500px;
   margin: 20px 20px;
   overflow:scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+}
+.search-wrap-div::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
 }
 .search-button-div {
   display: flex;
