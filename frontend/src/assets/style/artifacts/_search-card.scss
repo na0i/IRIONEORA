@@ -1,0 +1,32 @@
+.search-card {
+ border: 1px solid #d4ab67;
+ margin-top: 10%;
+}
+
+.search-card-img {
+  display: flex;
+  justify-content: center;
+}
+
+.search-card-img img {
+  height: 3.5rem;
+  width: 100%;
+}
+
+.search-card-p {
+  background-color: #32383B;
+  color: #d4ab67;
+  font-size: 0.5rem;
+}
+
+.search-card-p p {
+  margin: 0px;
+  height: 3rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+      
