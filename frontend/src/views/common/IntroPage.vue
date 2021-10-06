@@ -1,7 +1,7 @@
 <template>
   <div>
     <canvas id="scene"></canvas>
-    <input id="copy" type="text" value="irionenora" />
+    <input id="copy" type="text" value="404 not found" />
   
   </div>
 </template>

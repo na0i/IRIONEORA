@@ -46,7 +46,7 @@ export default {
       slideTransition: 'slide-right',
 
       // 세일이 만듬
-      cuttedUrl: '/openapi/img?serviceKey=YRxuikhcQX7v7M0GurZEBdHr49zxbr2so054TqRBKqRBZzBQo7xWyhdM06W8QSsVLjQyaRpV%2BM8oRktGCkQ8oFx2VKjYUUqoOG7rRO2tJXcxleSenoyroumw7aVcXof9F7egXUi1K%2F4%3D&imageId=YjNLeE1CdGR6RUZUckU5ZllIbnU0SmVRbHFvZkxoZy9YNU9BeW5scWlRcXZrZTMxWUNsTGNBc2M2cUtpRmRoaHFqTEs5TnlJUnAvTzlkTHpVbnVZMmtZaytHRnYwQldM',
+      cuttedUrl: 'www.emusueu/openapi/img?serviceKey=YRxuikhcQX7v7M0GurZEBdHr49zxbr2so054TqRBKqRBZzBQo7xWyhdM06W8QSsVLjQyaRpV%2BM8oRktGCkQ8oFx2VKjYUUqoOG7rRO2tJXcxleSenoyroumw7aVcXof9F7egXUi1K%2F4%3D&imageId=YjNLeE1CdGR6RUZUckU5ZllIbnU0SmVRbHFvZkxoZy9YNU9BeW5scWlRcXZrZTMxWUNsTGNBc2M2cUtpRmRoaHFqTEs5TnlJUnAvTzlkTHpVbnVZMmtZaytHRnYwQldM',
       kakaoImageUrl: null,
     }
   },
@@ -78,6 +78,10 @@ export default {
 
     //세일이 만듬
 
+    karequest () {
+      console.log('aaa')
+    },
+
     // logic 
     // 1. url을 받아와서 'http://www.emuseum.go.kr/'을 잘라야함 그래야 proxy설정이 맞아서 통신이 된다.
     // 2. 자른 url을 받아서 파일로 만들고 변환해야함
@@ -85,10 +89,12 @@ export default {
     // 3-2. 해당 주소를 공유하기 ImageUrl에 넣으면 완료!
 
     // 카카오 공유하기
-    async KakaoRequest () {
+    async kakaoRequest () {
       // 1. url 자르기
-      
-      // this.cuttedUrl = this.testurl.substring(24,this.testurl.length)
+      console.log(this.cuttingUrl)
+      this.cuttedUrl = this.cuttingUrl.substring(24,this.cuttingUrl.length)
+      console.log(this.cuttedUrl)
+      console.log('중간평가')
 
       // 2.url을 받아서, 파일 생성에 맞는 형식으로 변환
       const response = await fetch(this.cuttedUrl);
@@ -135,13 +141,23 @@ export default {
               },
             }], 
         }) 
+        
       }, 
   
   },
   computed: {
+
     ...mapState({
       results: state => state.artifacts.results
-    })
+    }),
+
+    cuttingUrl (){
+      console.log('computed')
+      console.log(this.results)
+      console.log(this.nowShowing-1)
+      console.log(this.results[this.nowShowing-1])
+      return this.results[this.nowShowing-1].img_uri
+    }
   }
 }
 </script>
