@@ -23,10 +23,23 @@ const state = {
       }
     ]
   },
+  kakaoResult : {
+    width: 0,
+    height: 0,
+    faces: [
+      {
+        h: 0,
+        w: 0,
+        x: 0,
+        y: 0
+      }
+    ]
+  }
 }
 const getters = {
   isLoggedIn: state => !!state.authToken,
   config: state => ({ headers: { Authorization: `Token ${state.authToken}` }}),
+  isResult: state => !!state.kakaoResult.width
 }
 const mutations = {
   SET_PROFILE_INFO(state, profile) {
