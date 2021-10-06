@@ -93,7 +93,6 @@ export default {
         method: 'get',
       })
       .then((res) => {
-        console.log(res.data)
         this.detailInfo = res.data
         this.imgUrl += res.data.image_uri
       })
@@ -122,13 +121,10 @@ export default {
     isLikeArtifact(artifact_id) {
       // some 내장함수로 check
       this.isLike = this.likeArtifacts.some(elem => elem.identification_number === artifact_id)
-      console.log(this.isLike)
-      console.log(this.likeArtifacts)
     },
 
     // 박물관 모달 open
     openMuseumModal() {
-      console.log('모달 open')
       this.$modal.show(
         MuseumModalVue,
         {
@@ -136,8 +132,8 @@ export default {
         },
         {
           name: 'dynamic-modal',
-          width: '400px',
-          height: '400px',
+          width: '300px',
+          height: '500px',
           draggable: false
         }
       )
@@ -211,6 +207,7 @@ export default {
     this.getWordCloud();
     this.isLikeArtifact(this.$route.params.artifactId);
     AccountsAPI.requestProfile(this.accessToken);
+    console.log(this.isLoggedIn)
   },
 }
 
