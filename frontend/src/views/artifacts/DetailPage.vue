@@ -13,14 +13,16 @@
           <div class="second-tab">
             <span class="artifact-title">소장위치</span>
             <span class="artifact-content">{{ detailInfo.museum_name }}</span>
-            <button class="museum-button" @click="getMuseumInfo(detailInfo.museum_name)"><span class="museum-button-text">자세히 보기</span></button>
+            <button class="museum-button" @click="[openMuseumModal(), setMuseumInfo(detailInfo.museum_name)]"><span class="museum-button-text">자세히 보기</span></button>
           </div>
+        <div v-if="isLoggedIn">
           <div v-if="isLike" class="second-tab">
             <img src="@/assets/images/heart.png" class="heart" @click="likeArtifact(detailInfo.identification_number)">
           </div>
           <div v-if="!isLike" class="second-tab">
             <img src="@/assets/images/heart-empty.png" class="heart" @click="likeArtifact(detailInfo.identification_number)">
           </div>
+        </div>
         </div>
         <div>
           <img src="@/assets/images/detailpage-cloud.png" class="detail-bgimg">
@@ -63,7 +65,9 @@
 import axios from 'axios'
 import API from '@/api/artifacts.js'
 import * as echarts from 'echarts'
-import 'echarts-wordcloud';
+import 'echarts-wordcloud'
+import MuseumModalVue from '../../components/artifacts/MuseumModal.vue'
+import {mapGetters, mapActions} from "vuex";
 
 
 export default {
@@ -73,13 +77,14 @@ export default {
   data() {
     return {
       detailInfo: [],
-      serviceKey: 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq%2BcLDfiGBiMv8Pt5VFk1H0Sz4lX3yw%3D%3D',
       imgUrl: 'https://',
       isLike: false,
+      museumInfo: [],
       wordcloudData: '',
     }
   },
   methods: {
+    ...mapActions(['setMuseumInfo']),
     // detail page 전체 정보 받아오기
     fetchDetailInfo() {
       axios({
@@ -107,17 +112,20 @@ export default {
       .catch((err) => console.log(err))
     },
 
-    // 박물관
-    getMuseumInfo(museumName) {
-      axios({
-        url: API.URL + API.ROUTES.museum + `${museumName}` +'/',
-        // url: `http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api?serviceKey=${this.serviceKey}&fcltyNm=${this.detailInfo.museum_name}`, 
-        method: 'get'
-      })
-      .then((res) => {
-        console.log(res.data)
-      })
-      .catch((err) => console.log(err))
+    // 박물관 모달
+    openMuseumModal() {
+      this.$modal.show(
+        MuseumModalVue,
+        {
+          modal: this.$modal,
+        },
+        {
+          name: 'dynamic-modal',
+          width: '300px',
+          height: '400px',
+          draggable: false
+        }
+      )
     },
 
     // wordcloud 단어 받아오기
@@ -136,12 +144,6 @@ export default {
     // wordcloud 그리기
     makeWordCloud() {
       var chart = echarts.init(document.getElementById('wordcloud'));
-
-      // const color_palette = ['#F1E8DB', '#DEC8A4', '#D5D3C3', '#D4AB67', '#B1AFB2', '#848063'];
-      // function randomItem(a) {
-      //   console.log(a[Math.floor(Math.random() * a.length)])
-      //   return a[Math.floor(Math.random() * a.length)]
-      // }
 
       chart.setOption({
           series: [{
@@ -164,14 +166,6 @@ export default {
               textStyle: {
                   fontFamily: 'Noto Serif KR',
                   fontWeight: 500,
-                  // color: randomItem(color_palette),
-                  // color: function () {
-                  //   return 'rgb(' + [
-                  //       Math.round(Math.random() * 160),
-                  //       Math.round(Math.random() * 160),
-                  //       Math.round(Math.random() * 160)
-                  //   ].join(',') + ')';
-                  // }
                   color: function(a) {
                     const i =  (a.dataIndex)%6;
                     const color_palette = ['#F1E8DB', '#DEC8A4', '#D5D3C3', '#D4AB67', '#B1AFB2', '#848063'];
@@ -191,10 +185,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isLoggedIn'])
   },
   created() {
-    this.fetchDetailInfo();
     this.getWordCloud();
+    this.fetchDetailInfo();
   }
 }
 
