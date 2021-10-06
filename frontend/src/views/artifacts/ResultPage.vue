@@ -46,6 +46,7 @@ export default {
       slideTransition: 'slide-right',
 
       // 세일이 만듬
+      selectedUrl: '',
       cuttedUrl: 'www.emusueu/openapi/img?serviceKey=YRxuikhcQX7v7M0GurZEBdHr49zxbr2so054TqRBKqRBZzBQo7xWyhdM06W8QSsVLjQyaRpV%2BM8oRktGCkQ8oFx2VKjYUUqoOG7rRO2tJXcxleSenoyroumw7aVcXof9F7egXUi1K%2F4%3D&imageId=YjNLeE1CdGR6RUZUckU5ZllIbnU0SmVRbHFvZkxoZy9YNU9BeW5scWlRcXZrZTMxWUNsTGNBc2M2cUtpRmRoaHFqTEs5TnlJUnAvTzlkTHpVbnVZMmtZaytHRnYwQldM',
       kakaoImageUrl: null,
     }
@@ -92,8 +93,8 @@ export default {
     async kakaoRequest () {
       // console.log(1)
       // 1. url 자르기
-      console.log(this.cuttingUrl())
-      this.cuttedUrl = this.cuttingUrl.substring(17,this.cuttingUrl.length)
+      console.log(this.selectedUrl)
+      this.cuttedUrl = this.selectedUrl.substring(17,this.selectedUrl.length)
       console.log(this.cuttedUrl)
       console.log('중간평가')
 
@@ -157,7 +158,7 @@ export default {
       console.log(this.results)
       console.log(this.nowShowing-1)
       console.log(this.results[this.nowShowing-1])
-      return this.results[this.nowShowing-1].url
+      this.selectedUrl = this.results[this.nowShowing-1].url
     }
   }
 }
