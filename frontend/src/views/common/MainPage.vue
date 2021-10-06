@@ -19,7 +19,7 @@
       <Button value="나와 닮은 문화재 찾기 →" class="button" @click.native="onImage"></Button>
       <ImageInput
           class="image-input" ref="image"
-          @on-loading="onLoading">
+          @on-loading="onLoading" >
       </ImageInput>
       <div class="info">
         사진은 저장되지 않습니다.<br>
