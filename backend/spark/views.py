@@ -2,9 +2,13 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
 from artifacts.models import Artifact
+from artifacts.serializers import ArtifactResembleSerializer
+
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 
 import numpy as np
 import pandas as pd
@@ -19,16 +23,20 @@ from pyspark.ml.feature import PCAModel
 
 from scipy.spatial import distance
 
-# def index(request):
-#     sc = spark.sparkContext
+# 닮은 유물 저장
+def artifact_resemble(request, artifact_id):
+    user = request.user
+    if user == IsAuthenticated:
+        artifact = get_object_or_404(Artifact, identification_number=artifact_id)
 
-#     # json 파일 읽어들이기
-#     test = spark.read.json('/home/path/test.json')
-
-#     # printSchema()로 json파일의 스키마 형태 볼수 있음
-#     test.printSchema()
-#     return render(request, 'test.html')
-# Create your views here.
+        if artifact.resemble_users.filter(username=user).exists():
+            pass
+        
+        else:
+            artifact.resemble_users.add(user)
+        
+        # serializer = ArtifactResembleSerializer(artifact)
+    # return Response(serializer.data)
 
 
 # 인풋된 유저 얼굴 데이터 변환
@@ -131,8 +139,8 @@ def user_face(request):
     sc = spark.sparkContext
     sqlContext = SQLContext(sc)
     dataset = sqlContext.read.format('parquet').load('hdfs://j5a601.p.ssafy.io:9000/data')
-    print('------------- dataset')
-    print(dataset)
+    # print('------------- dataset')
+    # print(dataset)
     processed = model.transform(dataset)
     user = model.transform(userData)
     check_point = user.collect()[0].output
@@ -140,13 +148,13 @@ def user_face(request):
     distance_udf = F.udf(lambda x: float(distance.euclidean(x, check_point)), DoubleType())
     top5 = processed.withColumn('distances', distance_udf(F.col('output'))).orderBy('distances').take(5)
 
-    print('------------- result')
-    print(top5)
+    # print('------------- result')
+    # print(top5)
 
     resultData = []
     for sel in top5:
         resultData.append({'identification': sel['identification'], 'width': sel['width'], 'height': sel['height'], 'x': sel['x'], 'y': sel['y'], 'w': sel['w'], 'h': sel['h']})
-    print(resultData)
+    # print(resultData)
 
     dummydata = [
         {'identification': 'PS0100100102102727900000', 'name': '이건첫번째야', 'width': 3000, 'height': 2000, 'x': 0.4754312744140625, 'y': 0.6482667846679687, 'w': 0.05687882486979168, 'h': 0.08531817626953131},
@@ -162,6 +170,9 @@ def user_face(request):
         # print(artifact.image_uri)
         resultData[i]['url'] = artifact.image_uri
         resultData[i]['name'] = artifact.artifact_name
+
+
+    artifact_resemble(request, resultData[0]['identification'])
 
     return Response(resultData)
     # return HttpResponse(200)
