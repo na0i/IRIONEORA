@@ -90,58 +90,58 @@ export default {
 
     // 카카오 공유하기
     async kakaoRequest () {
-      console.log(1)
-      // // 1. url 자르기
-      // console.log(this.cuttingUrl)
-      // this.cuttedUrl = this.cuttingUrl.substring(24,this.cuttingUrl.length)
-      // console.log(this.cuttedUrl)
-      // console.log('중간평가')
+      // console.log(1)
+      // 1. url 자르기
+      console.log(this.cuttingUrl)
+      this.cuttedUrl = this.cuttingUrl.substring(24,this.cuttingUrl.length)
+      console.log(this.cuttedUrl)
+      console.log('중간평가')
 
-      // // 2.url을 받아서, 파일 생성에 맞는 형식으로 변환
-      // const response = await fetch(this.cuttedUrl);
-      // const blob = await response.blob();
+      // 2.url을 받아서, 파일 생성에 맞는 형식으로 변환
+      const response = await fetch(this.cuttedUrl);
+      const blob = await response.blob();
 
-      // // 파일 생성하기
-      // const file = new File([blob], 'image.jpg', {type: blob.type});
-      // let list = new DataTransfer();
-      // list.items.add(file);
-      // let myFileList = list.files;
+      // 파일 생성하기
+      const file = new File([blob], 'image.jpg', {type: blob.type});
+      let list = new DataTransfer();
+      list.items.add(file);
+      let myFileList = list.files;
 
-      // // 3-1. 위에서 만든 파일을 통해서 카카오 url 등록하기
-      // var files = myFileList
-      // await window.Kakao.Link.uploadImage({
-      //   file: files
-      // })
-      // .then((res) =>{
+      // 3-1. 위에서 만든 파일을 통해서 카카오 url 등록하기
+      var files = myFileList
+      await window.Kakao.Link.uploadImage({
+        file: files
+      })
+      .then((res) =>{
 
-      //   // 수정 카카오 url을 저장해야함
-      //   this.kakaoImageUrl = res.infos.original.url
-      //   console.log(this.kakaoImageUrl)
-      // })
-      // .catch((err) => {
-      //   console.log(err)
-      // })
+        // 수정 카카오 url을 저장해야함
+        this.kakaoImageUrl = res.infos.original.url
+        console.log(this.kakaoImageUrl)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
       
-      // // 3-2.공유하기
-      // window.Kakao.Link.sendDefault({ 
-      //   objectType: 'feed', 
-      //   content: { 
-      //     title: '나와 닮은 얼굴은????', 
-      //     description: '지금 바로 나와 닮은 문화재를 찾아보세요!', 
-      //     imageUrl: this.kakaoImageUrl,
-      //     link: { 
-      //       mobileWebUrl: 'http://j5a601.p.ssafy.io/', 
-      //       webUrl: 'http://j5a601.p.ssafy.io/', 
-      //         }, 
-      //       }, 
-      //     buttons: [{ 
-      //       title: '이리오너라!!', 
-      //       link: { 
-      //         mobileWebUrl: 'http://j5a601.p.ssafy.io/', 
-      //         webUrl: 'http://j5a601.p.ssafy.io/', 
-      //         },
-      //       }], 
-      //   }) 
+      // 3-2.공유하기
+      window.Kakao.Link.sendDefault({ 
+        objectType: 'feed', 
+        content: { 
+          title: '나와 닮은 얼굴은????', 
+          description: '지금 바로 나와 닮은 문화재를 찾아보세요!', 
+          imageUrl: this.kakaoImageUrl,
+          link: { 
+            mobileWebUrl: 'http://j5a601.p.ssafy.io/', 
+            webUrl: 'http://j5a601.p.ssafy.io/', 
+              }, 
+            }, 
+          buttons: [{ 
+            title: '이리오너라!!', 
+            link: { 
+              mobileWebUrl: 'http://j5a601.p.ssafy.io/', 
+              webUrl: 'http://j5a601.p.ssafy.io/', 
+              },
+            }], 
+        }) 
         
       }, 
   
