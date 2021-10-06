@@ -47,6 +47,9 @@ const mutations = {
   },
   LOGOUT(state) {
     state.authToken = ''
+  },
+  SET_KAKAO_RESULT(state, result) {
+    state.kakaoResult = result
   }
 }
 const actions = {
@@ -75,6 +78,9 @@ const actions = {
   logout({commit}) {
     commit('LOGOUT')
     cookies.set('user-token', '', 0)
+  },
+  setKakaoResult({commit}, result) {
+    commit('SET_KAKAO_RESULT', result)
   }
 }
 

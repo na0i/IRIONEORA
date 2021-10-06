@@ -31,7 +31,7 @@
 import ResultPreview from "@/components/artifacts/ReseultPreview";
 import ResultBox from "@/components/artifacts/ResultBox";
 import IconButton from "@/components/artifacts/IconButton";
-import {mapState} from "vuex";
+import {mapGetters, mapState} from "vuex";
 
 export default {
   name: "ResultPage",
@@ -158,6 +158,7 @@ export default {
     ...mapState({
       results: state => state.artifacts.results
     }),
+    ...mapGetters(['isResult']),
 
     cuttingUrl (){
       console.log('computed')
@@ -166,6 +167,14 @@ export default {
       console.log(this.results[this.nowShowing-1])
       return this.results[this.nowShowing-1].url
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      // result 결과가 없다면 들어오지 못하도록
+      if (!vm.isResult) {
+        vm.$router.push('/')
+      }
+    })
   }
 }
 </script>
