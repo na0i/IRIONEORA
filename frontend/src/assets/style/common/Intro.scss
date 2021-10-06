@@ -4,9 +4,9 @@ body{
   font-size:0;
 }
 canvas{
-  background: black;
+  // background: black;;
   width: 425px;
-  height: 400px;
+  height: 600px;
 }
 input{
   width: 250px;
@@ -20,7 +20,7 @@ input{
   font-size: 30px;
   font-family: arial;
   text-align: center;
-  border: 1px solid white;
+  // border: 1px solid white;
   background: rgba(255,255,255,0.2);
   visibility: hidden;
 }
@@ -28,7 +28,7 @@ p{
 position: fixed;
 left: 0;
 bottom:5px;
-color: #fff;
+color: #111111;
 z-index:10;
 font-size:16px;
 font-family: Helvetica, Verdana, sans-serif;
