@@ -93,7 +93,7 @@ export default {
       // console.log(1)
       // 1. url 자르기
       console.log(this.cuttingUrl)
-      this.cuttedUrl = this.cuttingUrl.substring(24,this.cuttingUrl.length)
+      this.cuttedUrl = this.cuttingUrl.substring(17,this.cuttingUrl.length)
       console.log(this.cuttedUrl)
       console.log('중간평가')
 
