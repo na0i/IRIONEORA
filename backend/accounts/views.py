@@ -41,7 +41,7 @@ class KakaoAccountsLogin(SocialLoginView):
 def kakao_login(request):
 
     REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
-    REDIRECT_URI = 'http://localhost:8080/login'
+    REDIRECT_URI = 'http://j5a601.p.ssafy.io:8080/login'
 
     # 인증 코드
     code = request.data['code']
@@ -75,7 +75,7 @@ def kakao_login(request):
     data = {
         'access_token': access_token
     }
-    accept = requests.post(f'http://localhost:8000/accounts/kakao/user/', data=data)
+    accept = requests.post(f'http://j5a601.p.ssafy.io:8000/accounts/kakao/user/', data=data)
     print(accept)
 
     # 소셜 로그인 유저
