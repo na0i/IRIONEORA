@@ -1,7 +1,9 @@
 <template>
   <div>
     <button @click="onClick" class="kakao-button">
-      <img src="@/assets/images/kakao-login-wide.png" alt="">
+      <img src="@/assets/images/kakao-icon.png" alt="">
+      &nbsp;
+      카카오 로그인
     </button>
   </div>
 </template>
