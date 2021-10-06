@@ -34,7 +34,7 @@ ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
                  'localhost:8080/',
                  '127.0.0.1',
                  '3.36.130.57']
-# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 
