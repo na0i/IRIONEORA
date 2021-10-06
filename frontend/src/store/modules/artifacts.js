@@ -71,7 +71,7 @@ const actions = {
   setMuseumInfo({commit}, museumName) {
     axios({
       url: API.URL + API.ROUTES.museum + `${museumName}` +'/',
-      method: 'get'
+      method: 'GET'
     })
     .then((res) => {
       commit('SET_MUSEUM_INFO', res.data)

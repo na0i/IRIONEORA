@@ -60,14 +60,14 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
-import API from '@/api/artifacts.js'
+import ArtifactAPI from '@/api/artifacts.js'
+import AccountsAPI from '@/api/accounts.js';
 import * as echarts from 'echarts'
 import 'echarts-wordcloud'
 import MuseumModalVue from '../../components/artifacts/MuseumModal.vue'
-import {mapGetters, mapActions} from "vuex";
+import {mapState, mapGetters, mapActions} from "vuex";
 
 
 export default {
@@ -78,17 +78,18 @@ export default {
     return {
       detailInfo: [],
       imgUrl: 'https://',
-      isLike: false,
+      isLike: '',
       museumInfo: [],
       wordcloudData: '',
     }
   },
   methods: {
-    ...mapActions(['setMuseumInfo']),
+    ...mapActions(['setMuseumInfo', 'likeArtifact']),
+
     // detail page 전체 정보 받아오기
     fetchDetailInfo() {
       axios({
-        url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}`,
+        url: ArtifactAPI.URL + ArtifactAPI.ROUTES.detail + `${this.$route.params.artifactId}`,
         method: 'get',
       })
       .then((res) => {
@@ -100,20 +101,34 @@ export default {
     },
     
     // 유물 좋아요
-    likeArtifact() {
+    likeArtifact(artifact_id) {
       axios({
-        url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}` + '/like',
-        method: 'post',
+        url: ArtifactAPI.URL + ArtifactAPI.ROUTES.detail + `${artifact_id}/like/`,
+        method: 'POST',
+        headers: { Authorization: `Token ${this.accessToken}`}
       })
       .then((res) => {
-        console.log(res.data)
-        this.isLike = !this.isLike
+        AccountsAPI.requestProfile(this.accessToken)
+        // 저장 작업 따로 필요
+        .then((res) => {
+          this.$store.dispatch('setProfileInfo', res.data)
+          this.isLikeArtifact(this.detailInfo.identification_number)
+        })
       })
       .catch((err) => console.log(err))
     },
 
-    // 박물관 모달
+    // 좋아요한 유물인지 아닌지
+    isLikeArtifact(artifact_id) {
+      // some 내장함수로 check
+      this.isLike = this.likeArtifacts.some(elem => elem.identification_number === artifact_id)
+      console.log(this.isLike)
+      console.log(this.likeArtifacts)
+    },
+
+    // 박물관 모달 open
     openMuseumModal() {
+      console.log('모달 open')
       this.$modal.show(
         MuseumModalVue,
         {
@@ -121,7 +136,7 @@ export default {
         },
         {
           name: 'dynamic-modal',
-          width: '300px',
+          width: '400px',
           height: '400px',
           draggable: false
         }
@@ -131,7 +146,7 @@ export default {
     // wordcloud 단어 받아오기
     getWordCloud() {
       axios({
-        url: API.URL + API.ROUTES.detail + `${this.$route.params.artifactId}` + '/wordcloud',
+        url: ArtifactAPI.URL + ArtifactAPI.ROUTES.detail + `${this.$route.params.artifactId}` + '/wordcloud',
         method: 'get',
       })
       .then((res) => {
@@ -185,12 +200,18 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      accessToken: (state) => state.accounts.authToken,
+      likeArtifacts: (state) => state.accounts.profileInfo.like_artifact
+    }),
     ...mapGetters(['isLoggedIn'])
   },
   created() {
-    this.getWordCloud();
     this.fetchDetailInfo();
-  }
+    this.getWordCloud();
+    this.isLikeArtifact(this.$route.params.artifactId);
+    AccountsAPI.requestProfile(this.accessToken);
+  },
 }
 
 </script>
