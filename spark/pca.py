@@ -33,6 +33,7 @@ training_vectorize = VectorAssembler(
     outputCol='features'
 )
 dataset = training_vectorize.transform(df)
+dataset.write.save('hdfs://127.0.0.1:9000/data', format='csv', mode='append')
 
 # print(dataset)
 # PCA Dimensionality Reduction
@@ -47,7 +48,6 @@ def make_model(k):
 
 for k in range(2,7):
     make_model(k)
-
 
 #model2 = PCAModel.load('test_model')
 #print(model2.transform(dataset).collect()[0].output)
