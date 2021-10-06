@@ -16,7 +16,8 @@
 
     <!-- 이미지 입력/ 안내 -->
     <div class="image-upload">
-      <Button value="나와 닮은 문화재 찾기 →" class="button" @click.native="onImage"></Button>
+      <Button id="flux" value="나와 닮은 문화재 찾기 →" class="button" @click.native="onImage"></Button>
+      
       <ImageInput
           class="image-input" ref="image"
           @on-loading="onLoading">

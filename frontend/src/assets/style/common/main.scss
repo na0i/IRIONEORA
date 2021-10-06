@@ -82,3 +82,22 @@
 
 
 }
+
+
+#flux {
+  animation: flux 2s linear infinite;
+  -moz-animation: flux 2s linear infinite;
+  -webkit-animation: flux 2s linear infinite;
+  -o-animation: flux 2s linear infinite;
+}
+
+@keyframes flux {
+  0%,
+  100% {
+    box-shadow: 0 0 3px #DEC8A4, 0 0 3px #DEC8A4, 0 0 3px #DEC8A4, 0 0 3px 
+   
+  }
+  50% {
+    box-shadow: 0 0 3px #635949, 0 0 3px #635949, 0 0 3px #635949, 0 0 3px 
+  }
+}
