@@ -18,8 +18,6 @@
         />
     </div>
 
-    <!-- 확인 후 삭제 -->
-    <button>pqpeqpq1</button> 
   </div>
 </template>
 
