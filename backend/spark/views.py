@@ -129,7 +129,7 @@ def user_face(request):
 
     # adjust model
     sqlContext = SQLContext(sc)
-    dataset = sqlContext.read.format('csv').load('hdfs://j5a601.p.ssafy.io:9000/data')
+    dataset = sqlContext.read.format('parquet').load('hdfs://j5a601.p.ssafy.io:9000/data/part-00000-06399d54-8edc-4cfb-8b4c-eb58dd2394a3-c000.')
     print('------------- dataset')
     print(dataset)
     processed = model.transform(dataset).select( ['key', 'output'])
@@ -143,8 +143,6 @@ def user_face(request):
     print('------------- result')
     print(top5)
 
-    
-    
     
     dummydata = [
         {'identification': 'PS0100100102102727900000', 'name': '이건첫번째야', 'width': 3000, 'height': 2000, 'x': 0.4754312744140625, 'y': 0.6482667846679687, 'w': 0.05687882486979168, 'h': 0.08531817626953131},
