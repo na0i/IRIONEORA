@@ -120,15 +120,21 @@ def user_face(request):
 
 
     userData = training_vectorize.transform(userDf)
-    print( '----------- load model')
+    # print( '----------- load model')
     model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
-    print( '----------- load done')
-    print(model.pc)
-    print(model)
-    print(userData)
+    # print( '----------- load done')
+    # print(model.pc)
+    # print(model)
+    # print(userData)
+
+    # adjust model
+
+    # processed = model.transform(dataset).select( ['key', 'output'])
+    # user = model.transform(user_input).select( ['key', 'output'])
+
+    # check_point = user.collect()[0].output
 
 
-    
     
     
     
