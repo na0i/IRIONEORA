@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 import pyspark.sql.functions as F
-from pyspark.sql import SparkSession
+from pyspark.sql import SparkSession, SQLContext
 from pyspark.sql.types import DoubleType
 
 from pyspark.ml.feature import VectorAssembler
@@ -120,15 +120,29 @@ def user_face(request):
 
 
     userData = training_vectorize.transform(userDf)
-    print( '----------- load model')
+    # print('----------- load model')
     model = PCAModel.load('hdfs://j5a601.p.ssafy.io:9000/models/2')
-    print( '----------- load done')
-    print(model.pc)
-    print(model)
-    print(userData)
+    # print('----------- load done')
+    # print(model.pc)
+    # print(model)
+    # print(userData)
 
+    # adjust model
+    sqlContext = SQLContext(sc)
+    dataset = sqlContext.read.format('csv').load('hdfs://j5a601.p.ssafy.io:9000/data')
+    print('------------- dataset')
+    print(dataset)
+    processed = model.transform(dataset).select( ['key', 'output'])
+    user = model.transform(userData).select( ['key', 'output'])
 
-    
+    check_point = user.collect()[0].output
+
+    distance_udf = F.udf(lambda x: float(distance.euclidean(x, check_point)), DoubleType())
+    top5 = processed.withColumn('distances', distance_udf(F.col('output'))).orderBy('distances').take(5)
+
+    print('------------- result')
+    print(top5)
+
     
     
     
