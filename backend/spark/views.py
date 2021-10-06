@@ -166,7 +166,7 @@ def user_face(request):
     user = request.user
     if user.is_authenticated:
         artifact = get_object_or_404(Artifact, identification_number=resultData[0]['identification'])
-
+        print(artifact)
         if artifact.resemble_users.filter(username=user).exists():
             pass
         
