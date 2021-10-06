@@ -23,13 +23,8 @@ from pyspark.ml.feature import PCAModel
 
 from scipy.spatial import distance
 
-# 닮은 유물 저장
-def artifact_resemble(request, artifact_id):
-    user = request.user
-    if user == IsAuthenticated:
-        artifact = get_object_or_404(Artifact, identification_number=artifact_id)
 
-<<<<<<< HEAD
+
 # 인풋된 유저 얼굴 데이터 변환
 def get_polygon_info(prefix, polygon):
     x = [p[0] for p in polygon]
@@ -57,63 +52,16 @@ def decode_face(face):
         data.update(get_polygon_info(k, v))
 
     return data
-=======
-        if artifact.resemble_users.filter(username=user).exists():
-            pass
-        
-        else:
-            artifact.resemble_users.add(user)
-        
-        # serializer = ArtifactResembleSerializer(artifact)
-    # return Response(serializer.data)
-
-
-# 인풋된 유저 얼굴 데이터 변환
-def get_polygon_info(prefix, polygon):
-    x = [p[0] for p in polygon]
-    y = [p[1] for p in polygon]
-
-    return {
-        f'{prefix}_x_mean': np.average(x),
-        f'{prefix}_y_mean': np.average(y),
-        f'{prefix}_x_min': np.min(x),
-        f'{prefix}_x_max': np.max(x),
-        f'{prefix}_y_min': np.min(y),
-        f'{prefix}_y_max': np.max(y),
-    }
-
-
-def decode_face(face):
-    keys = ['x', 'y', 'w', 'h', 'yaw', 'pitch', 'roll', 'score']
-    data = dict()
-    data['age'] = face['facial_attributes']['age']
-    data['gender'] = face['facial_attributes']['gender']['female']
-
-    data.update({k: face[k] for k in keys})
->>>>>>> 64001b68debf0cf86dc51c0a7cb6c3e2e5949ed1
 
     for k, v in face['facial_points'].items():
         data.update(get_polygon_info(k, v))
 
-<<<<<<< HEAD
-def decode_one_image(o):
-    ret = []
-=======
-    return data
->>>>>>> 64001b68debf0cf86dc51c0a7cb6c3e2e5949ed1
-
-    rid = o['rid']
-    r = o['result']
-
-<<<<<<< HEAD
-=======
 def decode_one_image(o):
     ret = []
 
     rid = o['rid']
     r = o['result']
 
->>>>>>> 64001b68debf0cf86dc51c0a7cb6c3e2e5949ed1
     width = r['width']
     height = r['height']
 
@@ -212,7 +160,6 @@ def user_face(request):
         resultData[i]['name'] = artifact.artifact_name
 
 
-<<<<<<< HEAD
     # 닮은 유물 저장
     user = request.user
     if user.is_authenticated:
@@ -223,9 +170,6 @@ def user_face(request):
         
         else:
             artifact.resemble_users.add(user)
-=======
-    artifact_resemble(request, resultData[0]['identification'])
->>>>>>> 64001b68debf0cf86dc51c0a7cb6c3e2e5949ed1
 
     return Response(resultData)
     # return HttpResponse(200)
