@@ -133,9 +133,8 @@ def user_face(request):
     dataset = sqlContext.read.format('parquet').load('hdfs://j5a601.p.ssafy.io:9000/data')
     print('------------- dataset')
     print(dataset)
-    processed = model.transform(dataset).select( ['key', 'output'])
-    user = model.transform(userData).select( ['key', 'output'])
-
+    processed = model.transform(dataset)
+    user = model.transform(userData)
     check_point = user.collect()[0].output
 
     distance_udf = F.udf(lambda x: float(distance.euclidean(x, check_point)), DoubleType())
@@ -143,7 +142,7 @@ def user_face(request):
 
     print('------------- result')
     print(top5)
-
+    
     
     dummydata = [
         {'identification': 'PS0100100102102727900000', 'name': '이건첫번째야', 'width': 3000, 'height': 2000, 'x': 0.4754312744140625, 'y': 0.6482667846679687, 'w': 0.05687882486979168, 'h': 0.08531817626953131},
