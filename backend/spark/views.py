@@ -161,8 +161,10 @@ def user_face(request):
 
 
     # 닮은 유물 저장
+    print('-----------')
+    print(request)
     user = request.user
-    if user.is_authenticated:
+    if user.is_authenticated():
         artifact = get_object_or_404(Artifact, identification_number=resultData[0]['identification'])
 
         if artifact.resemble_users.filter(username=user).exists():
