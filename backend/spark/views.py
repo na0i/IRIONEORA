@@ -142,8 +142,12 @@ def user_face(request):
 
     print('------------- result')
     print(top5)
-    
-    
+
+    resultData = []
+    for sel in top5:
+        resultData.append({'identification': sel['identification'], 'width': sel['width'], 'height': sel['height'], 'x': sel['x'], 'y': sel['y'], 'w': sel['w'], 'h': sel['h']})
+    print(resultData)
+
     dummydata = [
         {'identification': 'PS0100100102102727900000', 'name': '이건첫번째야', 'width': 3000, 'height': 2000, 'x': 0.4754312744140625, 'y': 0.6482667846679687, 'w': 0.05687882486979168, 'h': 0.08531817626953131},
         {'identification': 'PS0100100100900173100000', 'name': '이건두번째고', 'width': 669, 'height': 515, 'x': 0.43930195122734494, 'y': 0.11844135765890473, 'w': 0.08157868663291756, 'h': 0.10597306038569479},
@@ -152,12 +156,12 @@ def user_face(request):
         {'identification': 'PS0100100100900260500000', 'name': '먹고싶어', 'width': 1592, 'height': 3000, 'x': 0.3875239003243758, 'y': 0.6396309000651041, 'w': 0.06894641665358042, 'h': 0.036587605794270894},
     ]
 
-    for i in range(len(dummydata)):
-        artifact_id = dummydata[i]['identification']
+    for i in range(len(resultData)):
+        artifact_id = resultData[i]['identification']
         artifact = get_object_or_404(Artifact, identification_number=artifact_id)
         # print(artifact.image_uri)
-        dummydata[i]['url'] = artifact.image_uri
-        # dummydata[i]['name'] = artifact.name
+        resultData[i]['url'] = artifact.image_uri
+        resultData[i]['name'] = artifact.artifact_name
 
-    return Response(dummydata)
+    return Response(resultData)
     # return HttpResponse(200)
