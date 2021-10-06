@@ -121,21 +121,25 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
         })
         .then((res) => {
           if (res.data.totalCount === 0) {
-            console.log("결과가 업습니다")
+            console.log("결과가 없습니다")
             return false
           }
           console.log(res.data.totalCount)
+          this.nextNum = 0
           this.totalNum = res.data.totalCount
           this.totalPage = parseInt(res.data.totalCount /100) + 2
           this.search_list.push(...res.data.list)
           this.nowPage = this.nowPage + 1
         })
         .then(() => {
+          console.log(this.nextNum)
+          console.log("why?")
           for (var j = this.nextNum; j < this.nextNum+18; j++) {
             if (this.search_list[j] !== undefined) {
               this.items.push(this.search_list[j]);
             } 
           }
+          console.log(this.items)
           this.nextNum = j
         })
         .catch((err) => {

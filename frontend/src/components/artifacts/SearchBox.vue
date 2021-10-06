@@ -93,6 +93,7 @@ import SearchCard from './SearchCard.vue'
             this.placeholder = '결과가 없습니다'
             return false
           }
+          this.nextNum = 0
           this.totalNum = res.data.totalCount
           this.totalPage = parseInt(res.data.totalCount /100) + 2
           this.search_list.push(...res.data.list)
