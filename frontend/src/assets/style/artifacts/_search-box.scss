@@ -5,17 +5,17 @@
 
 .search-icon-box-real{
   display: inline;
-  color: #d4ab67;
+  color: #DEC8A4;
   background-color: transparent;
-  border: solid 1px #d4ab67;
+  border: solid 1px #DEC8A4;
   height: 1.9rem;
   width: 60px;
 }
 
 .search-box {
   background-color: #081420;
-  border: solid 1px #d4ab67;
-  color: #d4ab67;
+  border: solid 1px #DEC8A4;
+  color: #DEC8A4;
   height: 1.9rem;
   margin-top: 1.5rem;
   margin-left: 1rem;
@@ -25,19 +25,19 @@
 }
 
 .search-box:focus {
-  border:1px solid #f1e8db;
+  border:1px solid #d4ab67;
   outline: none !important;
 }
 
 hr {
-  border-top: 1px solid #d4ab67;
+  border-top: 1px solid #DEC8A4;
   border-bottom: 0px;
   border-left: 0px;
   border-right: 0px;
 }
 
 input::placeholder {
-  color: #d4ab67;
+  color: #DEC8A4;
 }
 
 .search-wrap-div {

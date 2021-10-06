@@ -1,6 +1,7 @@
 <template>
   <div>
-    <SearchFilter @change="getNation" id="search-filter" theme="시대" :sortlist="nationalityName2" :startnum = "0"  />
+    <hr>
+    <SearchFilter @change="getNation" id="search-filter" theme="시대 구분" :sortlist="nationalityName2" :startnum = "0"  />
     <SearchFilter @change="getPurpose" id="search-filter" theme="유물 종류" :sortlist="purposeName2" :startnum = "8"  />
     <div id="float-clear-div">
       <div class="search-button-div">

@@ -25,7 +25,7 @@ window.$ = $;
 
       // var colors = ["#d5d3c3", "#d4ab67", "#848063", "#b1afb2", "#dec8a4", "#f1e8db"];
 
-      var colors = ["#d4ab67"];
+      var colors = ["#d4ab67", "#d4ab67", "#d4ab67", "#d4ab67", "#d4ab67", "#d4ab67", ];
 
       var copy = document.querySelector("#copy");
 
@@ -39,7 +39,7 @@ window.$ = $;
           x : x,
           y: y
         };
-        this.r =  Math.random()*5 + 2;
+        this.r =  Math.random() + 2;
         this.vx = (Math.random()-0.5)*20;
         this.vy = (Math.random()-0.5)*20;
         this.accX = 0;
@@ -52,8 +52,8 @@ window.$ = $;
       Particle.prototype.render = function() {
 
 
-        this.accX = (this.dest.x - this.x)/1000;
-        this.accY = (this.dest.y - this.y)/1000;
+        this.accX = (this.dest.x - this.x)/200;
+        this.accY = (this.dest.y - this.y)/200;
         this.vx += this.accX;
         this.vy += this.accY;
         this.vx *= this.friction;
@@ -64,7 +64,7 @@ window.$ = $;
 
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, Math.PI * 2, false);
+        ctx.arc(this.x, this.y, this.r, Math.PI , false);
         ctx.fill();
 
         var a = this.x - mouse.x;
@@ -103,17 +103,18 @@ window.$ = $;
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        ctx.font = "bold "+(ww/10)+"px sans-serif";
+        ctx.font = "900 "+(ww/10)+"px sans-serif";
         ctx.textAlign = "center";
         ctx.fillText(copy.value, ww/2, wh/2);
+
 
         var data  = ctx.getImageData(0, 0, ww, wh).data;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.globalCompositeOperation = "screen";
 
         particles = [];
-        for(var i=0;i<ww;i+=Math.round(ww/150)){
-          for(var j=0;j<wh;j+=Math.round(ww/150)){
+        for(var i=0;i<ww;i+=Math.round(ww/300)){
+          for(var j=0;j<wh;j+=Math.round(ww/300)){
             if(data[ ((i + j*ww)*4) + 3] > 150){
               particles.push(new Particle(i,j));
             }
@@ -125,7 +126,7 @@ window.$ = $;
 
       function onMouseClick(){
         radius++;
-        if(radius ===5){
+        if(radius ===1){
           radius = 0;
         }
       }

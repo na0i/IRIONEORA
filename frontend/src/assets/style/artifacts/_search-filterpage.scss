@@ -4,7 +4,7 @@
 
 hr {
   margin-top: 10px;
-  border-top: 1px solid #d4ab67;
+  border-top: 1px solid #848063;
   border-bottom: 0px;
   border-left: 0px;
   border-right: 0px;
@@ -36,12 +36,16 @@ hr {
 
 
 .search-button {
-  margin-right: 35px;
+  line-height: 28px;
+  height: 28px;
+  border-radius: 3px;
+  margin-right: 22px;
   margin-top: 10px;
-  width: fit-content;
+  width: 75px;
+  font-size: 14px;
   color: #DEC8A4;
   border: 1px solid #DEC8A4;
   background-color: transparent;
-  height: 20px;
+  // height: 20px;
   text-align: center;
 }
