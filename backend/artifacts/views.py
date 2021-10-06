@@ -343,10 +343,9 @@ def artifact_like(request, artifact_id):
     return Response(serializer.data)
 
 # 닮은 유물 저장
-# @api_view(['POST'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def artifact_resemble(request, artifact_id):
-    print('this working-------------')
     artifact = get_object_or_404(Artifact, identification_number=artifact_id)
     user = request.user
 
