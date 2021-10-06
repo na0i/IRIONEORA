@@ -1,8 +1,8 @@
 import axios from "axios";
 import cookies from "vue-cookies";
 
-// const URL = 'http://localhost:8000/'
-const URL = 'http://j5a601.p.ssafy.io:8000/'
+const URL = 'http://localhost:8000/'
+// const URL = 'http://j5a601.p.ssafy.io:8000/'
 
 const ROUTES = {
   detail: 'artifacts/',

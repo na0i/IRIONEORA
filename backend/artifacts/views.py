@@ -54,7 +54,7 @@ def get_csv():
 
                     xml_data = bs4.BeautifulSoup(r.content, 'html.parser')
 
-                    print(xml_data)
+                    # print(xml_data)
                     for item in xml_data.findAll('item'):
                         if item['key'] == 'imgUri':
                             image_uri = item['value']
@@ -288,7 +288,7 @@ def wordcloud(request, artifact_id):
     for i in range(len(common_50)):
         nv_dict = {'name': common_50[i][0], 'value': common_50[i][1]}
         result.append(nv_dict)
-    print(result)
+    # print(result)
 
     return Response(result)
 
@@ -297,6 +297,7 @@ def wordcloud(request, artifact_id):
 @permission_classes([IsAuthenticated])
 def artifact_like(request, artifact_id):
     user = request.user
+    print(user)
 
     # 좋아요한 artifact가 DB에 없는 경우 → 저장 후 좋아요하기
     if not Artifact.objects.all().filter(identification_number = artifact_id):
@@ -337,6 +338,7 @@ def artifact_like(request, artifact_id):
     else:
         artifact.like_users.add(user)
 
+    print('-----------------------------', artifact.like_users.all())
     serializer = ArtifactLikeSerializer(artifact)
     return Response(serializer.data)
 
