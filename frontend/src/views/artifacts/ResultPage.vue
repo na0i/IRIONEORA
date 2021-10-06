@@ -95,7 +95,12 @@ export default {
       // 1. url 자르기
       this.selectedUrl = this.cuttingUrl
       console.log(this.selectedUrl)
-      this.cuttedUrl = this.selectedUrl.substring(13,this.selectedUrl.length)
+     
+      const splitResult = this.selectedUrl.split('/',3)
+      const sumUrl = '/' + splitResult[1] + '/' + splitResult[2]
+      this.cuttedUrl = sumUrl
+      
+      // this.cuttedUrl = this.selectedUrl.substring(13,this.selectedUrl.length)
       console.log(this.cuttedUrl)
       console.log('중간평가')
 
