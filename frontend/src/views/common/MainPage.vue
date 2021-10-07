@@ -23,9 +23,7 @@
           @on-loading="onLoading" @on-error="onError">
       </ImageInput>
       <!-- 사진 에러-->
-      <ErrorModal v-if="isError" @close="isError=false" :error="error">
-
-      </ErrorModal>
+      <ErrorModal v-if="isError" @close="isError=false" :error="error"></ErrorModal>
       <div class="info">
         사진은 저장되지 않습니다.<br>
         얼굴이 흐릿하게 나오거나, 판별하기 어려운 사진은 결과가 도출되지 않을 수 있습니다.

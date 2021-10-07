@@ -60,7 +60,7 @@ export default {
   margin: 0 auto;
 
   /* 임시로 구분선 하나 그을게요.. */
-  border: 1px solid ivory;
+  /*border: 1px solid ivory;*/
 
   font-family: 'Noto Serif KR', serif;
 

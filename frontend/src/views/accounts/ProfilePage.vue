@@ -4,9 +4,9 @@
 
     <div class="nickname">
       {{nickname}}
+      <span @click="onLogout" class="logout">로그아웃</span>
     </div>
 
-    <button @click="onLogout">로그아웃</button>
 
     <div class="router-wrap">
       <router-link to="/profile" class="router-button">
