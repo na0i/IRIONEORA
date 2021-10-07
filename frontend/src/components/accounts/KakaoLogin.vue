@@ -28,10 +28,8 @@ export default {
           if (code) {
             AccountsApi.requestKakaoLogin(code)
             .then(res => {
-              this.$store.dispatch('fulfillLogin', res.data.key)
-              console.log(res.data)
               cookies.set('user-token', res.data.key)
-              // this.$router.go(-2)
+              this.$router.go(-2)
             })
           }
         },
