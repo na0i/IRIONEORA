@@ -45,7 +45,7 @@ def kakao_login(request):
 
     # 인증 코드
     code = request.data['code']
-    print(code)
+    # print(code)
 
     # 토큰 요청
     get_token = f'https://kauth.kakao.com/oauth/token'
@@ -56,13 +56,13 @@ def kakao_login(request):
         'code': code,
     }
     token_res = requests.post(get_token, params=params)
-    print(token_res.json())
+    # print(token_res.json())
     access_token = token_res.json()['access_token']
     # 정보 제공 동의 항목
     scope = token_res.json()['scope']
-    print(scope)
+    # print(scope)
     scope = set(scope.split())
-    print(scope)
+    # print(scope)
 
     # 프로필 요청
     get_profile = f'https://kapi.kakao.com/v2/user/me'
@@ -76,7 +76,7 @@ def kakao_login(request):
         'access_token': access_token
     }
     accept = requests.post(f'http://j5a601.p.ssafy.io:8000/accounts/kakao/user/', data=data)
-    print(accept)
+    # print(accept)
 
     # 소셜 로그인 유저
     social_user = SocialAccount.objects.all().filter(uid=profile_res.json()['id'])

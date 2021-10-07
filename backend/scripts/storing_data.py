@@ -20,31 +20,31 @@ def run():
                ]
 
     for key in API_KEY:
-        print(key)
+        # print(key)
         with open('scripts/국립중앙박물관_전국 박물관 유물정보_20190920..csv', encoding='cp949') as f:
             data = csv.reader(f)
             for line in data:
                 if line[5] == '종교신앙':
-                    print(line)
+                    # print(line)
                     id = line[0]
                     if not Artifact.objects.all().filter(identification_number=id):
                         params = {'serviceKey': key, 'id': id}
 
                         r = requests.get(URL, params=params)
-                        print(r.url)
+                        # print(r.url)
 
                         xml_data = bs4.BeautifulSoup(r.content, 'html.parser')
-                        print(xml_data)
+                        # print(xml_data)
 
                         # 404
                         if xml_data.find('div', class_='error_info'):
-                            print('404')
+                            # print('404')
                             continue
 
                         if xml_data.find('totalcount').text == '0':
 
                             if 'EXCEEDS' in xml_data.find('resultmsg').text:
-                                print('exceeds')
+                                # print('exceeds')
                                 break
 
                             continue
@@ -65,9 +65,9 @@ def run():
                         if Artifact.objects.all().filter(image_uri=image_uri):
                             continue
 
-                        print()
-                        print(data)
-                        print(len(image_uri))
+                        # print()
+                        # print(data)
+                        # print(len(image_uri))
 
                         serializer = ArtifactSerializer(data=data)
 
