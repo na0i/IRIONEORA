@@ -140,17 +140,17 @@ import ErrorModal from "@/components/artifacts/ErrorModal";
       // infinite methods
       loadMore () {
         if (this.nextNum > this.totalNum) {
-          // console.log("over")
+
           return false
         }
         // this.loading = true;
         setTimeout(_ => {
-          // console.log(e)
+
           for (var i = 0; i < 6; i++) {
             this.nextNum++
             this.items.push(this.search_list[this.nextNum]);
             if (this.nextNum > this.totalNum) {
-              // console.log("over")
+
               return false
             }
           }
@@ -177,7 +177,7 @@ import ErrorModal from "@/components/artifacts/ErrorModal";
       // Detect when scrolled to bottom.
       const listElm = document.querySelector('.search-wrap-div');
       listElm.addEventListener('scroll',_ => {
-        // console.log(e)
+
         if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight-10) {
           this.loadMore();
         }

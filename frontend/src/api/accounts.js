@@ -34,7 +34,7 @@ async function requestKakaoLogin(code) {
   const data = {
     'code': code
   }
-  console.log('request')
+  // console.log('request')
   return await axios.post(kakaoPath, data)
 }
 
