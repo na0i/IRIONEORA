@@ -147,6 +147,12 @@ const router = new VueRouter({
 
 // navigation guard
 router.beforeEach((to, from, next) => {
+  // 발표용
+  // 회원만 접근 가능하게
+  if (to.path !== '/login' && !store.getters.isLoggedIn) {
+    next('/login')
+  }
+
   // 결과 페이지
   if (to.name === 'ResultPage') {
     if (store.getters.isResult) {
