@@ -7,7 +7,6 @@ import requests
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
 
-from backend import irioneora
 User = get_user_model()
 
 # 카카오 로그인
@@ -43,7 +42,7 @@ class KakaoAccountsLogin(SocialLoginView):
 @api_view(['GET', 'POST'])
 def kakao_login(request):
 
-    print(accounts["REST_API_KEY"])
+
     REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
     REDIRECT_URI = 'http://j5a601.p.ssafy.io/login'
 
