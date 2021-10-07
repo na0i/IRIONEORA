@@ -210,7 +210,9 @@ export default {
     this.fetchDetailInfo();
     this.getWordCloud();
     this.isLikeArtifact(this.$route.params.artifactId);
-    AccountsAPI.requestProfile(this.accessToken);
+    if (this.isLoggedIn) {
+      AccountsAPI.requestProfile(this.accessToken);
+    }
   },
 }
 
