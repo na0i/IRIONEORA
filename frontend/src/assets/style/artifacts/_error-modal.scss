@@ -15,12 +15,14 @@
   display: table-cell;
   vertical-align: middle;
 
+
 }
 
 .modal-container {
-  width: 300px;
+  width: calc(100% - 40px);
+  max-width: 385px;
   margin: 0px auto;
-  padding: 20px 30px;
+  padding: 20px 10px;
   background-color: #081420;
   border: 1px solid rgba(241, 232, 219, .3);
   color: #f1e8db;
