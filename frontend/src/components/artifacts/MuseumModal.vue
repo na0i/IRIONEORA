@@ -1,27 +1,26 @@
 <template>
   <div class="museum-modal">
     <div>
-      <span class="museum-name">
-        {{ museumInfo.fclty_name }}
-      </span>
-      <span>
-        [{{ museumInfo.fclty_type }}]
-      </span>
+      <span class="museum-name">{{ museumInfo.fclty_name }}</span>
+      <span> [{{ museumInfo.fclty_type }}]</span>
     </div>
+
     <br>
-    <div>
-      {{ museumInfo.introduction }}
-    </div>
+
+    <div>{{ museumInfo.introduction }}</div>
+
     <br>
-    <div>
-      {{ museumInfo.address }}
-    </div>
+
+    <div>{{ museumInfo.address }}</div>
+
     <br>
-    <div>
-      {{ museumInfo.hompage }}
-    </div>
+    
+    <div>{{ museumInfo.hompage }}</div>
+
     <br>
+
     <div class="semi-title">운영 정보</div>
+
     <div>
       <div class="inblock-box">평일</div>
       {{ museumInfo.weekday_open }} ~
@@ -36,7 +35,9 @@
       <div class="inblock-box">휴무일</div>
       {{ museumInfo.closed_date }}
     </div>
+
     <br>
+
     <div class="semi-title">요금 정보</div>
     <div>
       <div class="inblock-box">성인</div>
@@ -50,12 +51,13 @@
       <div class="inblock-box">유아</div>
       {{ museumInfo.child_chrg }} 원
     </div>
+
     <div id="map" class="kakao-map"></div>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   name: 'MuseumModal',
@@ -76,7 +78,8 @@ export default {
       var geocoder = new kakao.maps.services.Geocoder();
 
       // 주소로 좌표 검색
-      geocoder.addressSearch('서울특별시 용산구 서빙고로 137' , function(result, status) {
+      // geocoder.addressSearch('서울특별시 용산구 서빙고로 137' , function(result, status) {
+      geocoder.addressSearch(this.museumInfo.address , function(result, status) {
 
           // 정상적으로 검색이 완료됐으면 
           if (status === kakao.maps.services.Status.OK) {
@@ -102,7 +105,7 @@ export default {
   },
   created() {
   },
-  mounted() {
+  updated() {
     if (window.kakao && window.kakao.maps) {
       this.initMap()
     } else {
