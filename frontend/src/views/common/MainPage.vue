@@ -73,7 +73,7 @@ export default {
     },
     // 로딩 스피너
     onLoading(status) {
-      console.log(status)
+      // console.log(status)
       this.isLoading = status
       // 스피너 돌 때 스크롤 안되게 -> 추후 확인 필요하고요..
       if (status) {

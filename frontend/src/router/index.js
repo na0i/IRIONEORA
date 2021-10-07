@@ -16,7 +16,7 @@ import ResultPage from "@/views/artifacts/ResultPage";
 import LoginPage from "@/views/accounts/LoginPage";
 import SignupPage from "@/views/accounts/SignupPage";
 import SignInUpPage from "@/views/accounts/SignInUpPage";
-import IntroPage from '../views/common/IntroPage.vue'
+
 
 Vue.use(VueRouter)
 
