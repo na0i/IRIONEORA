@@ -153,12 +153,19 @@ router.beforeEach((to, from, next) => {
       next('/profile')
     }
   }
+  // 발표용 조건
+  // 회원만 접근 가능하도록
+  else {
+    if (!store.getters.isLoggedIn) {
+      next('/login')
+    }
+  }
 
   // 발표용
   // 회원만 접근 가능하게
-  if (to.path !== '/login' && !store.getters.isLoggedIn) {
-    next('/login')
-  }
+  // if (to.path !== '/login' || to.path !== '/signup') {
+  //   next('/login')
+  // }
 
   // 결과 페이지
   if (to.name === 'ResultPage') {
