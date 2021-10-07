@@ -29,8 +29,13 @@ SECRET_KEY = 'django-insecure-u(+tceq^_7a$*$jy&ia)=$p3k@yfa3os1)r#eu)^c_@%kz4rgi
 DEBUG = True
 
 ALLOWED_HOSTS = ['j5a601.p.ssafy.io',
+                 'http://j5a601.p.ssafy.io'
                  'localhost',
-                 '127.0.0.1']
+                 'localhost:8080/',
+                 '127.0.0.1',
+                 '3.36.130.57']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
     'pages',
     'accounts',
     'artifacts',
+    'spark',
 
     # 3rd party apps
     'drf_yasg',  # for swagger
@@ -59,10 +65,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.kakao',
-    'django_extensions'
+    'django_extensions',
+    # cors
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

@@ -25,6 +25,11 @@ from drf_yasg import openapi
 schema_url_patterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('accounts.urls')),
+    path('artifacts/', include('artifacts.urls')),
+    path('pages/', include('pages.urls')),
+    path('spark/', include('spark.urls')),
 ]
 
 schema_view = get_schema_view(
@@ -46,6 +51,7 @@ urlpatterns = [
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/signup/', include('rest_auth.registration.urls')),
     path('pages/', include('pages.urls')),
+    path('spark/', include('spark.urls')),
 
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'), 
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'), 

@@ -1,0 +1,103 @@
+.main {
+  position: relative;
+
+  .background {
+    position: absolute;
+    right: 0;
+    z-index: -1;
+  }
+
+  .description {
+    margin-left: 20px;
+    margin-top: 20px;
+
+    .description-kr {
+      color: #F1E8DB;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 25px;
+    }
+
+    .description-eng {
+      margin-top: 20px;
+      color: rgba(241, 232, 219, 0.2);
+      font-size: 35px;
+      font-weight: 700;
+      line-height: 45px;
+    }
+  }
+
+  .flower {
+    position: absolute;
+    width: 30%;
+    bottom: -15px;
+    right: 10%;
+
+  }
+
+  .image-upload {
+    width: calc(100% - 40px);
+    margin-top: 430px;
+    margin-left: 20px;
+
+    .button {
+      height: 40px;
+
+      input {
+        font-weight: 400;
+        font-size: 14px;
+      }
+    }
+
+    .info {
+      margin-top: 1.3em;
+      text-align: center;
+      color: #848063;
+      font-size: 9.3px;
+      font-weight: 300;
+      line-height: 1.5em;
+      word-break: keep-all;
+    }
+
+    .image-input {
+      display: none;
+    }
+
+  }
+
+  .loading {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+  }
+
+  .todays-artifact {
+    margin-top: 40px;
+    color: #DEC8A4;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+
+
+}
+
+
+#flux {
+  animation: flux 2s linear infinite;
+  -moz-animation: flux 2s linear infinite;
+  -webkit-animation: flux 2s linear infinite;
+  -o-animation: flux 2s linear infinite;
+}
+
+@keyframes flux {
+  0%,
+  100% {
+    box-shadow: 0 0 3px #DEC8A4, 0 0 3px #DEC8A4, 0 0 3px #DEC8A4, 0 0 3px 
+   
+  }
+  50% {
+    box-shadow: 0 0 3px #635949, 0 0 3px #635949, 0 0 3px #635949, 0 0 3px 
+  }
+}

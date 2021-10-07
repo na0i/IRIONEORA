@@ -1,0 +1,62 @@
+.nav-background {
+  align-items: center;
+  background-color: #081420;
+  color: #d4ab67;  
+  display: flex;
+  width: 100%;
+  height: 50px;
+  left: 0;
+  margin: 0 auto;
+  max-width: 425px;
+  padding: 0 0 0 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9;
+}
+
+.nav-background a {
+  color: #d4ab67;
+}
+
+.nav-item-start {
+  display: flex;
+  justify-content: flex-start;
+  width: 33%;
+}
+
+.nav-item-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.nav-item-center img {
+  align-content: center;
+  height: 100%;
+  width: 70px;
+}
+
+.nav-item-end {
+  display: flex;
+  justify-content: flex-end;
+  width: 33%;
+}
+
+// #person-icon {
+//   margin-right: 1rem;
+// }
+
+// #search-icon {
+//   margin-left: 1rem;
+// }
+
+.search-icon {
+  width: 20px;
+  margin-left: 1rem;
+}
+
+.profile-icon {
+  width: 20px;
+  margin-right: 1rem;
+}

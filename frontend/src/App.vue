@@ -1,34 +1,85 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-      <h1>안녕안녕</h1>
+    <NavBar id="app-nav"/>
+
+      
+      <div id="app-content">
+        
+        <transition
+          mode="out-in"
+          name="router-anim"
+          :enter-active-class="this.$route.meta.enterActiveClass"
+          :leave-active-class="this.$route.meta.leaveActiveClass"
+        > 
+          
+          <router-view/>
+
+        </transition>
+      
+      </div>
     
-    </div>
-    <router-view/>
+
+    <LowBar id="low-bar"></LowBar>
   </div>
 </template>
 
+<script>  
+import cookies from "vue-cookies";
+import AccountsApi from "@/api/accounts";
+
+import NavBar from './components/common/NavBar.vue'
+import LowBar from "@/components/common/LowBar";
+
+export default {
+  components: {
+    NavBar,
+    LowBar
+  },
+  created() {
+    // 로그인된 유저 확인
+    const token = cookies.get('user-token')
+
+    if (token) {
+      AccountsApi.requestProfile(token)
+      .then(res => {
+        this.$store.dispatch('setProfileInfo', res.data)
+      })
+    }
+  }
+}
+</script>
+
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  max-width: 425px;
+  width: 100%;
+  /* 가운데 정렬 */
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+
+  /* 임시로 구분선 하나 그을게요.. */
+  /*border: 1px solid ivory;*/
+
+  font-family: 'Noto Serif KR', serif;
+
 }
 
-#nav {
-  padding: 30px;
+#app-content {
+  min-height: calc(100vh - 130px);
+  /*margin-top: 40px;*/
+  margin-bottom: 60px;
+  margin-top: 70px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+#app-nav {
+  /*padding: 30px;*/
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+#low-bar {
+  position: absolute;
+  bottom: 0;
 }
+
 </style>
