@@ -35,19 +35,19 @@ const routes = [
     name: 'MainPage',
     component: MainPage,
     meta: {
-      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
-      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+      enterActiveClass: "animate__animated animate__fadeIn animate__fast",
+      leaveActiveClass: "animate__animated animate__fadeOut animate__fast"
     },
   },
-  {
-    path: '/intro',
-    name: 'IntroPage',
-    component: IntroPage,
-    meta: {
-      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
-      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
-    },
-  },
+  // {
+  //   path: '/intro',
+  //   name: 'IntroPage',
+  //   component: IntroPage,
+  //   meta: {
+  //     enterActiveClass: "animate__animated animate__fadeIn animate__fast",
+  //     leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+  //   },
+  // },
   {
     path: '/search',
     component: SearchPage,
@@ -124,7 +124,7 @@ const routes = [
     name: 'DetailPage',
     component: DetailPage,
     meta: {
-      enterActiveClass: "animate__animated animate__fadeIn__slow",
+      enterActiveClass: "animate__animated animate__fadeIn__fast",
       leaveActiveClass: "animate__animated animate__fadeOut"
     },
   },
@@ -133,7 +133,7 @@ const routes = [
     name: 'ResultPage',
     component: ResultPage,
     meta: {
-      enterActiveClass: "animate__animated animate__fadeIn__slow",
+      enterActiveClass: "animate__animated animate__fadeIn__fast",
       leaveActiveClass: "animate__animated animate__fadeOut"
     },
   },
