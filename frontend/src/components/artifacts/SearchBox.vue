@@ -28,7 +28,7 @@ import SearchCard from './SearchCard.vue'
     data: function() {
       return {
         //setting values
-        serviceKey: "DLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg==",
+        serviceKey: 'SrLLfGdZjGbS5OmPmSlewYvcR6tXPmpk11SduYlvFr7r6CA7L9vjF7JRSx7rhrTEvOdAlUDtqkY9HJAg8+Y6ww==',
         placeholder: '검색어를 입력해주세요.',
 
         // index case

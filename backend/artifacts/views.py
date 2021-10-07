@@ -23,8 +23,7 @@ from konlpy.tag import Okt, Kkma, Twitter
 from collections import Counter
 
 # API_KEY
-API_KEY2 = 'SrLLfGdZjGbS5OmPmSlewYvcR6tXPmpk11SduYlvFr7r6CA7L9vjF7JRSx7rhrTEvOdAlUDtqkY9HJAg8+Y6ww=='
-API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
+API_KEY = 'SrLLfGdZjGbS5OmPmSlewYvcR6tXPmpk11SduYlvFr7r6CA7L9vjF7JRSx7rhrTEvOdAlUDtqkY9HJAg8+Y6ww=='
 
 # 저장 여부 확인
 def is_saved(id):
@@ -49,7 +48,7 @@ def get_csv():
             if line[5] == '문화예술' or line[5] == '종교신앙':
                 id = line[0]
                 if not Artifact.objects.all().filter(identification_number=id):
-                    params = {'serviceKey': API_KEY2, 'id': id}
+                    params = {'serviceKey': API_KEY, 'id': id}
 
                     r = requests.get(URL, params=params)
 

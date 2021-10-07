@@ -11,12 +11,6 @@ def run():
     # 소장품 상세정보 불러오기
     URL = 'http://www.emuseum.go.kr/openapi/relic/detail'
     API_KEY = ['SrLLfGdZjGbS5OmPmSlewYvcR6tXPmpk11SduYlvFr7r6CA7L9vjF7JRSx7rhrTEvOdAlUDtqkY9HJAg8+Y6ww==',
-               'SKd2hlziS4ug+UJeVVZqw0EWfwAuspV00Kqp1+r0NssWlBCZU1LQOULGnte7LgkQjRPjKFgIBPZ3xE5VxsGrBg==',
-               'LV9sokurL8kYjvdTGXfxBvus+4yck/HDl0a9/mzdvKJh0HwM0Z/W9YIPN3FT1yk0ki/r0sFn3wFfkN7u3qMazw==',
-               'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw==',
-               'D/3LM/MOiKLwT/BfzNrt4Uv6ItO4Lzcvl4N/g7GkP6U3buUdSei4pY+gDO/YVovYfFq9tRdvPLY+VqzYDkfR7w==',
-               'javtmpZuM82GShOc+dJyc3k5bo3kZ3dGF/eM1wUyCvvLXsbGG/sQz5gR0jfk2hH5OmBCVBPxBl5NqLdcHYv/Ew==',
-               'aEN8Ldpt09YQ8Cc/V7OWiDn89HI5wrT7V2fhm+4XB8YKqvtBGqFFY9z3PTkplks3Azsz8d1y+yjuy1r79CYKYg==',
                ]
 
     for key in API_KEY:
