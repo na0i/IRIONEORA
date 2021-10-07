@@ -168,14 +168,6 @@ export default {
       return this.results[this.nowShowing-1].url
     }
   },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      // result 결과가 없다면 들어오지 못하도록
-      if (!vm.isResult) {
-        vm.$router.push('/')
-      }
-    })
-  }
 }
 </script>
 
