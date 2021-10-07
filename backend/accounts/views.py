@@ -15,7 +15,7 @@ from rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.kakao import views as kakao_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from allauth.socialaccount.models import SocialAccount
-from ..irioneora.secrets import accounts
+
 
 
 # 회원가입시 닉네임 중복 확인
