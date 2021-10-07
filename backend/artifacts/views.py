@@ -298,7 +298,6 @@ def artifact_like(request, artifact_id):
     # 좋아요한 artifact가 DB에 없는 경우 → 저장 후 좋아요하기
     if not Artifact.objects.all().filter(identification_number = artifact_id):
         artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
-        API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
         params = {'serviceKey': API_KEY, 'id': artifact_id}
 
         raw_data = requests.get(artifact_url, params=params)
@@ -358,7 +357,6 @@ def artifact_resemble(request, artifact_id):
 @api_view(['GET'])
 def get_museum_info(request, museum_name):
     museum_url = f'http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api'
-    API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
     params = {'serviceKey': API_KEY, 'fcltyNm': museum_name}
 
     raw_data = requests.get(museum_url, params=params)
