@@ -43,8 +43,8 @@ class KakaoAccountsLogin(SocialLoginView):
 @api_view(['GET', 'POST'])
 def kakao_login(request):
 
-    REST_API_KEY = accounts["REST_API_KEY"]
-    # REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
+    print(accounts["REST_API_KEY"])
+    REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
     REDIRECT_URI = 'http://j5a601.p.ssafy.io/login'
 
     # 인증 코드
