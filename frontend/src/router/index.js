@@ -147,10 +147,18 @@ const router = new VueRouter({
 
 // navigation guard
 router.beforeEach((to, from, next) => {
+  // 결과 페이지
   if (to.name === 'ResultPage') {
     if (store.getters.isResult) {
       next()
     } else next('/')
+  }
+
+  // 로그인
+  if (to.path === '/login' || to.path === '/signup') {
+    if (store.getters.isLoggedIn) {
+      next('/profile')
+    }
   }
 
   next()
