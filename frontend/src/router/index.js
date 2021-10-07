@@ -145,5 +145,15 @@ const router = new VueRouter({
   routes
 })
 
+// navigation guard
+router.beforeEach((to, from, next) => {
+  if (to.name === 'ResultPage') {
+    if (store.getters.isResult) {
+      next()
+    } else next('/')
+  }
+
+  next()
+})
 
 export default router

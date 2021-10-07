@@ -8,7 +8,7 @@
       </div>
 
       <div class="search-card-p">
-        <p>{{artifact.name}}</p>
+        <p>{{name}}</p>
       </div>
 
     </div>
@@ -23,15 +23,19 @@
 
     data () {
     return {
-      imageUrl : this.artifact.imgThumUriM,
+      imageUrl : '',
       changedUrl : "",
-      idNum : this.artifact.id
+      idNum : '',
+      name: ''
       }
     },
 
     methods: {
       // URL 주소 체인지
       changeUrl (url) {
+        if (url === undefined) {
+          return false
+        } 
         const splitResult = url.split('/',3)
         const sumUrl = 'http://www.emuseum.go.kr' + '/' + splitResult[1] + '/' + splitResult[2]
         this.changedUrl = sumUrl
@@ -45,6 +49,12 @@
     },
 
     mounted () {
+      if (this.artifact === undefined) {
+        return false
+      }
+      this.imageUrl = this.artifact.imgThumUriM
+      this.idNum = this.artifact.id
+      this.name = this.artifact.name
       this.changeUrl(this.imageUrl)
     }
   }
