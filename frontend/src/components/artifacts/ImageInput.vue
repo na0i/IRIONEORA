@@ -32,10 +32,12 @@ export default {
       if (res.data.result.faces.length === 0) {
         this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
         this.$emit('on-loading', false)
+        throw new Error('face not detected');
       }
       // 얼굴 데이터를 전송받은 경우
       else {
         console.log(res.data.result)
+        this.$store.dispatch('setKakaoResult', res.data.result)
         const result = await AccountsApi.requestAnalyze(res.data)
         return result
       }
@@ -58,6 +60,7 @@ export default {
       ).toLowerCase()
 
       // 이미지 파일이 아닌 경우
+      console.log(extension)
       if (!['jpg', 'jpeg', 'png'].includes(extension)) {
         this.error = '이미지 파일을 선택해 주세요.'
       }
@@ -96,6 +99,7 @@ export default {
             console.log(res)
 
           })
+        .catch(err => {})
 
 
 
