@@ -1,3 +1,5 @@
+
+
 # 이리오너라(Irioneora)
 
 
@@ -70,6 +72,10 @@
 ### 🎨 디자인
 
 ##### MAIN PAGE
+
+
+
+
 
 ![image-20210914234540963](https://user-images.githubusercontent.com/77482972/133280448-121645f1-7061-4d5c-8a15-45ea76cd48bc.png) ![image-20210914234604885](https://user-images.githubusercontent.com/77482972/133280456-aa9f59b1-695b-45df-8212-9572397fc67d.png)
 
