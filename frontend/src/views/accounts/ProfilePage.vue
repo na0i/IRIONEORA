@@ -39,7 +39,9 @@ export default {
   methods: {
     onLogout() {
       this.$store.dispatch('logout')
-      this.$router.push('/')
+      .then(res =>
+        this.$router.push('/')
+      )
     }
   },
   // computed

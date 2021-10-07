@@ -74,9 +74,10 @@ const actions = {
         // .catch(err => true)
     // }
   },
-  logout({commit}) {
-    commit('LOGOUT')
-    cookies.set('user-token', '', 0)
+  async logout({commit}) {
+    cookies.remove('user-token')
+    await commit('LOGOUT')
+    return true
   },
   setKakaoResult({commit}, result) {
     commit('SET_KAKAO_RESULT', result)
