@@ -71,23 +71,23 @@ export default {
     initMap() {
       var mapContainer = document.getElementById('map'),
           mapOption = {
-              center: new kakao.maps.LatLng(33.450701, 126.570667),
+              center: new window.kakao.maps.LatLng(33.450701, 126.570667),
               level: 3
           };  
-      var map = new kakao.maps.Map(mapContainer, mapOption); 
-      var geocoder = new kakao.maps.services.Geocoder();
+      var map = new window.kakao.maps.Map(mapContainer, mapOption);
+      var geocoder = new window.kakao.maps.services.Geocoder();
 
       // 주소로 좌표 검색
       // geocoder.addressSearch('서울특별시 용산구 서빙고로 137' , function(result, status) {
       geocoder.addressSearch(this.museumInfo.address , function(result, status) {
 
           // 정상적으로 검색이 완료됐으면 
-          if (status === kakao.maps.services.Status.OK) {
+          if (status === window.kakao.maps.services.Status.OK) {
 
-              var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+              var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
 
               // 마커로 표시
-              var marker = new kakao.maps.Marker({
+              var marker = new window.kakao.maps.Marker({
                   map: map,
                   position: coords
               });
@@ -110,7 +110,7 @@ export default {
       this.initMap()
     } else {
       const script = document.createElement('script')
-      script.onload = () => kakao.maps.load(this.initMap);
+      script.onload = () => window.kakao.maps.load(this.initMap);
       script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=ac9d810283d93186609b852e5cc33be8'
       document.head.appendChild(script)
     }
