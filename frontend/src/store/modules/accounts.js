@@ -42,6 +42,9 @@ const getters = {
   isResult: state => !!state.kakaoResult.width
 }
 const mutations = {
+  SET_TOKEN(state, token) {
+    state.authToken = token
+  },
   SET_PROFILE_INFO(state, profile) {
     state.profileInfo = profile
   },
@@ -62,6 +65,8 @@ const actions = {
   async fulfillLogin({commit, state, rootState}, token) {
     // 쿠키에 토큰 저장
     cookies.set('user-token', token, 0)
+    // state에 토큰 저장
+    commit('SET_TOKEN', token)
     // 닮은 유물 저장 요청 -> 앞서 요청 보낸 경우가 있었다면,
     // const identification_number = rootState.artifacts.results[0].identification
     // if (!identification_number) {
