@@ -4,9 +4,9 @@
 
     <input type="text" class="search-box" :placeholder="placeholder" v-model="indexWord" @keydown.enter="searchKeyWord()"/>
     
-    <button class="search-icon-box-real" @click="searchKeyWord()">
+    <!-- <button class="search-icon-box-real" @click="searchKeyWord()">
       search
-    </button>
+    </button> -->
     <!-- <button @click="searchKeyWord()">search</button> -->
     </div>
     <hr>
@@ -76,7 +76,6 @@ import SearchCard from './SearchCard.vue'
         // 검색결과 초기화
         this.search_list = []
         this.items = []
-        console.log("first")
 
         // 응답 요청
         axios({
@@ -84,11 +83,7 @@ import SearchCard from './SearchCard.vue'
           url : `/openapi/relic/list?serviceKey=${this.serviceKey}&name=${this.indexWord}&numOfRows=100&pageNo=1`, 
         })
         .then((res) => {
-          console.log("res")
-          console.log(res)
-          console.log(res.data.totalCount)
           if (res.data.totalCount === 0) {
-            console.log("결과가 업습니다")
             this.indexWord = ''
             this.placeholder = '결과가 없습니다'
             return false
@@ -120,12 +115,10 @@ import SearchCard from './SearchCard.vue'
           return false
         }
         // this.loading = true;
-        setTimeout(e => {
-          console.log(e)
+        setTimeout(_ => {
           for (var i = 0; i < 6; i++) {
             this.nextNum++
             this.items.push(this.search_list[this.nextNum]);
-            console.log(this.nextNum)
           }
           // this.loading = false;
         }, 200);
@@ -138,7 +131,6 @@ import SearchCard from './SearchCard.vue'
         
         if ( this.nextNumReminder > 70 && this.reminderFlag === 0 && this.nowPage < this.totalPage ) {
           this.getArtifactPageList(this.nowPage)
-          console.log(this.search_list)
           this.nowPage = this.nowPage + 1
           this.reminderFlag = 1
         }
@@ -149,11 +141,7 @@ import SearchCard from './SearchCard.vue'
     mounted () {
       // Detect when scrolled to bottom.
       const listElm = document.querySelector('.search-wrap-div');
-      listElm.addEventListener('scroll',e => {
-        console.log(e)
-        // console.log(listElm.scrollTop)
-        // console.log(listElm.clientHeight)
-        // console.log(listElm.scrollHeight)
+      listElm.addEventListener('scroll',_ => {
         if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight-10) {
           this.loadMore();
         }

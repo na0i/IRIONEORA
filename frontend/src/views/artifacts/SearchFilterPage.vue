@@ -91,7 +91,6 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
             })
       },
       searchFilters () {
-        console.log(1)
         // 검색결과 초기화
         this.search_list = []
         this.items = []
@@ -103,28 +102,15 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
           return false
         } 
 
-        // if (this.purposeCode === '') {
-        //   // 어떻게 표현하지
-        //   console.log("pn empty")
-        //   return false
-        // } 
-
-
-        // 응답 요청
-     
-
         // 응답 받아오기
-        console.log("axios")
         axios({
           method: 'get',
           url : `/openapi/relic/list?serviceKey=${this.serviceKey}&nationalityCode=${this.nationalityCode}&purposeCode=${this.purposeCode}&numOfRows=100&pageNo=1`, 
         })
         .then((res) => {
           if (res.data.totalCount === 0) {
-            console.log("결과가 없습니다")
             return false
           }
-          console.log(res.data.totalCount)
           this.nextNum = 0
           this.totalNum = res.data.totalCount
           this.totalPage = parseInt(res.data.totalCount /100) + 2
@@ -132,14 +118,11 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
           this.nowPage = this.nowPage + 1
         })
         .then(() => {
-          console.log(this.nextNum)
-          console.log("why?")
           for (var j = this.nextNum; j < this.nextNum+18; j++) {
             if (this.search_list[j] !== undefined) {
               this.items.push(this.search_list[j]);
             } 
           }
-          console.log(this.items)
           this.nextNum = j
         })
         .catch((err) => {
@@ -150,15 +133,19 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
       // infinite methods
       loadMore () {
         if (this.nextNum > this.totalNum) {
+          // console.log("over")
           return false
         }
         // this.loading = true;
-        setTimeout(e => {
-          console.log(e)
+        setTimeout(_ => {
+          // console.log(e)
           for (var i = 0; i < 6; i++) {
             this.nextNum++
             this.items.push(this.search_list[this.nextNum]);
-            console.log(this.nextNum)
+            if (this.nextNum > this.totalNum) {
+              // console.log("over")
+              return false
+            }
           }
           // this.loading = false;
         }, 200);
@@ -171,7 +158,6 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
         
         if ( this.nextNumReminder > 70 && this.reminderFlag === 0 && this.nowPage < this.totalPage ) {
           this.getArtifactPageList(this.nowPage)
-          console.log(this.search_list)
           this.nowPage = this.nowPage + 1
           this.reminderFlag = 1
         }
@@ -181,21 +167,10 @@ import SearchCard from '@/components/artifacts/SearchCard.vue'
     },
 
     mounted () {
-      axios({
-              method: 'get',
-              url : `/openapi/code?serviceKey=DLuSbLjmCJIDKmhoSB7ELx3eVXXxg9ZBqh9oC8/eFWTcq2gDMqfQA7jrooSkvzWgYv/pd9a6fUJKG40K3VQXHg==&parentCode=PS06001&numOfRows=100`, 
-              // url : `/openapi/relic/list?serviceKey=${this.serviceKey}&numOfRows=100&nationalityCode=PS06001009&purposeCode=PS09009`,
-})
-            .then((res) => {
-              console.log(res)
-            })
       // Detect when scrolled to bottom.
       const listElm = document.querySelector('.search-wrap-div');
-      listElm.addEventListener('scroll',e => {
-        console.log(e)
-        // console.log(listElm.scrollTop)
-        // console.log(listElm.clientHeight)
-        // console.log(listElm.scrollHeight)
+      listElm.addEventListener('scroll',_ => {
+        // console.log(e)
         if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight-10) {
           this.loadMore();
         }
