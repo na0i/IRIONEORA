@@ -105,7 +105,7 @@ export default {
 
           })
         .catch(err => {
-          console.log(err)
+          this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
           this.$emit('on-loading', false)
         })
 
