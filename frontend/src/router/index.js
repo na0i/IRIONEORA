@@ -136,6 +136,12 @@ const routes = [
       leaveActiveClass: "animate__animated animate__fadeOut"
     },
   },
+  {
+    path: '*',
+    redirect: "/error"
+    // 아래처럼 바로 NotFound 경로를 매칭해도 됨
+    // component: NotFound
+},
 ]
 
 const router = new VueRouter({
