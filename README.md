@@ -17,64 +17,7 @@
 
    
 
-   <div style="display: flex">
-       <div style="display: flex; flex-direction: column; align-items: center; width: 25%">
-           <img src="README.assets/image-20211008041402031.png" alt="image-20211008041402031" style="width: 80%; height: 200px" />
-           <div>
-               <h3 style="text-align: center">
-                   <br/>
-                   박나영 
-               </h3>
-               <p style="text-align: center">
-                   FE/BE<br/>
-                   UI/UX<br/>
-                   영상촬영
-               </p>
-           </div>
-       </div>
-       <div style="display: flex; flex-direction: column; align-items: center; width: 25%">
-           <img src="README.assets/image-20211008041429436.png" alt="image-20211008041429436" style="width: 80%; height: 200px" />
-           <div>
-               <h3 style="text-align: center">
-                   <br/>
-                   윤세일
-               </h3>
-               <p style="text-align: center">
-                   FE/BE<br/>
-                   분산처리<br/>
-                   개발환경 설정
-               </p>
-           </div>
-       </div>
-       <div style="display: flex; flex-direction: column; align-items: center; width: 25%">
-           <img src="README.assets/image-20211008041442183.png" alt="image-20211008041442183" style="width: 80%; height: 200px" />
-           <div>
-               <h3 style="text-align: center">
-                   <br/>
-                   이현경
-               </h3>
-               <p style="text-align: center">
-                   CI/CD<br/>
-                   분산처리<br/>
-                   알고리즘 구현
-               </p>
-           </div>
-       </div>
-       <div style="display: flex; flex-direction: column; align-items: center; width: 25%">
-           <img src="README.assets/image-20211008043449312.png" alt="image-20211008041402031" style="height: 200px" />
-           <div>
-               <h3 style="text-align: center">
-                   <br/>
-                   조정원
-               </h3>
-               <p style="text-align: center">
-                   FE/BE <br/>
-                   DB 관리<br/>
-                   데이터 수집
-               </p>
-           </div>
-       </div>
-   </div>
+   ![image-20211008052404895](README.assets/image-20211008052404895.png)
 
 <br><br>
 
@@ -100,7 +43,7 @@
   - <img src="https://img.shields.io/badge/Docker-20.10.7-yellowgreen?logo=docker" style="float: left;">
   - <img src="https://img.shields.io/badge/Nginx-1.18.0-yellowgreen?logo=nginx" style="float: left;">
 
-
+<br>
 
 **Back-End**
 
@@ -108,14 +51,14 @@
   - <img src="https://img.shields.io/badge/Django-v3.2.7-yellowgreen?logo=django"  style="float: left">
   - <img src="https://img.shields.io/badge/Visual Studio Code----yellowgreen?logo=visualstudiocode" style="float: left">
 
-
+<br>
 
 **Hadoop**
 
 - <img src="https://img.shields.io/badge/Hadoop-v3.2.2-yellowgreen?logo=hadoop" style="float: left">
 - <img src="https://img.shields.io/badge/Pyspark-v3.1.2-yellowgreen?logo=pyspark" style="float: left">
 
-
+<br>
 
 **Front-End**
 
@@ -138,19 +81,23 @@
 
 - 우리나라 문화재와 유물의 매력을 손쉽게 접할 수 있는 서비스 제공
 
-
+<br>
 
 #### 2. MZ세대의 흥미에 맞춘 테스트 서비스
 
 -  유저들의 흥미를 유발하기 위하여 사용자가 직접 참여하는 테스트를 기획
 
+<br>
 
+<br>
 
 ## 프로젝트 아키텍처 
 
 ![image-20211008050350006](README.assets/image-20211008050350006.png) 
 
+<br>
 
+<br>
 
 ## 분산처리 (Hadoop) 구조
 
@@ -158,12 +105,16 @@
 
 
 
+<br><br>
+
 ## 향후 발전 가능성 및 의의 
 
 - 현재 EC2 서버에서 분산처리를 수행하고있으나, 대규모 클러스터를 연결하여 다수의 사용자가 이용할 수 있도록 개선시킬 예정
 - 국/공립 박물관과의 서비스 연계 등을 통하여 우리나라 유물과 전통 전반을 소개하는 서비스로 발전 가능 
 
+<br>
 
+<br>
 
 ## 🎨 디자인
 
@@ -171,13 +122,13 @@
 
 ![main-up](README.assets/main-up-3633349.png).![main-down](README.assets/main-down-3633359.png) 
 
-
+<br>
 
 #### RESULT PAGE
 
 ![face-result-1](README.assets/face-result-1.png)![face-result-2](README.assets/face-result-2.png) 
 
-
+<br>
 
 #### DETAIL PAGE
 
@@ -185,19 +136,19 @@
 
 ![detail-map](README.assets/detail-map.png) 
 
-
+<br>
 
 #### SEARCH PAGE
 
 ![search-index](README.assets/search-index.png) ![search-filter](README.assets/search-filter.png) 
 
-
+<br>
 
 #### LOGIN & SIGNUP PAGE  
 
 ![login](README.assets/login.png) ![signup](README.assets/signup.png) 
 
-
+<br>
 
 #### PROFILE PAGE
 
