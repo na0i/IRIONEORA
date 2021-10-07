@@ -13,6 +13,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
+
 import csv
 import requests
 import bs4
@@ -22,7 +23,8 @@ from konlpy.tag import Okt, Kkma, Twitter
 from collections import Counter
 
 # API_KEY
-API_KEY = 'SrLLfGdZjGbS5OmPmSlewYvcR6tXPmpk11SduYlvFr7r6CA7L9vjF7JRSx7rhrTEvOdAlUDtqkY9HJAg8+Y6ww=='
+API_KEY2 = 'SrLLfGdZjGbS5OmPmSlewYvcR6tXPmpk11SduYlvFr7r6CA7L9vjF7JRSx7rhrTEvOdAlUDtqkY9HJAg8+Y6ww=='
+API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
 
 # 저장 여부 확인
 def is_saved(id):
@@ -47,7 +49,7 @@ def get_csv():
             if line[5] == '문화예술' or line[5] == '종교신앙':
                 id = line[0]
                 if not Artifact.objects.all().filter(identification_number=id):
-                    params = {'serviceKey': API_KEY, 'id': id}
+                    params = {'serviceKey': API_KEY2, 'id': id}
 
                     r = requests.get(URL, params=params)
 
@@ -298,6 +300,7 @@ def artifact_like(request, artifact_id):
     # 좋아요한 artifact가 DB에 없는 경우 → 저장 후 좋아요하기
     if not Artifact.objects.all().filter(identification_number = artifact_id):
         artifact_url = f'http://www.emuseum.go.kr/openapi/relic/detail'
+        API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
         params = {'serviceKey': API_KEY, 'id': artifact_id}
 
         raw_data = requests.get(artifact_url, params=params)
@@ -357,6 +360,7 @@ def artifact_resemble(request, artifact_id):
 @api_view(['GET'])
 def get_museum_info(request, museum_name):
     museum_url = f'http://api.data.go.kr/openapi/tn_pubr_public_museum_artgr_info_api'
+    API_KEY = 'SqZskQNLBydKAJrTV5fUn3zRuenH7ELym5KvJWma15ABpxIYBeQK15yeq+cLDfiGBiMv8Pt5VFk1H0Sz4lX3yw=='
     params = {'serviceKey': API_KEY, 'fcltyNm': museum_name}
 
     raw_data = requests.get(museum_url, params=params)
