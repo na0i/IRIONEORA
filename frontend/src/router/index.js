@@ -21,17 +21,17 @@ import IntroPage from '../views/common/IntroPage.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: Home,
+  //   meta: {
+  //     enterActiveClass: "animate__animated animate__fadeIn animate__slow",
+  //     leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+  //   },
+  // },
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-    meta: {
-      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
-      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
-    },
-  },
-  {
-    path: '/main',
     name: 'MainPage',
     component: MainPage,
     meta: {
