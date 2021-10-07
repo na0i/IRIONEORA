@@ -6,6 +6,8 @@ import requests
 # 중복확인
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
+
+from backend import irioneora
 User = get_user_model()
 
 # 카카오 로그인
@@ -13,6 +15,7 @@ from rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.kakao import views as kakao_views
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from allauth.socialaccount.models import SocialAccount
+from ..irioneora.secrets import accounts
 
 
 # 회원가입시 닉네임 중복 확인
@@ -40,7 +43,8 @@ class KakaoAccountsLogin(SocialLoginView):
 @api_view(['GET', 'POST'])
 def kakao_login(request):
 
-    REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
+    REST_API_KEY = accounts["REST_API_KEY"]
+    # REST_API_KEY = '0e63d9a73b29cb9e1c85f0279f834367'
     REDIRECT_URI = 'http://j5a601.p.ssafy.io/login'
 
     # 인증 코드
