@@ -81,7 +81,6 @@ export default {
 
         // 버튼 비활성화
         this.isSubmit = false
-        console.log('1')
         AccountsApi.requestLogin(data)
           // 로그인 성공
           .then(res => {
