@@ -24,60 +24,119 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
+      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+    },
   },
   {
     path: '/main',
     name: 'MainPage',
-    component: MainPage
+    component: MainPage,
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
+      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+    },
   },
   {
     path: '/intro',
     name: 'IntroPage',
-    component: IntroPage
+    component: IntroPage,
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn animate__slow",
+      leaveActiveClass: "animate__animated animate__fadeOut animate__slow"
+    },
   },
   {
     path: '/search',
     component: SearchPage,
     children: [
-      {path: '', name: 'SearchIndexPage', component: SearchIndexPage},
-      {path: 'filter', name: 'SearchFilterPage', component: SearchFilterPage},
-    ]
+      {
+        path: '', name: 'SearchIndexPage', component: SearchIndexPage,
+        meta: {
+          enterActiveClass: "animate__animated animate__fadeIn",
+          leaveActiveClass: ""
+        }
+      },
+      {
+        path: 'filter', name: 'SearchFilterPage', component: SearchFilterPage,
+        meta: {
+          enterActiveClass: "animate__animated animate__fadeIn",
+          leaveActiveClass: ""
+        }
+      },
+    ],
   },
   {
     path: '/profile',
     component: ProfilePage,
     children: [
-      {path: '', name: 'ProfileLikePage', component: ProfileLikePage},
-      {path: 'resemble', name: 'ProfileResemblePage', component: ProfileResemblePage}
-    ]
+      {
+        path: '', name: 'ProfileLikePage', component: ProfileLikePage,
+        meta: {
+          enterActiveClass: "animate__animated animate__fadeIn",
+          leaveActiveClass: ""
+        }
+      },
+      {
+        path: 'resemble', name: 'ProfileResemblePage', component: ProfileResemblePage,
+        meta: {
+          enterActiveClass: "animate__animated animate__fadeIn",
+          leaveActiveClass: ""
+        }
+      }
+    ],
   },
 
   // 로그인/ 회원가입
   {
     path: '/login', component: SignInUpPage,
     children: [
-        {path: '', name: 'LoginPage', component: LoginPage},
+        {
+          path: '', name: 'LoginPage', component: LoginPage,
+          meta: {
+            enterActiveClass: "animate__animated animate__fadeIn",
+            leaveActiveClass: ""
+          }
+        },
         // 회원가입
-        {path: '/signup', name: 'SignupPage', component: SignupPage},
-      ]
+        {
+          path: '/signup', name: 'SignupPage', component: SignupPage,
+          meta: {
+            enterActiveClass: "animate__animated animate__fadeIn",
+            leaveActiveClass: ""
+          }
+        },
+    ],
   },
   {
     path: '/loading',
     name: 'LoadingPage',
     component: LoadingPage,
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    },
   },
   {
     path: '/detail/:artifactId',
     name: 'DetailPage',
     component: DetailPage,
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn__slow",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    },
   },
   {
     path: '/result',
     name: 'ResultPage',
-    component: ResultPage
-  }
-
+    component: ResultPage,
+    meta: {
+      enterActiveClass: "animate__animated animate__fadeIn__slow",
+      leaveActiveClass: "animate__animated animate__fadeOut"
+    },
+  },
 ]
 
 const router = new VueRouter({

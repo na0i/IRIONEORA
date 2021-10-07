@@ -2,9 +2,22 @@
   <div id="app">
     <NavBar id="app-nav"/>
 
-    <div id="app-content">
-      <router-view/>
-    </div>
+      
+      <div id="app-content">
+        
+        <transition
+          mode="out-in"
+          name="router-anim"
+          :enter-active-class="this.$route.meta.enterActiveClass"
+          :leave-active-class="this.$route.meta.leaveActiveClass"
+        > 
+          
+          <router-view/>
+
+        </transition>
+      
+      </div>
+    
 
     <LowBar id="low-bar"></LowBar>
   </div>
