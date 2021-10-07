@@ -5,7 +5,7 @@
     <SearchFilter @change="getPurpose" id="search-filter" theme="유물 종류" :sortlist="purposeName2" :startnum = "8"  />
     <div id="float-clear-div">
       <div class="search-button-div">
-        <button class="search-button" @click="searchFilters" value="search">search</button>
+        <button class="search-button" @click="searchFilters" value="search">검색하기</button>
       </div>
       <hr>
     </div>
