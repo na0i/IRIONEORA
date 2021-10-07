@@ -24,6 +24,11 @@ export default {
       this.$refs.imgInput.click()
     },
 
+    // error 초기화
+    onReset() {
+      this.error = ''
+    },
+
     // kakao vision -> back으로 얼굴 json 전송
     async requestAnalyze (imageFile) {
       // kakao 얼굴 데이터 검출
@@ -99,7 +104,10 @@ export default {
             console.log(res)
 
           })
-        .catch(err => {})
+        .catch(err => {
+          console.log(err)
+          this.$emit('on-loading', false)
+        })
 
 
 

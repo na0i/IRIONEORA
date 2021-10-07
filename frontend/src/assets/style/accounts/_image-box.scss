@@ -16,19 +16,22 @@
     height: 92%;
     overflow: hidden;
   }
-  img {
+
+  .img-preview {
     position: absolute;
     width: 28vw;
     max-width: 117px;
 
     top: var(--margin-up);
-
-
-
     //height: 28vw;
     //max-height: 117px;
     //bottom: var(--margin-down);
     //height: 100%;
     //object-fit: cover;
+  }
+
+  .img-profile {
+    width: 100%;
+    object-fit: cover;
   }
 }

@@ -69,6 +69,7 @@ export default {
     // input 호출
     onImage() {
       this.$refs.image.onOpen()
+      this.$refs.image.onReset()
     },
     // 로딩 스피너
     onLoading(status) {

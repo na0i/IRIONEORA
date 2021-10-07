@@ -2,9 +2,8 @@
   <div>
     <div class="img-wrap">
       <div class="img-container">
-        <img v-if="preview" :src="preview" :style="previewImgClip" alt="profile image">
-        <img v-else src="@/assets/images/logo-main.png" alt="profile image">
-
+        <img v-if="preview" :src="preview" :style="previewImgClip" alt="preview image" class="img-preview">
+        <img v-else src="@/assets/images/logo-main.png" alt="preview image" class="img-profile">
       </div>
     </div>
   </div>

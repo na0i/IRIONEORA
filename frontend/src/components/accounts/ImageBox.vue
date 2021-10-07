@@ -2,8 +2,8 @@
   <div>
     <div class="img-wrap">
       <div class="img-container">
-        <img v-if="profileImg" :src="profileImg" alt="profile image">
-        <img v-else src="@/assets/images/profile-background.png" alt="profile image">
+        <img v-if="profileImg" :src="profileImg" alt="profile image" class="img-profile">
+        <img v-else src="@/assets/images/profile-background.png" alt="profile image" class="img-profile">
       </div>
     </div>
   </div>
