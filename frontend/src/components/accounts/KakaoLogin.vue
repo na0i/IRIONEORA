@@ -28,6 +28,7 @@ export default {
           if (code) {
             AccountsApi.requestKakaoLogin(code)
             .then(res => {
+              this.$store.dispatch('fulfillLogin', res.data.key)
               cookies.set('user-token', res.data.key)
               this.$router.go(-2)
             })

@@ -98,7 +98,7 @@ export default {
               // }
               // )
             })
-            .then(res => this.$router.back())
+            .then(res => this.$router.push('/profile'))
 
           // 로그인 실패
           .catch(() => {
