@@ -42,11 +42,9 @@ window.$ = $;
     
     methods: {
       buttonSwitch: function ($event,idx) {
-        console.log($event.target.innerText)
         this.value = this.sortlist[idx].code
         
         if ($event.target.classList[1] === "on") {
-          console.log("already on")
           $event.target.classList.remove("on")
           this.value = ''
           this.$emit('change', this.value)
@@ -54,7 +52,6 @@ window.$ = $;
           var j = this.startnum
           var num = j+this.sortlist.length
           const btns = document.getElementsByClassName("search-button")
-          // console.log(j)
           for (j ; j < num; j++) {
             const btn = btns[j]
             $(btn).removeClass('on')
