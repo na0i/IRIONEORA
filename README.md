@@ -66,7 +66,7 @@
   - <img src="https://img.shields.io/badge/SCSS----yellowgreen?logo=sass"  style="float: left">
   - <img src="https://img.shields.io/badge/JavaScript-ES6+-yellowgreen?logo=javascript" style="float: left">
   - <img src="https://img.shields.io/badge/Vue.js-@vue/cli 4.5.13-yellowgreen?logo=vue.js"  style="float: left">
-  - <img src="https://img.shields.io/badge/Node.js-v.14.17.3-yellowgreen?logo=node.js" style="float: left">
+  - <img src="https://img.shields.io/badge/Node.js-v.10.19.0-yellowgreen?logo=node.js" style="float: left">
   - <img src="https://img.shields.io/badge/Visual Studio Code----yellowgreen?logo=visualstudiocode" style="float: left">
 
 <br>
@@ -277,6 +277,7 @@ frontend
     │  │      heart.png
     │  │      kakao-icon.png
     │  │      kakao-login-wide.png
+    │  │      last-mountain.png
     │  │      left-m.png
     │  │      logo-main.png
     │  │      logo-navbar.png
