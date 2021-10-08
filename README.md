@@ -283,6 +283,7 @@ frontend
     │  │      heart.png
     │  │      kakao-icon.png
     │  │      kakao-login-wide.png
+    │  │      last-mountain.png
     │  │      left-m.png
     │  │      logo-main.png
     │  │      logo-navbar.png
