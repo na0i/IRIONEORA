@@ -2,24 +2,51 @@
   <div id="app">
     <NavBar id="app-nav"/>
 
-    <div id="app-content">
-      <router-view/>
-    </div>
+      
+      <div id="app-content">
+        
+        <transition
+          mode="out-in"
+          name="router-anim"
+          :enter-active-class="this.$route.meta.enterActiveClass"
+          :leave-active-class="this.$route.meta.leaveActiveClass"
+        > 
+          
+          <router-view/>
+
+        </transition>
+      
+      </div>
+    
 
     <LowBar id="low-bar"></LowBar>
   </div>
 </template>
 
 <script>  
+import cookies from "vue-cookies";
+import AccountsApi from "@/api/accounts";
+
 import NavBar from './components/common/NavBar.vue'
 import LowBar from "@/components/common/LowBar";
 
-  export default {
-    components: {
-      NavBar,
-      LowBar
+export default {
+  components: {
+    NavBar,
+    LowBar
+  },
+  created() {
+    // 로그인된 유저 확인
+    const token = cookies.get('user-token')
+
+    if (token) {
+      AccountsApi.requestProfile(token)
+      .then(res => {
+        this.$store.dispatch('setProfileInfo', res.data)
+      })
     }
   }
+}
 </script>
 
 <style>
@@ -33,20 +60,21 @@ import LowBar from "@/components/common/LowBar";
   margin: 0 auto;
 
   /* 임시로 구분선 하나 그을게요.. */
-  border: 1px solid ivory;
+  /*border: 1px solid ivory;*/
 
   font-family: 'Noto Serif KR', serif;
 
 }
 
 #app-content {
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 130px);
   /*margin-top: 40px;*/
   margin-bottom: 60px;
+  margin-top: 70px;
 }
 
 #app-nav {
-  padding: 30px;
+  /*padding: 30px;*/
 }
 
 #low-bar {

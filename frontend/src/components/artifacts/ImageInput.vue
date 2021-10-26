@@ -11,17 +11,22 @@ import AccountsApi from "@/api/accounts";
 
 export default {
   name: "ImageInput",
+  props: ['preview'],
   data() {
     return {
       selectedFile: null,
       error: '',
-
     }
   },
   methods: {
     // input창 호출
     onOpen() {
       this.$refs.imgInput.click()
+    },
+
+    // error 초기화
+    onReset() {
+      this.error = ''
     },
 
     // kakao vision -> back으로 얼굴 json 전송
@@ -31,12 +36,21 @@ export default {
       // 얼굴 데이터를 검출하지 못한 경우
       if (res.data.result.faces.length === 0) {
         this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
+        this.$emit('on-loading', false)
+        throw new Error('face not detected');
       }
       // 얼굴 데이터를 전송받은 경우
       else {
+        // console.log(res.data.result)
+        this.$store.dispatch('setKakaoResult', res.data.result)
         const result = await AccountsApi.requestAnalyze(res.data)
         return result
       }
+    },
+
+    // 미리보기
+    async setPreview(data) {
+      return await this.$store.dispatch('setPreview', data)
     },
 
     // 이미지 입력 받음
@@ -51,6 +65,7 @@ export default {
       ).toLowerCase()
 
       // 이미지 파일이 아닌 경우
+      // console.log(extension)
       if (!['jpg', 'jpeg', 'png'].includes(extension)) {
         this.error = '이미지 파일을 선택해 주세요.'
       }
@@ -62,6 +77,7 @@ export default {
       // 에러 발생하면 에러메세지 emit
       if (this.error) {
         this.$emit('on-error', this.error)
+        this.$emit('on-loading', false)
       }
 
       // 오류 없는 경우 formData 전송
@@ -70,10 +86,30 @@ export default {
         const imageFile = new FormData()
         imageFile.append('image', this.selectedFile)
 
-        const result = this.requestAnalyze(imageFile)
-        console.log(result)
+        this.requestAnalyze(imageFile)
+          .then(res => {
+            // vuex 결과 저장
+            this.$store.dispatch('setResults', res.data)
 
-        this.$emit('on-loading', false)
+            // 미리보기
+            const read = new FileReader()
+            read.onload = file => {
+              this.setPreview(file.target.result)
+                .then(() => {
+                  this.$router.push('/result')
+                  this.$emit('on-loading', false)
+                })
+            }
+            read.readAsDataURL(this.selectedFile)
+            // console.log(res)
+
+          })
+        .catch(err => {
+          this.$emit('on-error', '얼굴이 없거나, 확인이 불가합니다.')
+          this.$emit('on-loading', false)
+        })
+
+
 
 
       }
