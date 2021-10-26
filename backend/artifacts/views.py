@@ -355,6 +355,7 @@ def artifact_resemble(request, artifact_id):
     serializer = ArtifactResembleSerializer(artifact)
     return Response(serializer.data)
 
+
 # 박물관 정보
 @api_view(['GET'])
 def get_museum_info(request, museum_name):
